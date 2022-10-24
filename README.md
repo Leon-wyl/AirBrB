@@ -458,6 +458,12 @@ This will submit the latest commit on master as your submission.
 It is your responsibiltiy to ensure that your code can be successfully demonstrated on the CSE machines (e.g. vlab)
 from a fresh clone of your repository. Failure to ensure this may result in a loss of marks.
 
+### Dryrun
+
+You can run a dryrun to sanity check your code runs basically by:
+1. Pushing your code to master on gitlab
+2. On a CSE terminal (vlab or lab machine), run `6080 ass3dryrun GROUP_NAME` where GROUP_NAME is the name of your group
+
 ## 9. Late Submission Policy
 
 If your assignment is submitted after this date, each hour it is late reduces the maximum mark it can achieve by 2%.
