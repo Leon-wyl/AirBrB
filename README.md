@@ -355,6 +355,7 @@ Your assignment will be hand-marked by tutor(s) in the course according to the c
 				<li>Features implemented that satisfy requirements as outlined in `2.1`, `2.2`, `2.3`, `2.4`, and `2.5` (for pairs).</li>
 				<li>Features implemented in a mobile responsive way that work on screens as small as 400px wide, 700px high</li>
 				<li>Responsive design will contribute up to one quarter of the marks of this section</li>
+				<li>You MUST update the progress.csv file in the root folder of this repository as you complete things partially or fully. The valid values are "NO", "PARTIAL", and "YES". Updating this is necessary so that your tutor knows what to focus on and what to avoid - giving them the best understanding of your work and provide you with marks you have earned.</li>
 			</ul>
 		</td>
 	</tr>
