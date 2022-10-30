@@ -12,7 +12,7 @@
 
 ## 0. Change Log
 
-N/A
+* 30/10: Updated Typescript setup instructions
 
 ## 1. Background & Motivation
 
@@ -260,8 +260,11 @@ Tests must be run from inside the `frontend` folder by running `yarn test`.
 ### 2.9. Other notes
 * The port you can use to `fetch` data from the backend is defined in `frontend/src/config.json`
 * You can modify the eslint file throughout your work, but you need to revert it to the original for final submission to achieve the linting marks.
-* For users of typescript, there is an alternatively `.eslintrc` file [being collaborated here](https://hackmd.io/sy1urGgxRpGwOJ0nOkNlUw?both). Do not change it unless given approval on forum.
 * [This article may be useful to some students](https://stackoverflow.com/questions/66284286/react-jest-mock-usenavigate)
+* If you'd like to use Typescript, remove the frontend folder and instead run these commands in the main directory
+  * `npx create-react-app frontend --template typescript`
+  * `cd frontend`
+  * `npm i eslint-config-standard-with-typescript`
 
 ## 3. Getting Started
 
