@@ -13,6 +13,7 @@
 ## 0. Change Log
 
 * 30/10: Updated Typescript setup instructions
+* 1/11: Updated backend to not overwrite users details when an email already exists on the database.
 
 ## 1. Background & Motivation
 
