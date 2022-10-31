@@ -107,7 +107,7 @@ export const login = (email, password) =>
         resolve(jwt.sign({ email }, JWT_SECRET, { algorithm: 'HS256' }));
       }
     }
-    reject(new InputError('Invalid username or password'));
+    reject(new InputError('Invalid email or password'));
   });
 
 export const logout = (email) =>
@@ -126,14 +126,15 @@ export const register = (email, password, name) =>
       reject(new InputError('Must provide a name for user registration'));
     } else if (email && email in users) {
       reject(new InputError('Email address already registered'));
+    } else {
+      users[email] = {
+        name,
+        password,
+        sessionActive: true,
+      };
+      const token = jwt.sign({ email }, JWT_SECRET, { algorithm: 'HS256' });
+      resolve(token);
     }
-    users[email] = {
-      name,
-      password,
-      sessionActive: true,
-    };
-    const token = jwt.sign({ email }, JWT_SECRET, { algorithm: 'HS256' });
-    resolve(token);
   });
 
 /***************************************************************
