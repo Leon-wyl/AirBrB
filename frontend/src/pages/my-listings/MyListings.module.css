@@ -1,0 +1,16 @@
+.outerContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.innerContainer {
+	display: flex;
+	width: 1000px;
+}
+
+.header {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+}

@@ -1,0 +1,42 @@
+html {
+	overflow: hidden;
+}
+
+.container {
+	width: 100vw;
+	height: calc(100vh - 72px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.logoContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	padding: 15px;
+	width: 390px;
+}
+
+.title {
+	text-align: center;
+	margin-top: 15px;
+	font-size: 25px;
+}
+
+.icon {
+	margin-right: 5px;
+}
+
+.link {
+	color: #1890ff;
+	text-align: center!important;
+}
+
+.link:hover {
+	text-decoration: underline;
+}

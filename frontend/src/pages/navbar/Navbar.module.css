@@ -1,0 +1,5 @@
+@media screen and (max-width: 409px) {
+	.navbtn {
+		padding: 4px 10px !important;
+	}
+}
