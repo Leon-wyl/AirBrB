@@ -14,6 +14,7 @@
 
 * 30/10: Updated Typescript setup instructions
 * 1/11: Updated backend to not overwrite users details when an email already exists on the database.
+* 2/11: Added correct late policy as per course policy and lecture
 
 ## 1. Background & Motivation
 
@@ -450,7 +451,7 @@ knowledge.
 
 ## 8. Submission
 
-This assignment is due *Friday 18th November, 19:59:59*.
+This assignment is due *Friday 18th November, 10pm*.
 
 To submit your assignment, simply run the following command on a CSE terminal:
 
@@ -460,9 +461,6 @@ This will submit the latest commit on master as your submission.
 
 <b>If you are working in a pair, only one group member needs to submit</b>
 
-It is your responsibiltiy to ensure that your code can be successfully demonstrated on the CSE machines (e.g. vlab)
-from a fresh clone of your repository. Failure to ensure this may result in a loss of marks.
-
 ### Dryrun
 
 You can run a dryrun to sanity check your code runs basically by:
@@ -471,6 +469,4 @@ You can run a dryrun to sanity check your code runs basically by:
 
 ## 9. Late Submission Policy
 
-If your assignment is submitted after this date, each hour it is late reduces the maximum mark it can achieve by 2%.
-
-For example if an assignment you submitted with a raw awarded mark of 85% was submitted 5 hours late, the late submission would have no effect (as maximum mark would be 90%). If the same assignment was submitted 20 hours late it would be awarded 60%, the maximum mark it can achieve at that time.
+No late submission are accepted.
