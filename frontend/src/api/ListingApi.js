@@ -1,11 +1,11 @@
-import { postAxios, getAxios } from './Base';
+import { postAxios, getAxios, deleteAxios } from './Base';
 import { baseUrl } from '../constants/Constants';
 
 export const getAllListings = async () => {
   try {
     const url = baseUrl + '/listings';
     const res = await getAxios(url);
-    console.log(res)
+    // console.log(res)
     return res;
   } catch (err) {
     console.log(err)
@@ -13,13 +13,13 @@ export const getAllListings = async () => {
   }
 }
 
-export const getListingsWithId = async (id) => {
+export const getListingWithId = async (id) => {
   try {
     const token = localStorage.getItem('token');
-    const url = baseUrl + '/listings' + id;
+    const url = baseUrl + '/listings/' + id;
     const headers = { Authorization: 'Bearer ' + token }
     const res = await getAxios(url, {}, headers);
-    console.log(res)
+    // console.log(res)
     return res;
   } catch (err) {
     console.log(err)
@@ -27,8 +27,9 @@ export const getListingsWithId = async (id) => {
   }
 }
 
-export const postNewListings = async (title, address, price, thumbnail, metadata) => {
+export const postNewListing = async (title, address, price, thumbnail, metadata) => {
 	try {
+    console.log(title, address, price, thumbnail, metadata)
     const token = localStorage.getItem('token');
     const url = baseUrl + '/listings/new';
     const headers = { Authorization: 'Bearer ' + token }
@@ -39,8 +40,21 @@ export const postNewListings = async (title, address, price, thumbnail, metadata
 			thumbnail: thumbnail,
 			metadata: metadata,
 		}
-    const res = await getAxios(url, data, headers);
-    console.log(res)
+    const res = await postAxios(url, data, headers);
+    return res;
+  } catch (err) {
+    console.log(err)
+    return err;
+  }
+}
+
+export const deleteListing = async (id) => {
+	try {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    const url = baseUrl + '/listings/' + id;
+    const headers = { Authorization: 'Bearer ' + token }
+    const res = await deleteAxios(url, {}, headers);
     return res;
   } catch (err) {
     console.log(err)

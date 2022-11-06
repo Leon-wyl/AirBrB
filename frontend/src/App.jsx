@@ -5,6 +5,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Register from './pages/User/Register';
 import { UserContext } from './store/UserContext';
 import MyListings from './pages/my-listings/MyListings';
+import NewListing from './pages/NewListing/NewListing';
+import Home from './pages/Home/Home';
 
 function App () {
   const token = localStorage.getItem('token');
@@ -14,9 +16,11 @@ function App () {
       <UserContext.Provider value={{ userInfo, setUserInfo }}>
         <Navbar />
         <Switch>
+          <Route path='/' exact component={Home} />
           <Route path='/login' exact component={Login} />
           <Route path='/register' exact component={Register} />
           <PrivateRoute path="/mylistings" component={MyListings} />
+          <PrivateRoute path="/newlisting" component={NewListing} />
         </Switch>
       </UserContext.Provider>
     </>

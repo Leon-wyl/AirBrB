@@ -59,9 +59,9 @@ export const deleteAxios = (url, data = {}, headers = {}) =>
     axios
       .delete(
         url,
-        { ...data },
         {
           headers: headers,
+          data: data,
         }
       )
       .then((res) => {

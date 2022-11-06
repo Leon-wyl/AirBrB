@@ -7,25 +7,13 @@
 
 .innerContainer {
 	display: flex;
-	width: 1000px;
 	flex-direction: column;
+	width: 1000px;
 }
 
 .header {
 	display: flex;
 	width: 100%;
-	justify-content: space-between;
-	align-items: center;
-	margin: 1rem 0;
-}
-
-h1 {
-	margin-top: 0.5rem;
-}
-
-.cardContainer {
-	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-wrap: wrap;
 }

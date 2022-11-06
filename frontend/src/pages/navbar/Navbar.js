@@ -52,9 +52,9 @@ const Navbar = () => {
           title='AirBrB'
           extra={[
             <Button className={styles.navbtn} key='3'>
-              All Listings
+              Home
             </Button>,
-            <Button className={styles.navbtn} key='2'>
+            <Button className={styles.navbtn} key='2' onClick={() => history.push('/mylistings')}>
               My Listings
             </Button>,
             <Button
