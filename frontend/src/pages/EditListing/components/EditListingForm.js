@@ -1,23 +1,87 @@
 import { Button, Form, Input, Select, message, Upload, Card } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { propertyTypes, amenities } from "../../../constants/Constants";
-import { postNewListing } from "../../../api/ListingApi";
+import { getListingWithId, putListing } from "../../../api/ListingApi";
 import { beforeUpload } from "../../../Helper/Helper";
 
-const CreateNewListingForm = () => {
+const EditListingForm = () => {
+	// The useState storing the thumbnail and image
+  const [thumbnail, setThumbnail] = useState([]);
+  const [imageGallery, setImageGallery] = useState([]);
+
+  const [form] = Form.useForm();
+  useEffect(async () => {
+		// Get listing id from url
+    const listingId = window.location.href.split("/")[4];
+    getListingWithId(listingId).then((res) => {
+      if (res.status) {
+				// Set all fetched listing details into form
+        const listingData = res.data.listing;
+        const initialValues = {
+          title: listingData?.title,
+          addressLine: listingData?.address?.addressLine,
+					city: listingData?.address?.city,
+          state: listingData?.address?.state,
+          country: listingData?.address?.country,
+          price: listingData?.price,
+          propertyType: listingData?.metadata?.propertyType,
+          numBathroom: listingData?.metadata?.numBathroom,
+          numBedroom: listingData?.metadata?.numBedroom,
+          numBed: listingData?.metadata?.numBed,
+          bedroomDetails: listingData?.metadata?.bedroomDetails,
+          amenities: listingData?.metadata?.amenities,
+        };
+        form.setFieldsValue(initialValues);
+				// Set thumbnail picture into state
+        if (listingData.thumbnail !== "")
+          setThumbnail([
+            {
+              uid: "-1",
+              name: "avatar.png",
+              status: "done",
+              thumbUrl: listingData.thumbnail,
+            },
+          ]);
+				// Set gallery image into state
+        if (listingData?.metadata?.imageGallery) {
+          const imageGalleryList = listingData?.metadata?.imageGallery?.map(
+            (url, key) => {
+              return {
+                uid: key,
+                name: "image" + key,
+                status: "done",
+                thumbUrl: url,
+              };
+            }
+          );
+          setImageGallery(imageGalleryList);
+        }
+      } else if (res.response.status === 403) {
+        message.error("User is invalid. Please log in or sign up again");
+        return;
+      } else {
+        message.error("Something unexpected happened. Delete Unsuccessful");
+        return;
+      }
+    });
+  }, []);
+
   const history = useHistory();
 
   const onFinish = async (value) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
+    await new Promise((resolve) => setTimeout(resolve, 100));
+		// Create address object
     const address = {
       addressLine: value.addressLine,
-      city: value.city,
+			city: value.city,
       state: value.state,
       country: value.country,
     };
+		// Map image files to data url
+		const imageGalleryUrl = imageGallery.map((item) =>item.thumbUrl)
+		// create metadata object
     const metaData = {
       amenities: value.amenities,
       bedroomDetails: value.bedroomDetails,
@@ -25,47 +89,36 @@ const CreateNewListingForm = () => {
       numBed: value.numBed,
       numBedroom: value.numBedroom,
       propertyType: value.propertyType,
-      imageGallery: [],
+      imageGallery: imageGalleryUrl,
     };
-    console.log(metaData);
     if (value.title) {
-      const res = await postNewListing(
-        value.title,
-        address,
-        value.price,
-        imageUrl,
-        metaData
-      );
+			// Send request
+		  const listingId = window.location.href.split("/")[4];
+      const res = await putListing(listingId, value.title, address, value.price, thumbnail[0].thumbUrl, metaData);
       if (res.status) {
         console.log(res);
-        message.success("Creat new listing successfully");
-        history.push("/mylistings");
+        message.success('Edit listing successfully');
+        history.push('/mylistings');
       } else if (res.response.status === 400) {
         message.error("Input of infomation of the new listing in invalid");
       } else if (res.response.status === 403) {
         message.error("User is invalid. Please log in or sign up again");
-        history.push("/login");
+        history.push("/login")
       } else {
-        message.error("Something unexpected happened.");
+        message.error('Something unexpected happened.');
       }
     }
   };
   const onFinishFailed = () => {};
 
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState();
 
-  const handleChange = (info) => {
-    console.log(info);
+	// When thumbnail number > 1, cut it to 1
+  const handleThumbnailChange = (info) => {
+    setThumbnail(info.fileList);
     if (info.fileList.length >= 2) {
       info.fileList.shift();
     }
-    setTimeout(() => {
-      console.log(info);
-      info?.fileList[0]?.thumbUrl
-        ? setImageUrl(info.fileList[0].thumbUrl)
-        : setImageUrl("");
-    }, 100);
   };
 
   const uploadButton = (
@@ -80,10 +133,11 @@ const CreateNewListingForm = () => {
       </div>
     </div>
   );
-
+	console.log(imageGallery);
   return (
     <>
       <Form
+        form={form}
         name="basic"
         labelCol={{
           span: 8,
@@ -121,13 +175,13 @@ const CreateNewListingForm = () => {
           <Input placeholder="Address Line" />
         </Form.Item>
 
-        <Form.Item
+				<Form.Item
           name="city"
           label="City"
           rules={[
             {
               required: true,
-              message: "Please input your city!",
+              message: "Please input your scity!",
             },
           ]}
         >
@@ -146,7 +200,6 @@ const CreateNewListingForm = () => {
         >
           <Input placeholder="State" />
         </Form.Item>
-
         <Form.Item
           name="country"
           label="Country"
@@ -284,8 +337,25 @@ const CreateNewListingForm = () => {
             className="avatar-uploader"
             showUploadList={true}
             beforeUpload={beforeUpload}
-            onChange={handleChange}
-            onRemove={() => setImageUrl("")}
+            onChange={handleThumbnailChange}
+            fileList={thumbnail}
+            onRemove={() => setThumbnail([])}
+          >
+            {uploadButton}
+          </Upload>
+        </Form.Item>
+
+        <Form.Item name="imageGallery" label="Image Gallery">
+          <Upload
+            name="images"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={true}
+            beforeUpload={beforeUpload}
+            onChange={({ fileList: newFileList }) => {
+              setImageGallery(newFileList)
+						}}
+            fileList={imageGallery}
           >
             {uploadButton}
           </Upload>
@@ -322,4 +392,4 @@ const CreateNewListingForm = () => {
   );
 };
 
-export default CreateNewListingForm;
+export default EditListingForm;

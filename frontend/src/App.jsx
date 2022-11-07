@@ -7,6 +7,7 @@ import { UserContext } from './store/UserContext';
 import MyListings from './pages/my-listings/MyListings';
 import NewListing from './pages/NewListing/NewListing';
 import Home from './pages/Home/Home';
+import EditListing from './pages/EditListing/EditListing';
 
 function App () {
   const token = localStorage.getItem('token');
@@ -21,6 +22,7 @@ function App () {
           <Route path='/register' exact component={Register} />
           <PrivateRoute path="/mylistings" component={MyListings} />
           <PrivateRoute path="/newlisting" component={NewListing} />
+          <PrivateRoute path='/editlisting/:id' component={EditListing} />
         </Switch>
       </UserContext.Provider>
     </>

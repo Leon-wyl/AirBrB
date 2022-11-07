@@ -13,6 +13,7 @@ const MyListings = () => {
 	const history = useHistory();
 
 	const [listings, setListings] = useState([]);
+	const [reloadCode, setReloadCode] = useState("");
 	const {userInfo} = useContext(UserContext);
 
 	const reload = async () => {
@@ -41,7 +42,7 @@ const MyListings = () => {
 		};	
 	}
 
-	useEffect(reload, []);
+	useEffect(reload, [reloadCode]);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -66,7 +67,7 @@ const MyListings = () => {
 					</Button>
 				</div>
 				<div className={styles.cardContainer}>
-				{listings.map((listing) => <MyListingCard data={listing} reload={reload} setListings={setListings}/>)}
+				{listings.map((listing) => <MyListingCard data={listing} setReloadCode={setReloadCode}/>)}
 				</div>
 			</div>
 		</div>

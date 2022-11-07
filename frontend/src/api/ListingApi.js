@@ -1,4 +1,4 @@
-import { postAxios, getAxios, deleteAxios } from './Base';
+import { postAxios, getAxios, deleteAxios, putAxios } from './Base';
 import { baseUrl } from '../constants/Constants';
 
 export const getAllListings = async () => {
@@ -55,6 +55,26 @@ export const deleteListing = async (id) => {
     const url = baseUrl + '/listings/' + id;
     const headers = { Authorization: 'Bearer ' + token }
     const res = await deleteAxios(url, {}, headers);
+    return res;
+  } catch (err) {
+    console.log(err)
+    return err;
+  }
+}
+
+export const putListing = async (id, title, address, price, thumbnail, metadata) => {
+	try {
+    const token = localStorage.getItem('token');
+    const url = baseUrl + '/listings/' + id;
+    const headers = { Authorization: 'Bearer ' + token }
+		const data = { 
+			title: title,
+			address: address,
+			price: price,
+			thumbnail: thumbnail,
+			metadata: metadata,
+		}
+    const res = await putAxios(url, data, headers);
     return res;
   } catch (err) {
     console.log(err)

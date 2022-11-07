@@ -2,13 +2,13 @@ import { Typography, Card, Rate, Button, Modal, message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import styles from "./MyListingCard.module.css";
-import { deleteListing, getAllListings, getListingWithId } from "../../../api/ListingApi";
+import { deleteListing, getAllListings} from "../../../api/ListingApi";
 import { useHistory } from "react-router-dom";
 
 const { Meta } = Card;
 
 const MyListingCard = (props) => {
-  const { data, reload } = props;
+  const { data, setReloadCode } = props;
   const { Text } = Typography;
 
   const history = useHistory();
@@ -26,7 +26,7 @@ const MyListingCard = (props) => {
       if (res.status) {
         console.log(res);
         message.success("Delete listing successfully");
-        history.push('/');
+        setReloadCode(data.id);
       } else if (res.response.status === 400) {
         message.error("Delete Unsuccessful");
       } else if (res.response.status === 403) {
@@ -80,7 +80,7 @@ const MyListingCard = (props) => {
           >
             Bookings
           </Button>,
-          <EditOutlined key="edit" />,
+          <EditOutlined key="edit" onClick={() => history.push(`/editlisting/${data.id}`)}/>,
           <DeleteOutlined key="delete" onClick={showModal} />,
         ]}
       >
