@@ -81,3 +81,32 @@ export const putListing = async (id, title, address, price, thumbnail, metadata)
     return err;
   }
 }
+
+export const putPublishListing = async (id, availability) => {
+	try {
+    const token = localStorage.getItem('token');
+    const url = baseUrl + '/listings/publish/' + id;
+    const headers = { Authorization: 'Bearer ' + token }
+		const data = { 
+			availability: availability
+		}
+    const res = await putAxios(url, data, headers);
+    return res;
+  } catch (err) {
+    console.log(err)
+    return err;
+  }
+}
+
+export const putUnpublishListing = async (id) => {
+	try {
+    const token = localStorage.getItem('token');
+    const url = baseUrl + '/listings/unpublish/' + id;
+    const headers = { Authorization: 'Bearer ' + token }
+    const res = await putAxios(url, {}, headers);
+    return res;
+  } catch (err) {
+    console.log(err)
+    return err;
+  }
+}

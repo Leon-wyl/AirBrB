@@ -2,8 +2,10 @@ import { Typography, Card, Rate, Button, Modal, message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import styles from "./MyListingCard.module.css";
-import { deleteListing, getAllListings} from "../../../api/ListingApi";
+import DeleteModal from "./DeleteModal";
 import { useHistory } from "react-router-dom";
+import PublishModal from "./PublishModal";
+import UnpublishModal from "./UnpublishModal";
 
 const { Meta } = Card;
 
@@ -13,35 +15,9 @@ const MyListingCard = (props) => {
 
   const history = useHistory();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = async () => {
-    const deleteCallback = async () => {
-      setIsModalOpen(false);
-      const res = await deleteListing(data.id);
-      if (res.status) {
-        console.log(res);
-        message.success("Delete listing successfully");
-        setReloadCode(data.id);
-      } else if (res.response.status === 400) {
-        message.error("Delete Unsuccessful");
-      } else if (res.response.status === 403) {
-        message.error("User is invalid. Please log in or sign up again");
-      } else {
-        message.error("Something unexpected happened. Delete Unsuccessful");
-      }
-      
-    };
-    deleteCallback();
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+  const [isUnpublishModalOpen, setIsUnpublishModalOpen] = useState(false);
 
   const numRatings = data.reviews.length;
   const rating =
@@ -52,14 +28,24 @@ const MyListingCard = (props) => {
 
   return (
     <>
-      <Modal
-        title="Delete Listing"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Text>{`Are you sure to delete the listing with title '${data.title}'?`}</Text>
-      </Modal>
+      <DeleteModal
+        isModalOpen={isDeleteModalOpen}
+        setIsModalOpen={setIsDeleteModalOpen}
+        setReloadCode={setReloadCode}
+        listingId={data.id}
+      />
+      <PublishModal
+        isModalOpen={isPublishModalOpen}
+        setIsModalOpen={setIsPublishModalOpen}
+        setReloadCode={setReloadCode}
+        listingId={data.id}
+      />
+      <UnpublishModal
+        isModalOpen={isUnpublishModalOpen}
+        setIsModalOpen={setIsUnpublishModalOpen}
+        setReloadCode={setReloadCode}
+        listingId={data.id}
+      />
       <Card
         hoverable={true}
         className={styles.card}
@@ -71,8 +57,13 @@ const MyListingCard = (props) => {
           <Button
             style={{ border: "transparent", backgroundColor: "transparent" }}
             size="small"
+            onClick={() =>
+              data.published
+                ? setIsUnpublishModalOpen(true)
+                : setIsPublishModalOpen(true)
+            }
           >
-            {data.publish ? "Unpublish" : "Publish"}
+            {data.published ? "Unpublish" : "Publish"}
           </Button>,
           <Button
             style={{ border: "transparent", backgroundColor: "transparent" }}
@@ -80,8 +71,14 @@ const MyListingCard = (props) => {
           >
             Bookings
           </Button>,
-          <EditOutlined key="edit" onClick={() => history.push(`/editlisting/${data.id}`)}/>,
-          <DeleteOutlined key="delete" onClick={showModal} />,
+          <EditOutlined
+            key="edit"
+            onClick={() => history.push(`/editlisting/${data.id}`)}
+          />,
+          <DeleteOutlined
+            key="delete"
+            onClick={() => setIsDeleteModalOpen(true)}
+          />,
         ]}
       >
         <Meta title={data.title} />
@@ -98,8 +95,11 @@ const MyListingCard = (props) => {
           <Text className={styles.description} type="secondary">
             Number of Bathrooms: {`${data.numBathroom}`}
           </Text>
-          <Rate size="small" disabled allowHalf defaultValue={rating} />
-          <Text className={styles.description} type="secondary">
+          <div>
+            <Rate size="small" disabled allowHalf defaultValue={rating} />
+            <Text type="secondary"> {`(${rating})`}</Text>
+          </div>
+          <Text  className={styles.description} type="secondary">
             Number of Ratings: {`${numRatings}`}
           </Text>
         </div>

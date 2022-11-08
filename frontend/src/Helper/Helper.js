@@ -7,3 +7,19 @@ export const beforeUpload = (file) => {
   }
   return false;
 };
+
+export const toRangeObject = (momentArray) => {
+	return {
+		start: momentArray[0],
+		end: momentArray[1],
+	}
+}
+
+// compare function for sorting
+export const CompareNames = (a, b) => {
+  const nameA = a.title.toLowerCase();
+  const nameB = b.title.toLowerCase();
+  if (nameA < nameB) return -1;
+  if (nameA > nameB) return 1;
+  return 0;
+};

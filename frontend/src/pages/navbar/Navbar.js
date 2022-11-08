@@ -51,7 +51,7 @@ const Navbar = () => {
           onBack={() => window.history.back()}
           title='AirBrB'
           extra={[
-            <Button className={styles.navbtn} key='3'>
+            <Button className={styles.navbtn} key='3' onClick={() => history.push('/')}>
               Home
             </Button>,
             <Button className={styles.navbtn} key='2' onClick={() => history.push('/mylistings')}>

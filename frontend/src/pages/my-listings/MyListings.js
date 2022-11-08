@@ -19,6 +19,7 @@ const MyListings = () => {
 	const reload = async () => {
 		// Fetech all listing data and filter out the ones the user created
 		const listingsRes = (await getAllListings()).data.listings;
+		console.log(listingsRes)
 		const myListings = listingsRes.filter((listing) => listing.owner === userInfo.email)
 		const listingsData = [];
 		// For each listing, fetch the metadata of the listing, then create new listing object and push it to the array
@@ -35,25 +36,15 @@ const MyListings = () => {
 				thumbnail: myListings[i].thumbnail,
 				reviews: myListings[i].reviews,
 				price: myListings[i].price,
-				published: listingsRes.published,
+				published: listingRes.published,
 			}
+			console.log(listingRes);
 			listingsData.push(listingData);
 			if (i === lengthMyListings - 1) setListings(listingsData);
 		};	
 	}
 
 	useEffect(reload, [reloadCode]);
-
-	const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
 	console.log(listings)
 
