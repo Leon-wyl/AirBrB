@@ -10,8 +10,7 @@ import Home from './pages/Home/Home';
 import EditListing from './pages/EditListing/EditListing';
 
 function App () {
-  const token = localStorage.getItem('token');
-  const [userInfo, setUserInfo] = useState(token);
+  const [userInfo, setUserInfo] = useState({email: null, token: null});
   return (
     <>
       <UserContext.Provider value={{ userInfo, setUserInfo }}>

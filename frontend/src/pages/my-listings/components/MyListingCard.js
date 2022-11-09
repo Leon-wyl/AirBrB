@@ -90,10 +90,10 @@ const MyListingCard = (props) => {
             Property Type: {`${data.propertyType}`}
           </Text>
           <Text className={styles.description} type="secondary">
-            Number of Beds: {`${data.numBed}`}
+            Beds: {`${data.numBed}`}
           </Text>
           <Text className={styles.description} type="secondary">
-            Number of Bathrooms: {`${data.numBathroom}`}
+            Bathrooms: {`${data.numBathroom}`}
           </Text>
           <div>
             <Rate size="small" disabled allowHalf defaultValue={rating} />

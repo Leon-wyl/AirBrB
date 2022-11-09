@@ -1,15 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const getAxios = (url, data = {}, headers = {}) =>
+export const getAxios = (url, headers = {}) =>
   new Promise((resolve, reject) => {
     axios
-      .get(
-        url,
-        { ...data },
-        {
-          headers: headers,
-        }
-      )
+      .get(url, { headers: headers })
       .then((res) => {
         resolve(res);
       })
@@ -57,13 +51,10 @@ export const putAxios = (url, data = {}, headers = {}) =>
 export const deleteAxios = (url, data = {}, headers = {}) =>
   new Promise((resolve, reject) => {
     axios
-      .delete(
-        url,
-        {
-          headers: headers,
-          data: data,
-        }
-      )
+      .delete(url, {
+        headers: headers,
+        data: data,
+      })
       .then((res) => {
         resolve(res);
       })

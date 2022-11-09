@@ -6,8 +6,8 @@ const { Meta } = Card;
 
 const AllListingCard = (props) => {
   const { data } = props;
+  console.log(data);
   const { Text } = Typography;
-	console.log(data);
   const numRatings = data?.reviews?.length;
   const rating =
     numRatings === 0
@@ -35,6 +35,7 @@ const AllListingCard = (props) => {
             <Text type="secondary"> {`(${rating})`}</Text>
           </div>
 					<Text type="secondary"> {`(${numRatings} people rates)`}</Text>
+          <Text className={styles.description} type={data.published ? "success" : "danger"}>{data.published ? "Available" : "Unavailable"}</Text>
         </div>
       </Card>
     </>

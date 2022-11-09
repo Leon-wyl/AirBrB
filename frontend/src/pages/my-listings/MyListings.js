@@ -1,8 +1,7 @@
-import { Button } from "antd";
 import React, { useEffect, useState, useContext } from "react";
 import { getAllListings, getListingWithId } from "../../api/ListingApi";
 import styles from './MyListings.module.css';
-import { Typography } from 'antd';
+import { Button, Typography, message } from 'antd';
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../store/UserContext";
 import MyListingCard from "./components/MyListingCard";
@@ -18,14 +17,25 @@ const MyListings = () => {
 
 	const reload = async () => {
 		// Fetech all listing data and filter out the ones the user created
-		const listingsRes = (await getAllListings()).data.listings;
-		console.log(listingsRes)
+		const listingsResRaw = await getAllListings();
+		if (!listingsResRaw.status) {
+			// If cannot fetch user's listing, stop.
+			message('Something wrong happened, we cannot load the listings');
+			return;
+		}
+		const listingsRes = listingsResRaw.data.listings
 		const myListings = listingsRes.filter((listing) => listing.owner === userInfo.email)
 		const listingsData = [];
 		// For each listing, fetch the metadata of the listing, then create new listing object and push it to the array
 		const lengthMyListings = myListings.length;
 		for (let i = 0; i < lengthMyListings; i++) {
-			const listingRes = (await getListingWithId(myListings[i].id)).data.listing;
+			const listingResRaw = await getListingWithId(myListings[i].id);
+			if (!listingResRaw.status) {
+				// If cannot fetch user's listing, stop.
+				message('Something wrong happened, we cannot load the listings.');
+				return;
+			}
+			const listingRes = listingResRaw.data.listing;
 			const listingMetadata = listingRes.metadata;
 			const listingData = {
 				id: myListings[i].id,
@@ -46,8 +56,6 @@ const MyListings = () => {
 
 	useEffect(reload, [reloadCode]);
 
-	console.log(listings)
-
 	return (
 		<div className={styles.outerContainer}>
 			<div className={styles.innerContainer}>
@@ -58,7 +66,7 @@ const MyListings = () => {
 					</Button>
 				</div>
 				<div className={styles.cardContainer}>
-				{listings.map((listing) => <MyListingCard data={listing} setReloadCode={setReloadCode}/>)}
+				{listings.map((listing, key) => <MyListingCard key={key} data={listing} setReloadCode={setReloadCode}/>)}
 				</div>
 			</div>
 		</div>

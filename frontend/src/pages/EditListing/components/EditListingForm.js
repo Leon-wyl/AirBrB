@@ -7,22 +7,22 @@ import { getListingWithId, putListing } from "../../../api/ListingApi";
 import { beforeUpload } from "../../../Helper/Helper";
 
 const EditListingForm = () => {
-	// The useState storing the thumbnail and image
+  // The useState storing the thumbnail and image
   const [thumbnail, setThumbnail] = useState([]);
   const [imageGallery, setImageGallery] = useState([]);
 
   const [form] = Form.useForm();
   useEffect(async () => {
-		// Get listing id from url
+    // Get listing id from url
     const listingId = window.location.href.split("/")[4];
     getListingWithId(listingId).then((res) => {
       if (res.status) {
-				// Set all fetched listing details into form
+        // Set all fetched listing details into form
         const listingData = res.data.listing;
         const initialValues = {
           title: listingData?.title,
           addressLine: listingData?.address?.addressLine,
-					city: listingData?.address?.city,
+          city: listingData?.address?.city,
           state: listingData?.address?.state,
           country: listingData?.address?.country,
           price: listingData?.price,
@@ -34,7 +34,7 @@ const EditListingForm = () => {
           amenities: listingData?.metadata?.amenities,
         };
         form.setFieldsValue(initialValues);
-				// Set thumbnail picture into state
+        // Set thumbnail picture into state
         if (listingData.thumbnail !== "")
           setThumbnail([
             {
@@ -44,7 +44,7 @@ const EditListingForm = () => {
               thumbUrl: listingData.thumbnail,
             },
           ]);
-				// Set gallery image into state
+        // Set gallery image into state
         if (listingData?.metadata?.imageGallery) {
           const imageGalleryList = listingData?.metadata?.imageGallery?.map(
             (url, key) => {
@@ -72,16 +72,16 @@ const EditListingForm = () => {
 
   const onFinish = async (value) => {
     await new Promise((resolve) => setTimeout(resolve, 100));
-		// Create address object
+    // Create address object
     const address = {
       addressLine: value.addressLine,
-			city: value.city,
+      city: value.city,
       state: value.state,
       country: value.country,
     };
-		// Map image files to data url
-		const imageGalleryUrl = imageGallery.map((item) =>item.thumbUrl)
-		// create metadata object
+    // Map image files to data url
+    const imageGalleryUrl = imageGallery.map((item) => item.thumbUrl);
+    // create metadata object
     const metaData = {
       amenities: value.amenities,
       bedroomDetails: value.bedroomDetails,
@@ -92,20 +92,27 @@ const EditListingForm = () => {
       imageGallery: imageGalleryUrl,
     };
     if (value.title) {
-			// Send request
-		  const listingId = window.location.href.split("/")[4];
-      const res = await putListing(listingId, value.title, address, value.price, thumbnail[0].thumbUrl, metaData);
+      // Send request
+      const listingId = window.location.href.split("/")[4];
+      const res = await putListing(
+        listingId,
+        value.title,
+        address,
+        value.price,
+        thumbnail[0].thumbUrl,
+        metaData
+      );
       if (res.status) {
         console.log(res);
-        message.success('Edit listing successfully');
-        history.push('/mylistings');
+        message.success("Edit listing successfully");
+        history.push("/mylistings");
       } else if (res.response.status === 400) {
         message.error("Input of infomation of the new listing in invalid");
       } else if (res.response.status === 403) {
         message.error("User is invalid. Please log in or sign up again");
-        history.push("/login")
+        history.push("/login");
       } else {
-        message.error('Something unexpected happened.');
+        message.error("Something unexpected happened.");
       }
     }
   };
@@ -113,7 +120,7 @@ const EditListingForm = () => {
 
   const [loading, setLoading] = useState(false);
 
-	// When thumbnail number > 1, cut it to 1
+  // When thumbnail number > 1, cut it to 1
   const handleThumbnailChange = (info) => {
     setThumbnail(info.fileList);
     if (info.fileList.length >= 2) {
@@ -133,7 +140,7 @@ const EditListingForm = () => {
       </div>
     </div>
   );
-	console.log(imageGallery);
+  console.log(imageGallery);
   return (
     <>
       <Form
@@ -175,7 +182,7 @@ const EditListingForm = () => {
           <Input placeholder="Address Line" />
         </Form.Item>
 
-				<Form.Item
+        <Form.Item
           name="city"
           label="City"
           rules={[
@@ -330,7 +337,16 @@ const EditListingForm = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item name="thumbnail" label="Thumbnail">
+        <Form.Item
+          name="thumbnail"
+          label="Thumbnail"
+          rules={[
+            {
+              required: true,
+              message: "Please input your bedroom details!",
+            },
+          ]}
+        >
           <Upload
             name="avatar"
             listType="picture-card"
@@ -353,8 +369,8 @@ const EditListingForm = () => {
             showUploadList={true}
             beforeUpload={beforeUpload}
             onChange={({ fileList: newFileList }) => {
-              setImageGallery(newFileList)
-						}}
+              setImageGallery(newFileList);
+            }}
             fileList={imageGallery}
           >
             {uploadButton}
@@ -385,7 +401,9 @@ const EditListingForm = () => {
             flexDirection: "row",
           }}
         >
-          <Button size="large" onClick={() => history.push('/mylistings')}>Cancel</Button>
+          <Button size="large" onClick={() => history.push("/mylistings")}>
+            Cancel
+          </Button>
         </Form.Item>
       </Form>
     </>
