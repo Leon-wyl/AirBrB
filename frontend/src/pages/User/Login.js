@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { postLogin } from '../../api/AuthApi';
 import { UserContext } from '../../store/UserContext';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { useLocalStorage } from '../../custom-hooks/CustomHooks';
 
 const Login = () => {
   const history = useHistory();
@@ -18,6 +19,7 @@ const Login = () => {
     if (res.status) {
       message.success('Login successfully');
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('email', value.email);
       setUserInfo({
         email: value.email,
         token: res.data.token,

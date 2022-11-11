@@ -1,19 +1,20 @@
 import { Typography, Card, Rate } from "antd";
 import React from "react";
+import { getRating } from "../../../Helper/Helper";
 import styles from "../../my-listings/components/MyListingCard.module.css";
 
 const { Meta } = Card;
 
 const AllListingCard = (props) => {
   const { data } = props;
-  console.log(data);
+
   const { Text } = Typography;
-  const numRatings = data?.reviews?.length;
-  const rating =
-    numRatings === 0
-      ? 0
-      : data.review.reduce((prev, curr) => prev.rating + curr.rating, 0) /
-        numRatings;
+
+  const numRatings = data.reviews.length;
+  const rating = getRating(data.reviews);
+
+  const availabilityText = data.published ? "Available" : "Unavailable";
+  const availabilityTextColor = data.published ? "success" : "danger";
 
   return (
     <>
@@ -35,7 +36,7 @@ const AllListingCard = (props) => {
             <Text type="secondary"> {`(${rating})`}</Text>
           </div>
 					<Text type="secondary"> {`(${numRatings} people rates)`}</Text>
-          <Text className={styles.description} type={data.published ? "success" : "danger"}>{data.published ? "Available" : "Unavailable"}</Text>
+          <Text className={styles.description} type={availabilityTextColor}>{availabilityText}</Text>
         </div>
       </Card>
     </>

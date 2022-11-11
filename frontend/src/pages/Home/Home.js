@@ -16,6 +16,7 @@ const Home = () => {
 
   useEffect(async () => {
     const listingsRes = await getAllSortedUserDetails(userInfo);
+    console.log(listingsRes);
     setAllListings(listingsRes);
   }, []);
 

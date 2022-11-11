@@ -1,14 +1,17 @@
-import React from "react";
-import { Modal, Typography, message, Form, DatePicker, Button } from "antd";
-import DynamicField from "./DynamicField";
-import { toRangeObject } from "../../../Helper/Helper";
-import { putPublishListing } from "../../../api/ListingApi";
-import moment from "moment";
+import React, { useContext } from 'react';
+import { Modal, Typography, message, Form, DatePicker, Button } from 'antd';
+import DynamicField from './DynamicField';
+import { getAllSortedUserDetails, toRangeObject } from '../../../Helper/Helper';
+import { putPublishListing } from '../../../api/ListingApi';
+import moment from 'moment';
+import { UserContext } from '../../../store/UserContext';
 
 const PublishModal = (props) => {
   const { Title } = Typography;
   const { RangePicker } = DatePicker;
-  const { isModalOpen, setIsModalOpen, listingId, setReloadCode } = props;
+  const { isModalOpen, setIsModalOpen, listingId, setListings } = props;
+
+  const { userInfo } = useContext(UserContext);
 
   const [form] = Form.useForm();
 
@@ -17,6 +20,7 @@ const PublishModal = (props) => {
       setIsModalOpen(false);
       const availableRanges = [];
       const firstRange = toRangeObject(value.firstRange);
+      console.log(firstRange);
       availableRanges.push(firstRange);
       if (value.fields) {
         value.fields.forEach((item) => {
@@ -27,15 +31,17 @@ const PublishModal = (props) => {
       const res = await putPublishListing(listingId, availableRanges);
       if (res.status) {
         console.log(res);
-        message.success("Publish listing successfully");
-        setReloadCode(Math.random);
+        message.success('Publish listing successfully');
       } else if (res.response.status === 400) {
-        message.error("Publish Unsuccessful");
+        message.error('Publish Unsuccessful');
       } else if (res.response.status === 403) {
-        message.error("User is invalid. Please log in or sign up again");
+        message.error('User is invalid. Please log in or sign up again');
       } else {
-        message.error("Something unexpected happened. Delete Unsuccessful");
+        message.error('Something unexpected happened. Delete Unsuccessful');
       }
+      const listingDetails = await getAllSortedUserDetails(userInfo);
+      const myListingDetails = listingDetails.filter((listing) => listing.owner === userInfo.email);
+      setListings(myListingDetails);
     };
     publishCallback(value);
   };
@@ -56,21 +62,23 @@ const PublishModal = (props) => {
         <Form
           onFinish={onFinish}
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
           <Form.Item
             name="firstRange"
-            rules={[{ required: true, message: "Please enter a date range" }]}
+            rules={[{ required: true, message: 'Please enter a date range' }]}
           >
             <RangePicker
-              disabledDate={(currentDate) => currentDate <= moment().subtract(1, 'd')}
+              disabledDate={(currentDate) =>
+                currentDate <= moment().subtract(1, 'd')
+              }
             />
           </Form.Item>
           <DynamicField />
-          <Form.Item style={{ display: "flex", justifyContent: "center" }}>
+          <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>

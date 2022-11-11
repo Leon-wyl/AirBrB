@@ -19,6 +19,7 @@ const Register = () => {
     if (res.status) {
       message.success('Login successfully');
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('email', value.email);
       setUserInfo({
         email: value.email,
         token: res.data.token,

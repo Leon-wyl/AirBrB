@@ -10,7 +10,6 @@ const EditListingForm = () => {
   // The useState storing the thumbnail and image
   const [thumbnail, setThumbnail] = useState([]);
   const [imageGallery, setImageGallery] = useState([]);
-
   const [form] = Form.useForm();
   useEffect(async () => {
     // Get listing id from url
@@ -91,6 +90,11 @@ const EditListingForm = () => {
       propertyType: value.propertyType,
       imageGallery: imageGalleryUrl,
     };
+    // Check if the thumbnail is empty
+    if (thumbnail.length === 0) {
+      message.error('Please input a thumbnail.');
+      return;
+    }
     if (value.title) {
       // Send request
       const listingId = window.location.href.split("/")[4];
@@ -340,12 +344,6 @@ const EditListingForm = () => {
         <Form.Item
           name="thumbnail"
           label="Thumbnail"
-          rules={[
-            {
-              required: true,
-              message: "Please input your bedroom details!",
-            },
-          ]}
         >
           <Upload
             name="avatar"

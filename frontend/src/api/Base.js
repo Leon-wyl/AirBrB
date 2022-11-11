@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const getAxios = (url, headers = {}) =>
   new Promise((resolve, reject) => {

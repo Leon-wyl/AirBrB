@@ -17,15 +17,15 @@ const Navbar = () => {
   };
   const handleOk = async () => {
     const res = await postLogout();
-
-    localStorage.clear();
-    setUserInfo({});
+    localStorage.setItem('email', '');
+    localStorage.setItem('token', '');
+    setUserInfo({email: '', token: ''});
     setIsModalOpen(false);
-
     if (res.status) {
       message.success('Log out successfully');
     } else if (res.response?.status === 403) {
-      message.error('Invalid User');
+      message.error('Invalid User, please login or sign out again');
+      history.push('/login');
     } else {
       message.error('Something unexpected happened.');
     }
@@ -35,9 +35,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className='site-page-header-ghost-wrapper'>
+    <div className="site-page-header-ghost-wrapper">
       <Modal
-        title='Log Out'
+        title="Log Out"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -49,18 +49,26 @@ const Navbar = () => {
           ghost={false}
           backIcon={false}
           onBack={() => window.history.back()}
-          title='AirBrB'
+          title="AirBrB"
           extra={[
-            <Button className={styles.navbtn} key='3' onClick={() => history.push('/')}>
+            <Button
+              className={styles.navbtn}
+              key="3"
+              onClick={() => history.push('/')}
+            >
               Home
             </Button>,
-            <Button className={styles.navbtn} key='2' onClick={() => history.push('/mylistings')}>
+            <Button
+              className={styles.navbtn}
+              key="2"
+              onClick={() => history.push('/mylistings')}
+            >
               My Listings
             </Button>,
             <Button
               className={styles.navbtn}
-              key='1'
-              type='danger'
+              key="1"
+              type="danger"
               onClick={showModal}
             >
               Logout
@@ -72,9 +80,14 @@ const Navbar = () => {
           ghost={false}
           backIcon={false}
           onBack={() => window.history.back()}
-          title='AirBrB'
+          title="AirBrB"
           extra={[
-            <Button className={styles.navbtn} key='1' type='primary' onClick={() => history.push('/login')}>
+            <Button
+              className={styles.navbtn}
+              key="1"
+              type="primary"
+              onClick={() => history.push('/login')}
+            >
               Log In
             </Button>,
           ]}

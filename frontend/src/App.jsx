@@ -30,7 +30,7 @@ function App () {
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { userInfo } = useContext(UserContext);
-  const isLoggedIn = userInfo.token;
+  const isLoggedIn = userInfo.token && userInfo.email;
 
   return (
     <Route

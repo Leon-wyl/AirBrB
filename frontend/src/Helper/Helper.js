@@ -1,27 +1,28 @@
-import { message } from "antd";
-import { getBookings } from "../api/BookingApi";
-import { getAllListings, getListingWithId } from "../api/ListingApi";
+import { message } from 'antd';
+import { getAxios } from '../api/Base';
+import { getBookings } from '../api/BookingApi';
+import { getAllListings, getListingWithId } from '../api/ListingApi';
+import { baseUrl } from '../constants/Constants';
 
 export const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
+    message.error('You can only upload JPG/PNG file!');
   }
   return false;
 };
 
 export const toRangeObject = (momentArray) => {
-	return {
-		start: momentArray[0],
-		end: momentArray[1],
-	}
-}
+  return {
+    start: momentArray[0],
+    end: momentArray[1],
+  };
+};
 
 // compare function for sorting
 const compareNames = (a, b) => {
   const nameA = a.title.toLowerCase();
   const nameB = b.title.toLowerCase();
-  console.log(nameA + " " + nameB)
   if (nameA < nameB) return -1;
   if (nameA > nameB) return 1;
   return 0;
@@ -43,41 +44,35 @@ const isMyBooking = (listing, bookings) => {
 };
 
 export const getDaysBetweenDates = (startDate, endDate) => {
-  const currDate = startDate.clone()
+  const currDate = startDate.clone();
   const dates = [];
 
   while (currDate.isSameOrBefore(endDate)) {
-      dates.push(currDate.format('MM/DD/YYYY'));
-      currDate.add(1, 'days');
+    dates.push(currDate.format('YYYY-MM-DD'));
+    currDate.add(1, 'days');
   }
   return dates;
 };
 
-const getListingDetailFromIds = async (listings) => {
-  const listingsDetails = [];
-  for (const listing of listings) {
-    const listingDetailRaw = await getListingWithId(listing.id);
-    if (!listingDetailRaw.status) {
-      // If cannot fetch user's listing, stop.
-      message("Something wrong happened, we cannot load the listings.");
-      return;
-    }
-    listingsDetails.push(listingDetailRaw.data.listing);
-  }
-  return listingsDetails;
-};
-
 export const getAllSortedUserDetails = async (userInfo) => {
+  // get all user info, if cannot get then, print a message
   const listingsResRaw = await getAllListings();
   if (!listingsResRaw.status) {
-    message("Something wrong happened, we cannot load the listings");
+    message('Something wrong happened, we cannot load the listings');
     return;
   }
   const listingsRes = listingsResRaw.data.listings;
-  // Add metadata to listing results and sort listing alphabetically
-  const listingDetails = await getListingDetailFromIds(listingsRes);
+  // Get all user details, append the result with user id
+  const listingDetailsRaw = await getListingDetailFromIds(listingsRes);
+  const listingDetails = [];
+  for (let i = 0; i < listingDetailsRaw.length; i++) {
+    listingDetails[i] = {
+      ...listingDetailsRaw[i].data.listing,
+      id: listingsRes[i].id,
+    };
+  }
+  // Sort the result alphabetially, then put the listing(s) that is booked by the user in front of all other listings
   listingDetails.sort(compareNames);
-  // Put the listing(s) that is booked by the user in front of all other listings
   if (userInfo.token) {
     const bookingsResRaw = await getBookings();
     if (bookingsResRaw.status) {
@@ -86,4 +81,21 @@ export const getAllSortedUserDetails = async (userInfo) => {
     }
   }
   return listingDetails;
-}
+};
+
+export const getListingDetailFromIds = (listings) => {
+  const userPromises = [];
+  for (const listing of listings) {
+    const url = baseUrl + '/listings/' + listing.id;
+    userPromises.push(getAxios(url, {}));
+  }
+  return Promise.all(userPromises);
+};
+
+export const getRating = (reviews) => {
+  const numRatings = reviews.length;
+  return numRatings === 0
+    ? 0
+    : reviews.reduce((prev, curr) => prev.rating + curr.rating, 0) /
+        numRatings;
+};

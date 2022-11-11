@@ -1,4 +1,4 @@
-.searchBarContainer {
+.searchContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,7 +6,34 @@
   width: 100%;
 }
 
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
 .searchBar {
   margin-bottom: 25px;
-  width: 60%;
+  margin-right: 25px;
+  width: 70%;
 }
+
+.option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 25px;
+  margin-bottom: 15px;
+}
+
+.filterTitle {
+  display: inline;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+
+

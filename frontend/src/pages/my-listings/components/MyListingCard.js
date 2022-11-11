@@ -10,7 +10,7 @@ import UnpublishModal from "./UnpublishModal";
 const { Meta } = Card;
 
 const MyListingCard = (props) => {
-  const { data, setReloadCode } = props;
+  const { data, setListings } = props;
   const { Text } = Typography;
 
   const history = useHistory();
@@ -29,21 +29,21 @@ const MyListingCard = (props) => {
   return (
     <>
       <DeleteModal
+        setListings={setListings}
         isModalOpen={isDeleteModalOpen}
         setIsModalOpen={setIsDeleteModalOpen}
-        setReloadCode={setReloadCode}
         listingId={data.id}
       />
       <PublishModal
+        setListings={setListings}
         isModalOpen={isPublishModalOpen}
         setIsModalOpen={setIsPublishModalOpen}
-        setReloadCode={setReloadCode}
         listingId={data.id}
       />
       <UnpublishModal
+        setListings={setListings}
         isModalOpen={isUnpublishModalOpen}
         setIsModalOpen={setIsUnpublishModalOpen}
-        setReloadCode={setReloadCode}
         listingId={data.id}
       />
       <Card
@@ -87,13 +87,13 @@ const MyListingCard = (props) => {
             Price: {`$${data.price}`}
           </Text>
           <Text className={styles.description} type="secondary">
-            Property Type: {`${data.propertyType}`}
+            Property Type: {`${data.metadata.propertyType}`}
           </Text>
           <Text className={styles.description} type="secondary">
-            Beds: {`${data.numBed}`}
+            Beds: {`${data.metadata.numBed}`}
           </Text>
           <Text className={styles.description} type="secondary">
-            Bathrooms: {`${data.numBathroom}`}
+            Bathrooms: {`${data.metadata.numBathroom}`}
           </Text>
           <div>
             <Rate size="small" disabled allowHalf defaultValue={rating} />
