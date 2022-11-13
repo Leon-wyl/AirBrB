@@ -11,12 +11,13 @@ import SearchBar from "./components/SearchBar";
 
 const Home = () => {
   const { Title } = Typography;
-  const { userInfo } = useContext(UserContext);
+  const { userInfo, setDateRange } = useContext(UserContext);
   const [allListings, setAllListings] = useState([]);
 
   useEffect(async () => {
     const listingsRes = await getAllSortedUserDetails(userInfo);
     const publishedListings = listingsRes.filter((listing) => listing.published);
+    setDateRange(0);
     setAllListings(publishedListings);
   }, []);
 

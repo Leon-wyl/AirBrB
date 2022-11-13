@@ -28,7 +28,7 @@ const SearchBar = (props) => {
     setFilter(value);
     setMaxFilter('');
     setMinFilter('');
-    if (value !== 'Date') setDateRange(1);
+    if (value !== 'Date') setDateRange(0);
   };
 
   const onChangeDates = (date) => {
@@ -38,7 +38,7 @@ const SearchBar = (props) => {
     } else {
       setMaxFilter('');
       setMinFilter('');
-      setDateRange(1);
+      setDateRange(0);
     }
   };
 
@@ -126,7 +126,7 @@ const SearchBar = (props) => {
     const minDate = minFilter;
     if (maxDate && maxDate) {
       const diffInDates = maxFilter.diff(minFilter, 'days');
-      diffInDates === 0 ? setDateRange(1) : setDateRange(diffInDates);
+      diffInDates === 0 ? setDateRange(0) : setDateRange(diffInDates);
       const filteredDatesWithDups = getAllDatesBetweenDates(minDate, maxDate);
       const filteredDates = [...new Set(filteredDatesWithDups)];
       const filteredListings = listings.filter((listing) => {
@@ -143,7 +143,8 @@ const SearchBar = (props) => {
         const availableDates = [...new Set(availableDatesWithDups)];
         let isAllInAvailableDates = true;
         filteredDates.forEach((filteredDate) => {
-          if (!availableDates.includes(filteredDate)) isAllInAvailableDates = false;
+          if (!availableDates.includes(filteredDate))
+            isAllInAvailableDates = false;
         });
         return isAllInAvailableDates;
       });

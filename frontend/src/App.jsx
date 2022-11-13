@@ -10,21 +10,23 @@ import Home from './pages/Home/Home';
 import EditListing from './pages/EditListing/EditListing';
 import Listing from './pages/Listing/Listing';
 
-function App () {
-  const [userInfo, setUserInfo] = useState({email: null, token: null});
-  const [dateRange, setDateRange] = useState(1);
+function App() {
+  const [userInfo, setUserInfo] = useState({ email: '', token: '' });
+  const [dateRange, setDateRange] = useState(0);
   return (
     <>
-      <UserContext.Provider value={{ userInfo, setUserInfo, dateRange, setDateRange }}>
+      <UserContext.Provider
+        value={{ userInfo, setUserInfo, dateRange, setDateRange }}
+      >
         <Navbar />
         <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/login' exact component={Login} />
-          <Route path='/register' exact component={Register} />
+          <Route path="/" exact component={Home} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
           <PrivateRoute path="/mylistings" component={MyListings} />
           <PrivateRoute path="/newlisting" component={NewListing} />
-          <PrivateRoute path='/editlisting/:id' component={EditListing} />
-          <Route path='/listing/:id' exact component={Listing} />
+          <PrivateRoute path="/editlisting/:id" component={EditListing} />
+          <Route path="/listing/:id" exact component={Listing} />
         </Switch>
       </UserContext.Provider>
     </>
@@ -43,9 +45,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
           <Component {...props} />
         ) : (
           <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
+            to={{ pathname: '/login', state: { from: props.location } }}
           />
-  )}
+        )
+      }
     />
   );
 };

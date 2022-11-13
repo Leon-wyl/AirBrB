@@ -1,4 +1,4 @@
-@import "~react-image-gallery/styles/css/image-gallery.css";
+/* @import "~react-image-gallery/styles/css/image-gallery.css"; */
 
 .outerContainer {
 	display: flex;
@@ -9,6 +9,28 @@
 
 .innerContainer {
 	display: flex;
-	width: 90%;
+	width: 75%;
 	flex-direction: column;
+}
+
+.container {
+	display: flex;
+	flex-direction: flex-start;
+	flex-wrap: wrap;
+}
+
+.card {
+	margin-right: 30px;
+	margin-bottom: 30px;
+}
+
+.amenityCard {
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.reviewHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }

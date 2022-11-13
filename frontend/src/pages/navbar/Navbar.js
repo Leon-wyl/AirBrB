@@ -19,7 +19,7 @@ const Navbar = () => {
     const res = await postLogout();
     localStorage.setItem('email', '');
     localStorage.setItem('token', '');
-    setUserInfo({email: '', token: ''});
+    setUserInfo({ email: '', token: '' });
     setIsModalOpen(false);
     if (res.status) {
       message.success('Log out successfully');

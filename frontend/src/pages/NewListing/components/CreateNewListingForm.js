@@ -170,7 +170,7 @@ const CreateNewListingForm = () => {
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a whole number!",
+              message: "Please input a valid whole number!",
             },
           ]}
         >
@@ -209,7 +209,7 @@ const CreateNewListingForm = () => {
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a whole number!",
+              message: "Please input a valid whole number!",
             },
           ]}
         >
@@ -226,7 +226,7 @@ const CreateNewListingForm = () => {
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a whole number!",
+              message: "Please input a valid whole number!",
             },
           ]}
         >
@@ -243,7 +243,7 @@ const CreateNewListingForm = () => {
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a whole number!",
+              message: "Please input a valid whole number!",
             },
           ]}
         >
