@@ -84,6 +84,13 @@ const Navbar = () => {
           extra={[
             <Button
               className={styles.navbtn}
+              key="3"
+              onClick={() => history.push('/')}
+            >
+              Home
+            </Button>,
+            <Button
+              className={styles.navbtn}
               key="1"
               type="primary"
               onClick={() => history.push('/login')}

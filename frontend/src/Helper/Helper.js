@@ -43,7 +43,21 @@ const isMyBooking = (listing, bookings) => {
   return marker;
 };
 
-export const getDaysBetweenDates = (startDate, endDate) => {
+export const compareSortBy = (order) => (a, b) => {
+  const aRating = getRating(a.reviews);
+  const bRating = getRating(b.reviews);
+  if (order === 'increase') {
+    if (aRating < bRating) return -1;
+    if (aRating > bRating) return 1;
+    return 0;
+  } else {
+    if (aRating < bRating) return 1;
+    if (aRating > bRating) return -1;
+    return 0;
+  }
+}
+
+export const getAllDatesBetweenDates = (startDate, endDate) => {
   const currDate = startDate.clone();
   const dates = [];
 

@@ -1,0 +1,14 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+.outerContainer {
+	display: flex;
+	justify-content: center;
+	height: calc(100vh - 72px);
+	overflow-y: scroll;
+}
+
+.innerContainer {
+	display: flex;
+	width: 90%;
+	flex-direction: column;
+}

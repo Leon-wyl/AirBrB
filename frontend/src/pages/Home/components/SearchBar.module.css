@@ -35,5 +35,8 @@
   font-size: 16px;
 }
 
-
-
+.maxTitle,
+.minTitle {
+  font-size: 16px;
+  margin-right: 10px;
+}

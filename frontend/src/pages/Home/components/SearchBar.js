@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Input, Select, Typography, DatePicker, message } from 'antd';
 import {
+  compareSortBy,
   getAllSortedUserDetails,
-  getDaysBetweenDates,
+  getAllDatesBetweenDates,
 } from '../../../Helper/Helper';
 import { UserContext } from '../../../store/UserContext';
 import moment from 'moment';
@@ -15,10 +16,10 @@ const SearchBar = (props) => {
 
   const { setAllListings } = props;
 
-  const { userInfo } = useContext(UserContext);
+  const { userInfo, setDateRange } = useContext(UserContext);
 
   const [searchText, setSearchText] = useState('');
-  const [filter, setFilter] = useState('none');
+  const [filter, setFilter] = useState('None');
   const [maxFilter, setMaxFilter] = useState('');
   const [minFilter, setMinFilter] = useState('');
   const [sortBy, setSortBy] = useState('default');
@@ -27,6 +28,7 @@ const SearchBar = (props) => {
     setFilter(value);
     setMaxFilter('');
     setMinFilter('');
+    if (value !== 'Date') setDateRange(1);
   };
 
   const onChangeDates = (date) => {
@@ -36,20 +38,43 @@ const SearchBar = (props) => {
     } else {
       setMaxFilter('');
       setMinFilter('');
+      setDateRange(1);
     }
   };
 
   const onSearch = async () => {
     const listingDetails = await getAllSortedUserDetails(userInfo);
+    const publishedListings = listingDetails.filter(
+      (listing) => listing.published
+    );
     // Filter by the searched text
-    const listingAfterSearch = filterBySearchText(listingDetails);
+    const listingAfterSearch = filterBySearchText(publishedListings);
     let listingAfterFilter = [];
-    if (filter === 'Date') {
-      listingAfterFilter = filterByDates(listingAfterSearch);
-    } else {
-      listingAfterFilter = listingAfterSearch;
+    switch (filter) {
+      case 'Date':
+        listingAfterFilter = filterByDates(listingAfterSearch);
+        break;
+      case 'Number of Bedrooms':
+        listingAfterFilter = filterByBedroom(listingAfterSearch);
+        break;
+      case 'Price':
+        listingAfterFilter = filterByPrice(listingAfterSearch);
+        break;
+      default:
+        listingAfterFilter = listingAfterSearch;
     }
-    setAllListings(listingAfterFilter);
+    let listingAfterSortBy = [];
+    switch (sortBy) {
+      case 'Increase Rating':
+        listingAfterSortBy = listingAfterFilter.sort(compareSortBy('increase'));
+        break;
+      case 'Decrease Rating':
+        listingAfterSortBy = listingAfterFilter.sort(compareSortBy('decrease'));
+        break;
+      default:
+        listingAfterSortBy = listingAfterFilter;
+    }
+    setAllListings(listingAfterSortBy);
   };
 
   const filterBySearchText = (listings) => {
@@ -72,7 +97,7 @@ const SearchBar = (props) => {
     if (maxNum && minNum) {
       const result = listings.filter((listing) => {
         const numBedroom = listing.metadata.numBedroom;
-        return numBedroom <= minNum && numBedroom >= maxNum;
+        return numBedroom >= minNum && numBedroom <= maxNum;
       });
       return result;
     } else {
@@ -86,8 +111,8 @@ const SearchBar = (props) => {
     const minNum = parseInt(minFilter);
     if (maxNum && minNum) {
       const result = listings.filter((listing) => {
-        const price = listing.metadata.price;
-        return price <= minNum && price >= maxNum;
+        const price = listing.price;
+        return price >= minNum && price <= maxNum;
       });
       return result;
     } else {
@@ -100,28 +125,27 @@ const SearchBar = (props) => {
     const maxDate = maxFilter;
     const minDate = minFilter;
     if (maxDate && maxDate) {
-      console.log(typeof maxDate);
-      const filteredDatesWithDups = getDaysBetweenDates(minDate, maxDate);
+      const diffInDates = maxFilter.diff(minFilter, 'days');
+      diffInDates === 0 ? setDateRange(1) : setDateRange(diffInDates);
+      const filteredDatesWithDups = getAllDatesBetweenDates(minDate, maxDate);
       const filteredDates = [...new Set(filteredDatesWithDups)];
       const filteredListings = listings.filter((listing) => {
-        let marker = true;
         const availableDatesWithDups = [];
         const availabilities = listing.availability;
         if (availabilities === []) return false;
         availabilities.forEach((availability) => {
-          console.log(availability.start);
-          console.log(availability.end);
-          const availableDatesForPeriod = getDaysBetweenDates(
+          const availableDatesForPeriod = getAllDatesBetweenDates(
             moment(availability.start),
             moment(availability.end)
           );
           availableDatesWithDups.push(...availableDatesForPeriod);
         });
         const availableDates = [...new Set(availableDatesWithDups)];
+        let isAllInAvailableDates = true;
         filteredDates.forEach((filteredDate) => {
-          if (!availableDates.includes(filteredDate)) marker = false;
+          if (!availableDates.includes(filteredDate)) isAllInAvailableDates = false;
         });
-        return marker;
+        return isAllInAvailableDates;
       });
       return filteredListings;
     } else {
@@ -146,7 +170,7 @@ const SearchBar = (props) => {
           <Text className={styles.filterTitle}>Filter By:</Text>
           <Select
             size="large"
-            defaultValue="none"
+            defaultValue="None"
             style={{ width: '210px' }}
             onChange={onChangeFilter}
             options={[
@@ -182,11 +206,11 @@ const SearchBar = (props) => {
                 label: 'Default',
               },
               {
-                value: 'ratingDecrease',
+                value: 'Decrease Rating',
                 label: 'Decrease Rating',
               },
               {
-                value: 'ratingIncrease',
+                value: 'Increase Rating',
                 label: 'Increase Rating',
               },
             ]}
@@ -196,6 +220,7 @@ const SearchBar = (props) => {
       {(filter === 'Number of Bedrooms' || filter === 'Price') && (
         <div className={styles.optionsContainer}>
           <div className={styles.option}>
+            <Text className={styles.maxTitle}>Max:</Text>
             <Input
               style={{ width: '210px' }}
               size="large"
@@ -204,6 +229,7 @@ const SearchBar = (props) => {
             />
           </div>
           <div className={styles.option}>
+            <Text className={styles.minTitle}>Min:</Text>
             <Input
               style={{ width: '210px' }}
               size="large"

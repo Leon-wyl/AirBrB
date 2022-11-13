@@ -2,6 +2,7 @@ import { Typography, Card, Rate } from "antd";
 import React from "react";
 import { getRating } from "../../../Helper/Helper";
 import styles from "../../my-listings/components/MyListingCard.module.css";
+import { useHistory } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -10,11 +11,10 @@ const AllListingCard = (props) => {
 
   const { Text } = Typography;
 
+  const history = useHistory();
+
   const numRatings = data.reviews.length;
   const rating = getRating(data.reviews);
-
-  const availabilityText = data.published ? "Available" : "Unavailable";
-  const availabilityTextColor = data.published ? "success" : "danger";
 
   return (
     <>
@@ -25,6 +25,7 @@ const AllListingCard = (props) => {
           width: 300,
         }}
         cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
+        onClick={() => history.push(`/listing/${data.id}`)}
       >
         <Meta title={data.title} />
         <div className={styles.desContainer}>
@@ -36,7 +37,6 @@ const AllListingCard = (props) => {
             <Text type="secondary"> {`(${rating})`}</Text>
           </div>
 					<Text type="secondary"> {`(${numRatings} people rates)`}</Text>
-          <Text className={styles.description} type={availabilityTextColor}>{availabilityText}</Text>
         </div>
       </Card>
     </>

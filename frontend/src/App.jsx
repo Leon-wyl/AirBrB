@@ -8,12 +8,14 @@ import MyListings from './pages/my-listings/MyListings';
 import NewListing from './pages/NewListing/NewListing';
 import Home from './pages/Home/Home';
 import EditListing from './pages/EditListing/EditListing';
+import Listing from './pages/Listing/Listing';
 
 function App () {
   const [userInfo, setUserInfo] = useState({email: null, token: null});
+  const [dateRange, setDateRange] = useState(1);
   return (
     <>
-      <UserContext.Provider value={{ userInfo, setUserInfo }}>
+      <UserContext.Provider value={{ userInfo, setUserInfo, dateRange, setDateRange }}>
         <Navbar />
         <Switch>
           <Route path='/' exact component={Home} />
@@ -22,6 +24,7 @@ function App () {
           <PrivateRoute path="/mylistings" component={MyListings} />
           <PrivateRoute path="/newlisting" component={NewListing} />
           <PrivateRoute path='/editlisting/:id' component={EditListing} />
+          <Route path='/listing/:id' exact component={Listing} />
         </Switch>
       </UserContext.Provider>
     </>

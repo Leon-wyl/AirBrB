@@ -1,5 +1,5 @@
 import { Typography } from "antd";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import EditListingForm from "./components/EditListingForm";
 import styles from './EditListing.module.css';
 
