@@ -1,18 +1,32 @@
 import React from 'react';
-import { Modal, Typography } from 'antd';
+import { Modal, Typography, message } from 'antd';
+import { putDeclineBookings } from '../../../api/BookingApi';
 
 const RejectModal = (props) => {
-  const { isModalOpen, setIsModalOpen } = props;
+  const { isModalOpen, setIsModalOpen, booking, getListingBookings, setBookings } = props;
 
   const { Text } = Typography;
 
-	const handleOk = () => {
-		setIsModalOpen(false);
-	}
+  const handleOk = async () => {
+    const res = await putDeclineBookings(booking.id);
+    if (res.status) {
+      message.success('Reject booking successfully');
+      const myBookings = await getListingBookings(data.id);
+      setBookings(myBookings);
+    } else if (res.response.status === 400) {
+      console.log(res);
+      message.error(res.response.data.error);
+    } else if (res.response.status === 403) {
+      message.error('User is invalid. Please log in or sign up again');
+    } else {
+      message.error('Something unexpected happened.');
+    }
+    setIsModalOpen(false);
+  };
 
-	const handleCancel = () => {
-		setIsModalOpen(false);
-	}
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -22,7 +36,9 @@ const RejectModal = (props) => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Text>{'Are you sure to reject this booking?'}</Text>
+        <Text style={{ fontSize: '16px' }}>
+          Are you sure to reject this booking?
+        </Text>
       </Modal>
     </>
   );

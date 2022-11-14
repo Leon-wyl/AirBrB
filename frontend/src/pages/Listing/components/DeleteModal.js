@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Modal, Typography, message } from 'antd';
-import { putAcceptBookings } from '../../../api/BookingApi';
+import { deleteBookings } from '../../../api/BookingApi';
+import { UserContext } from '../../../store/UserContext';
 
-const AcceptModal = (props) => {
-  const { isModalOpen, setIsModalOpen, booking, getListingBookings, setBookings, data } = props;
+const DeleteModal = (props) => {
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    booking,
+    getMyBookingRes,
+    setBookings,
+    data,
+  } = props;
 
   const { Text } = Typography;
 
+  const { userInfo } = useContext(UserContext);
+
   const handleOk = async () => {
-    const res = await putAcceptBookings(booking.id);
+    const res = await deleteBookings(booking.id);
     if (res.status) {
-      message.success('Accept booking successfully');
-      const myBookings = await getListingBookings(data.id);
+      message.success('Delete booking successfully');
+      const myBookings = await getMyBookingRes(data.id, userInfo);
       setBookings(myBookings);
     } else if (res.response.status === 400) {
       console.log(res);
@@ -31,17 +41,17 @@ const AcceptModal = (props) => {
   return (
     <>
       <Modal
-        title="Accept Booking"
+        title="Delete Booking"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
       >
         <Text style={{ fontSize: '16px' }}>
-          Are you sure to accept this booking?
+          Are you sure to delete this booking?
         </Text>
       </Modal>
     </>
   );
 };
 
-export default AcceptModal;
+export default DeleteModal;

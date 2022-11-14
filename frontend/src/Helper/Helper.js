@@ -29,7 +29,8 @@ const compareNames = (a, b) => {
 };
 
 const compareIsMyBooking = (bookings, userInfo) => (a, b) => {
-  if (isMyBooking(a, bookings, userInfo) === isMyBooking(b, bookings, userInfo)) return 0;
+  if (isMyBooking(a, bookings, userInfo) === isMyBooking(b, bookings, userInfo))
+    return 0;
   if (isMyBooking(a, bookings, userInfo)) return -1;
   return 1;
 };
@@ -37,7 +38,10 @@ const compareIsMyBooking = (bookings, userInfo) => (a, b) => {
 const isMyBooking = (listing, bookings, userInfo) => {
   let marker = false;
   bookings.forEach((booking) => {
-    if (listing.id === Number(booking.listingId) && userInfo.email === booking.owner)
+    if (
+      listing.id === Number(booking.listingId) &&
+      userInfo.email === booking.owner
+    )
       marker = true;
   });
   return marker;
@@ -55,7 +59,7 @@ export const compareSortBy = (order) => (a, b) => {
     if (aRating > bRating) return -1;
     return 0;
   }
-}
+};
 
 export const getAllDatesBetweenDates = (startDate, endDate) => {
   const currDate = startDate.clone();
@@ -92,7 +96,9 @@ export const getAllSortedUserDetails = async (userInfo) => {
     if (bookingsResRaw.status) {
       const bookings = bookingsResRaw.data.bookings;
       console.log(listingDetails);
-      const afterSorting = listingDetails.sort(compareIsMyBooking(bookings, userInfo));
+      const afterSorting = listingDetails.sort(
+        compareIsMyBooking(bookings, userInfo)
+      );
       console.log(afterSorting);
     }
   }
@@ -110,8 +116,9 @@ export const getListingDetailFromIds = (listings) => {
 
 export const getRating = (reviews) => {
   const numRatings = reviews.length;
-  return numRatings === 0
-    ? 0
-    : reviews.reduce((prev, curr) => prev.rating + curr.rating, 0) /
-        numRatings;
+  let ratingSum = 0;
+  reviews.forEach((review) => {
+    ratingSum = ratingSum + review.rating;
+  });
+  return numRatings === 0 ? 0 : (ratingSum / numRatings).toFixed(2);
 };

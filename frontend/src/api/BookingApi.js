@@ -37,7 +37,7 @@ export const putAcceptBookings = async (bookingId) => {
     const token = localStorage.getItem('token');
     const url = baseUrl + `/bookings/accept/${bookingId}`;
     const headers = { Authorization: 'Bearer ' + token };
-    const res = await postAxios(url, {}, headers);
+    const res = await putAxios(url, {}, headers);
     console.log(res);
     return res;
   } catch (err) {
@@ -50,7 +50,7 @@ export const putDeclineBookings = async (bookingId) => {
     const token = localStorage.getItem('token');
     const url = baseUrl + `/bookings/decline/${bookingId}`;
     const headers = { Authorization: 'Bearer ' + token };
-    const res = await postAxios(url, {}, headers);
+    const res = await putAxios(url, {}, headers);
     console.log(res);
     return res;
   } catch (err) {
@@ -63,7 +63,8 @@ export const deleteBookings = async (bookingId) => {
     const token = localStorage.getItem('token');
     const url = baseUrl + '/bookings/' + bookingId;
     const headers = { Authorization: 'Bearer ' + token };
-    const res = await deleteAxios(url, {}, headers);
+    console.log(url);
+    const res = await deleteAxios(url, null, headers);
     return res;
   } catch (err) {
     console.log(err);

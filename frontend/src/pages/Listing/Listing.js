@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { getListingWithId } from '../../api/ListingApi';
-import ImageGallery from 'react-image-gallery';
 import styles from './Listing.module.css';
-import Gallery from 'react-photo-gallery';
 import { Card, Typography, Rate, Button, Divider } from 'antd';
 import { UserContext } from '../../store/UserContext';
 import OtherDetails from './components/OtherDetails';
 import Header from './components/Header';
 import { getBookings } from '../../api/BookingApi';
-import Bookings from './components/Bookings';
+import BookingCard from './components/BookingCard';
 import OtherImages from './components/OtherImage';
 import Reviews from './components/Reviews';
 
 const Listing = () => {
+  const { Title, Text } = Typography;
+
   const [data, setData] = useState({});
   const [bookings, setBookings] = useState([]);
 
@@ -23,17 +23,17 @@ const Listing = () => {
   const acceptedBookings = bookings.filter(
     (booking) => booking.status === 'accepted'
   );
-  const canReview = acceptedBookings.length !== 0;
   console.log(acceptedBookings);
 
-  const getMyBookingRes = async (listingId) => {
+  const getMyBookingRes = async (listingId, userInfo) => {
     const bookingsRes = await getBookings();
-    console.log(bookingsRes);
     const bookingDetails = bookingsRes ? bookingsRes?.data?.bookings : [];
+    console.log(bookingDetails);
     const myBookings = bookingDetails.filter(
       (booking) =>
-        booking.listingId === listingId && booking.owner === userInfo.email
+        booking.listingId === listingId.toString() && booking.owner === userInfo.email
     );
+    console.log(userInfo.email);
     return myBookings;
   };
 
@@ -45,7 +45,8 @@ const Listing = () => {
     setData({ ...listingDetail, id: Number(listingId) });
     // If logged in, get booking info, store at useState
     if (loggedIn) {
-      const myBookings = await getMyBookingRes(listingId);
+      console.log(listingId)
+      const myBookings = await getMyBookingRes(listingId, userInfo);
       setBookings(myBookings);
     }
   }, []);
@@ -62,12 +63,35 @@ const Listing = () => {
           setBookings={setBookings}
         />
         <Divider />
-        {loggedIn && !isOwnListing && <Bookings bookings={bookings} />}
+        {loggedIn && !isOwnListing && (
+          <div className={styles.BookingContainer}>
+            <Title level={2}>Your Bookings</Title>
+            {bookings.length == 0 && (
+              <Text style={{ fontSize: '16px' }}>
+                You haven't made any bookings on this listing
+              </Text>
+            )}
+            <div className={styles.container}>
+              {bookings.length > 0 &&
+                bookings.map((booking, key) => (
+                  <BookingCard
+                    key={key}
+                    data={data}
+                    booking={booking}
+                    setData={setData}
+                    getMyBookingRes={getMyBookingRes}
+                    setBookings={setBookings}
+                  />
+                ))}
+            </div>
+            <Divider />
+          </div>
+        )}
         <OtherDetails data={data} />
         <Divider />
         <OtherImages data={data} />
         <Divider />
-        <Reviews data={data} canReview={canReview} />
+        <Reviews data={data} acceptedBookings={acceptedBookings} setData={setData}/>
       </div>
     </div>
   );

@@ -1,21 +1,37 @@
-import React, { useContext } from 'react';
-import { Typography, Button, Divider } from 'antd';
+import React, { useState } from 'react';
+import { Typography, Button, Divider, Card, Rate } from 'antd';
 import styles from '../Listing.module.css';
-import { UserContext } from '../../../store/UserContext';
+import ReviewModal from './ReviewModal';
+import moment from 'moment';
 
 const Reviews = (props) => {
   const { Title, Text } = Typography;
 
-  const { data, canReview } = props;
+  const { data, acceptedBookings, setData } = props;
+
+  const canReview = acceptedBookings.length !== 0;
+
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   return (
     <>
+      <ReviewModal
+        isModalOpen={isReviewModalOpen}
+        setIsModalOpen={setIsReviewModalOpen}
+        data={data}
+        setData={setData}
+        acceptedBookings={acceptedBookings}
+      />
       <div className={styles.reviewHeader}>
         <Title level={2} style={{ display: 'inline' }}>
           Reviews
         </Title>
-        <Button type="primary" size="large" disabled={!canReview}>
-          Review
+        <Button
+          type="primary"
+          disabled={!canReview}
+          onClick={() => setIsReviewModalOpen(true)}
+        >
+          Add an review
         </Button>
       </div>
       <div className={styles.container}>
@@ -23,11 +39,20 @@ const Reviews = (props) => {
           <Text style={{ fontSize: '16px' }}>No reviews posted</Text>
         )}
         {data?.reviews?.length > 0 &&
-          data?.reviews.map((review) => (
-            <Card style={{ width: '100%' }}>
-              <Title level={5}>{review.user}</Title>
-              <Text style={{ fontSize: '16px' }}>
-                {review.time.format('DD/MM/YYYY')}
+          data?.reviews.map((review, key) => (
+            <Card style={{ width: '100%' }} key={key} className={styles.card}>
+              <Title
+                level={4}
+                style={{
+                  fontSize: '16px',
+                  display: 'inline',
+                  marginRight: '20px',
+                }}
+              >
+                {review.user}
+              </Title>
+              <Text style={{ fontSize: '16px', display:'inline' }}>
+                {`Rated on ${moment(review.time).format('DD/MM/YYYY')}`}
               </Text>
               <div>
                 <Rate

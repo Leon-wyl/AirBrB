@@ -23,6 +23,7 @@ const Navbar = () => {
     setIsModalOpen(false);
     if (res.status) {
       message.success('Log out successfully');
+      history.push('/login');
     } else if (res.response?.status === 403) {
       message.error('Invalid User, please login or sign out again');
       history.push('/login');

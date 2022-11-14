@@ -58,11 +58,11 @@ const ListingDescriptions = (props) => {
         <Descriptions.Item label="Number of Reviews">
           {numReview}
         </Descriptions.Item>
-        <Descriptions.Item label="Has been online for">{`${onlineDays} days`}</Descriptions.Item>
-        <Descriptions.Item label="Dates booked this year">
+        <Descriptions.Item label="Been online for">{`${onlineDays} days`}</Descriptions.Item>
+        <Descriptions.Item label="Days booked this year">
           {numDaysBookedThisYear}
         </Descriptions.Item>
-        <Descriptions.Item label="Profits made this year">
+        <Descriptions.Item label="Profits this year">
           {`$${profitMadeThisYear}`}
         </Descriptions.Item>
       </Descriptions>

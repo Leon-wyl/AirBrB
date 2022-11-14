@@ -103,7 +103,7 @@ export const putPublishListing = async (id, availability) => {
     const data = {
       availability: availability,
     };
-    console.log(data)
+    console.log(data);
     const res = await putAxios(url, data, headers);
     return res;
   } catch (err) {
@@ -118,6 +118,19 @@ export const putUnpublishListing = async (id) => {
     const url = baseUrl + '/listings/unpublish/' + id;
     const headers = { Authorization: 'Bearer ' + token };
     const res = await putAxios(url, {}, headers);
+    return res;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const putReviewListing = async (listingId, bookingId, review) => {
+  try {
+    const token = localStorage.getItem('token');
+    const url = baseUrl + '/listings/' + listingId + '/review/' + bookingId;
+    const headers = { Authorization: 'Bearer ' + token };
+    const res = await putAxios(url, { review: review }, headers);
     return res;
   } catch (err) {
     console.log(err);

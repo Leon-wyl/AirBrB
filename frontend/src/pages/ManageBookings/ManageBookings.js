@@ -7,7 +7,7 @@ import { getAllDatesBetweenDates, getRating } from '../../Helper/Helper';
 import moment from 'moment';
 import { getBookings } from '../../api/BookingApi';
 import ListingDescriptions from './components/LisitingDescriptions';
-import PendingBookings from './components/PendingBookings';
+import PendingBooking from './components/PendingBooking';
 import BookingHistories from './components/BookingHistories';
 
 const ManageBookings = () => {
@@ -36,6 +36,10 @@ const ManageBookings = () => {
     setBookings(myBookings);
   }, []);
 
+  const pendingBookings = bookings.filter(
+    (booking) => booking.status === 'pending'
+  );
+
   console.log(bookings);
   console.log(moment().year());
   return (
@@ -46,12 +50,24 @@ const ManageBookings = () => {
         </div>
         <ListingDescriptions data={data} bookings={bookings} />
         <Divider />
-        <PendingBookings
-          data={data}
-          bookings={bookings}
-          getListingBookings={getListingBookings}
-          setBookings={setBookings}
-        />
+        <Title level={2}>Pending Bookings</Title>
+        {pendingBookings.length === 0 && (
+          <Text style={{ fontSize: '16px' }}>
+            No upcoming bookings to deal with for now
+          </Text>
+        )}
+        <div className={styles.cardContainer}>
+          {pendingBookings.length > 0 &&
+            pendingBookings.map((booking, key) => (
+              <PendingBooking
+                key={key}
+                data={data}
+                booking={booking}
+                getListingBookings={getListingBookings}
+                setBookings={setBookings}
+              />
+            ))}
+        </div>
         <Divider />
         <BookingHistories bookings={bookings} />
       </div>

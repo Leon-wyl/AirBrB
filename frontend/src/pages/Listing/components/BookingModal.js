@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, DatePicker, Typography, message } from 'antd';
 import moment from 'moment';
 import { postBookings } from '../../../api/BookingApi';
+import { UserContext } from '../../../store/UserContext';
 
 const BookingModal = (props) => {
-  const { isModalOpen, setIsModalOpen, data, getMyBookingRes, setBookings } = props;
-  console.log(data);
+  const { isModalOpen, setIsModalOpen, data, getMyBookingRes, setBookings } =
+    props;
+
   const { RangePicker } = DatePicker;
   const { Title } = Typography;
+
+  const { userInfo } = useContext(UserContext);
 
   const [dateRange, setDateRange] = useState({ start: null, end: null });
 
@@ -20,8 +24,9 @@ const BookingModal = (props) => {
         const res = await postBookings(data.id, dateRange, days * data.price);
         if (res.status) {
           message.success('Create new booking successfully');
-          const myBookings = await getMyBookingRes(data.id);
-					setBookings(myBookings);
+          console.log(data.id);
+          const myBookings = await getMyBookingRes(data.id, userInfo);
+          setBookings(myBookings);
         } else if (res.response.status === 400) {
           console.log(res);
           message.error('Input of infomation of the new booking in invalid');
