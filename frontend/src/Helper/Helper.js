@@ -28,16 +28,16 @@ const compareNames = (a, b) => {
   return 0;
 };
 
-const compareIsMyBooking = (bookings) => (a, b) => {
-  if (isMyBooking(a, bookings) === isMyBooking(b, bookings)) return 0;
-  if (isMyBooking(a, bookings)) return -1;
+const compareIsMyBooking = (bookings, userInfo) => (a, b) => {
+  if (isMyBooking(a, bookings, userInfo) === isMyBooking(b, bookings, userInfo)) return 0;
+  if (isMyBooking(a, bookings, userInfo)) return -1;
   return 1;
 };
 
-const isMyBooking = (listing, bookings) => {
-  const marker = false;
-  bookings.filter((booking) => {
-    if (listing.id === booking.listingId && userInfo.email === booking.owner)
+const isMyBooking = (listing, bookings, userInfo) => {
+  let marker = false;
+  bookings.forEach((booking) => {
+    if (listing.id === Number(booking.listingId) && userInfo.email === booking.owner)
       marker = true;
   });
   return marker;
@@ -91,7 +91,9 @@ export const getAllSortedUserDetails = async (userInfo) => {
     const bookingsResRaw = await getBookings();
     if (bookingsResRaw.status) {
       const bookings = bookingsResRaw.data.bookings;
-      listingDetails.sort(compareIsMyBooking(bookings));
+      console.log(listingDetails);
+      const afterSorting = listingDetails.sort(compareIsMyBooking(bookings, userInfo));
+      console.log(afterSorting);
     }
   }
   return listingDetails;

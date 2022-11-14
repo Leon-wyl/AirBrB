@@ -14,5 +14,16 @@
 .titleContainer {
 	display: flex;
 	justify-content: center;
-	
+}
+
+.cardContainer {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.card {
+	margin-right: 30px;
+	margin-bottom: 30px;
 }
