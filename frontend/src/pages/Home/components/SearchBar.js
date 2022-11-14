@@ -125,14 +125,19 @@ const SearchBar = (props) => {
     const maxDate = maxFilter;
     const minDate = minFilter;
     if (maxDate && maxDate) {
+      // Get date range
       const diffInDates = maxFilter.diff(minFilter, 'days');
       diffInDates === 0 ? setDateRange(0) : setDateRange(diffInDates);
+      // Get all dates being filtered in
       const filteredDatesWithDups = getAllDatesBetweenDates(minDate, maxDate);
       const filteredDates = [...new Set(filteredDatesWithDups)];
+      // Get all listing that satisfies the filtered dates
       const filteredListings = listings.filter((listing) => {
         const availableDatesWithDups = [];
         const availabilities = listing.availability;
+        // If the listing has no availabilities, filter it out
         if (availabilities === []) return false;
+        // For all availability ranges, get all dates and put them in an array
         availabilities.forEach((availability) => {
           const availableDatesForPeriod = getAllDatesBetweenDates(
             moment(availability.start),
@@ -141,6 +146,7 @@ const SearchBar = (props) => {
           availableDatesWithDups.push(...availableDatesForPeriod);
         });
         const availableDates = [...new Set(availableDatesWithDups)];
+        // Check is all filtered dates are available, if not, exclude it
         let isAllInAvailableDates = true;
         filteredDates.forEach((filteredDate) => {
           if (!availableDates.includes(filteredDate))

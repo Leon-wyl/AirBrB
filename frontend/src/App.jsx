@@ -9,6 +9,7 @@ import NewListing from './pages/NewListing/NewListing';
 import Home from './pages/Home/Home';
 import EditListing from './pages/EditListing/EditListing';
 import Listing from './pages/Listing/Listing';
+import ManageBookings from './pages/ManageBookings/ManageBookings';
 
 function App() {
   const [userInfo, setUserInfo] = useState({ email: '', token: '' });
@@ -27,6 +28,7 @@ function App() {
           <PrivateRoute path="/newlisting" component={NewListing} />
           <PrivateRoute path="/editlisting/:id" component={EditListing} />
           <Route path="/listing/:id" exact component={Listing} />
+          <Route path="/bookings/:id" exact component={ManageBookings} />
         </Switch>
       </UserContext.Provider>
     </>

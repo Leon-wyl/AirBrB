@@ -1,14 +1,12 @@
-import React, { useContext } from 'react';
-import ImageGallery from 'react-image-gallery';
+import React, { useState, useContext } from 'react';
 import styles from './Header.module.css';
-import Gallery from 'react-photo-gallery';
 import { Card, Typography, Rate, Button, Divider } from 'antd';
 import { getRating } from '../../../Helper/Helper';
 import { UserContext } from '../../../store/UserContext';
-import { LockOutlined } from '@ant-design/icons';
+import BookingModal from './BookingModal';
 
 const Header = (props) => {
-  const { data } = props;
+  const { data, isOwnListing, getMyBookingRes, setBookings } = props;
 
   const { Title, Text } = Typography;
 
@@ -18,13 +16,22 @@ const Header = (props) => {
   const rating = data?.reviews ? getRating(data.reviews) : 0;
 
   const loggedIn = !(userInfo.token === '');
-	console.log(userInfo.token)
+
   const price = data?.price ? data.price : 0;
   const stayLength = dateRange === 0 ? 1 : dateRange;
   const perStayOrPerNight = dateRange === 0 ? 'per night' : 'per stay';
 
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+
   return (
     <div className={styles.header}>
+      <BookingModal
+        isModalOpen={isBookingModalOpen}
+        setIsModalOpen={setIsBookingModalOpen}
+				data={data}
+				getMyBookingRes={getMyBookingRes}
+				setBookings={setBookings}
+      />
       <Card
         hoverable={true}
         className={styles.card}
@@ -32,7 +39,6 @@ const Header = (props) => {
           width: 300,
         }}
         cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
-        onClick={() => history.push(`/listing/${data.id}`)}
       ></Card>
       <div className={styles.headerInfo}>
         <Title level={2} style={{ marginBottom: '5px' }}>
@@ -49,7 +55,12 @@ const Header = (props) => {
           }`}</Title>
           <Text>{` USD ${perStayOrPerNight}`}</Text>
         </div>
-        <Button size="large" type="primary" disabled={!loggedIn}>
+        <Button
+          size="large"
+          type="primary"
+          disabled={!loggedIn || isOwnListing}
+					onClick={() => setIsBookingModalOpen(true)}
+        >
           Book
         </Button>
         <div>

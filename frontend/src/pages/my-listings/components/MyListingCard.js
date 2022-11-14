@@ -68,6 +68,7 @@ const MyListingCard = (props) => {
           <Button
             style={{ border: "transparent", backgroundColor: "transparent" }}
             size="small"
+            onClick={() => history.push(`/bookings/${data.id}`)}
           >
             Bookings
           </Button>,

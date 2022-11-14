@@ -7,7 +7,7 @@ import { deleteListing } from '../../../api/ListingApi';
 const DeleteModal = (props) => {
   const { Text } = Typography;
 
-  const {userInfo} = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
 
   const { isModalOpen, setIsModalOpen, listingId, setListings } = props;
 
@@ -27,7 +27,9 @@ const DeleteModal = (props) => {
         message.error('Something unexpected happened. Delete Unsuccessful');
       }
       const listingDetails = await getAllSortedUserDetails(userInfo);
-      const myListingDetails = listingDetails.filter((listing) => listing.owner === userInfo.email);
+      const myListingDetails = listingDetails.filter(
+        (listing) => listing.owner === userInfo.email
+      );
       setListings(myListingDetails);
     };
     deleteCallback();

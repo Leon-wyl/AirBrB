@@ -1,10 +1,10 @@
-import { Button, Form, Input, Select, message, Upload, Card } from "antd";
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { propertyTypes, amenities } from "../../../constants/Constants";
-import { postNewListing } from "../../../api/ListingApi";
-import { beforeUpload } from "../../../Helper/Helper";
+import { Button, Form, Input, Select, message, Upload, Card } from 'antd';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { propertyTypes, amenities } from '../../../constants/Constants';
+import { postNewListing } from '../../../api/ListingApi';
+import { beforeUpload } from '../../../Helper/Helper';
 
 const CreateNewListingForm = () => {
   const history = useHistory();
@@ -38,15 +38,15 @@ const CreateNewListingForm = () => {
       );
       if (res.status) {
         console.log(res);
-        message.success("Creat new listing successfully");
-        history.push("/mylistings");
+        message.success('Creat new listing successfully');
+        history.push('/mylistings');
       } else if (res.response.status === 400) {
-        message.error("Input of infomation of the new listing in invalid");
+        message.error('Input of infomation of the new listing in invalid');
       } else if (res.response.status === 403) {
-        message.error("User is invalid. Please log in or sign up again");
-        history.push("/login");
+        message.error('User is invalid. Please log in or sign up again');
+        history.push('/login');
       } else {
-        message.error("Something unexpected happened.");
+        message.error('Something unexpected happened.');
       }
     }
   };
@@ -64,7 +64,7 @@ const CreateNewListingForm = () => {
       console.log(info);
       info?.fileList[0]?.thumbUrl
         ? setImageUrl(info.fileList[0].thumbUrl)
-        : setImageUrl("");
+        : setImageUrl('');
     }, 100);
   };
 
@@ -101,7 +101,7 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input the title of your listing!",
+              message: 'Please input the title of your listing!',
             },
           ]}
         >
@@ -114,7 +114,7 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your address line!",
+              message: 'Please input your address line!',
             },
           ]}
         >
@@ -127,7 +127,7 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your city!",
+              message: 'Please input your city!',
             },
           ]}
         >
@@ -140,7 +140,7 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your state!",
+              message: 'Please input your state!',
             },
           ]}
         >
@@ -153,7 +153,7 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your country!",
+              message: 'Please input your country!',
             },
           ]}
         >
@@ -166,11 +166,11 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your price!",
+              message: 'Please input your price!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -183,7 +183,7 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please select a property type!",
+              message: 'Please select a property type!',
             },
           ]}
         >
@@ -205,11 +205,11 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your number of bathroom!",
+              message: 'Please input your number of bathroom!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -222,11 +222,11 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your number of bedroom!",
+              message: 'Please input your number of bedroom!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -239,11 +239,11 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your number of bed!",
+              message: 'Please input your number of bed!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -256,7 +256,7 @@ const CreateNewListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your bedroom details!",
+              message: 'Please input your bedroom details!',
             },
           ]}
         >
@@ -285,7 +285,7 @@ const CreateNewListingForm = () => {
             showUploadList={true}
             beforeUpload={beforeUpload}
             onChange={handleChange}
-            onRemove={() => setImageUrl("")}
+            onRemove={() => setImageUrl('')}
           >
             {uploadButton}
           </Upload>
@@ -293,9 +293,9 @@ const CreateNewListingForm = () => {
 
         <Form.Item
           style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "row",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'row',
           }}
         >
           <Button
@@ -310,12 +310,14 @@ const CreateNewListingForm = () => {
 
         <Form.Item
           style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "row",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'row',
           }}
         >
-          <Button size="large" onClick={() => history.push('/mylistings')}>Cancel</Button>
+          <Button size="large" onClick={() => history.push('/mylistings')}>
+            Cancel
+          </Button>
         </Form.Item>
       </Form>
     </>

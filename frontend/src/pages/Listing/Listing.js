@@ -13,76 +13,56 @@ import OtherImages from './components/OtherImage';
 import Reviews from './components/Reviews';
 
 const Listing = () => {
-  const { Title, Text } = Typography;
-
   const [data, setData] = useState({});
   const [bookings, setBookings] = useState([]);
 
   const { userInfo } = useContext(UserContext);
   const loggedIn = !(userInfo.token === '');
+  const isOwnListing = userInfo.email === data.owner;
 
   const acceptedBookings = bookings.filter(
     (booking) => booking.status === 'accepted'
   );
-  console.log(acceptedBookings);
   const canReview = acceptedBookings.length !== 0;
   console.log(acceptedBookings);
+
+  const getMyBookingRes = async (listingId) => {
+    const bookingsRes = await getBookings();
+    console.log(bookingsRes);
+    const bookingDetails = bookingsRes ? bookingsRes?.data?.bookings : [];
+    const myBookings = bookingDetails.filter(
+      (booking) =>
+        booking.listingId === listingId && booking.owner === userInfo.email
+    );
+    return myBookings;
+  };
 
   useEffect(async () => {
     // Get the listing info, store in the useState
     const listingId = window.location.href.split('/')[4];
     const listingRes = await getListingWithId(listingId);
     const listingDetail = listingRes.data.listing;
-    setData(listingDetail);
+    setData({ ...listingDetail, id: Number(listingId) });
     // If logged in, get booking info, store at useState
     if (loggedIn) {
-      const bookingsRes = await getBookings();
-      const bookingDetails = bookingsRes.data.bookings;
-      const myBookings = bookingDetails.filter(
-        (booking) =>
-          booking.listingId === Number(listingId) &&
-          booking.owner === userInfo.email
-      );
+      const myBookings = await getMyBookingRes(listingId);
       setBookings(myBookings);
     }
   }, []);
 
-  // const thumbnail = [
-  //   {
-  //     src: data?.thumbnail,
-  //   },
-  // ];
-  // const otherImages = data?.metadata?.imageGallery
-  //   ? data?.metadata?.imageGallery?.map((dataUrl) => {
-  //       return {
-  //         src: dataUrl,
-  //       };
-  //     })
-  //   : [];
-  // const photos = thumbnail.concat(otherImages);
-
-  // const thumbnail = [
-  //   {
-  //     original: data?.thumbnail,
-  // 		thumbnail: data?.thumbnail,
-  //   },
-  // ];
-  // const otherImages = data?.metadata?.imageGallery
-  //   ? data?.metadata?.imageGallery?.map((dataUrl) => {
-  //       return {
-  //         original: dataUrl,
-  // 				thumbnail: dataUrl,
-  //       };
-  //     })
-  //   : [];
-  // const photos = thumbnail.concat(otherImages);
   console.log(data);
   return (
     <div className={styles.outerContainer}>
       <div className={styles.innerContainer}>
-        <Header data={data} />
+        <Header
+          data={data}
+          isOwnListing={isOwnListing}
+          setData={setData}
+          getMyBookingRes={getMyBookingRes}
+          setBookings={setBookings}
+        />
         <Divider />
-        {bookings.length !== 0 && <Bookings bookings={bookings} />}
+        {loggedIn && !isOwnListing && <Bookings bookings={bookings} />}
         <OtherDetails data={data} />
         <Divider />
         <OtherImages data={data} />
