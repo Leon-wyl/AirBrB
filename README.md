@@ -15,6 +15,7 @@
 * 30/10: Updated Typescript setup instructions
 * 1/11: Updated backend to not overwrite users details when an email already exists on the database.
 * 2/11: Added correct late policy as per course policy and lecture
+* 15/11: Removing (*)
 
 ## 1. Background & Motivation
 
@@ -103,7 +104,7 @@ For logged in users, they are able to create their own listings (as a host) that
 	- Price (per night)
 	- Type
 	- Number of bathrooms
-	- Bedrooms (incorporate editing of beds as part of bedrooms) (**\***)
+	- Bedrooms (incorporate editing of beds as part of bedrooms)
 	- Amenities
 	- List of property images
 * Updates can auto-save, or a save button can exist that saves the updates and returns you to the hosted listings screen.
@@ -119,7 +120,7 @@ availability: [{ start: date1, end: date2 }, { start: date3, end: date4 }, ...];
 //Example 2:
 availability: [date1, date2, date3, date4, ...];
 ```
-* (Note: If the listing has more than 1 availability range, aggregate them on the frontend and submit them all to the backend in one go when publishing the listing). (**\***)
+* (Note: If the listing has more than 1 availability range, aggregate them on the frontend and submit them all to the backend in one go when publishing the listing).
 
 ### 2.3. Feature Set 3. Landing Page: Listings and Search (16% for solo, 14% for pairs)
 
@@ -138,14 +139,14 @@ When the app loads, regardless of whether a user is logged in or not, they can a
   * All remaining listings should be displayed in alphabetical order of title.
 
 #### 2.3.2. Search Filters
-* On this listings screen, a search section must exist for the user to filter via search parameters. You are only required to be able to search by one of the parameters described below at a time. (**\***)
+* On this listings screen, a search section must exist for the user to filter via search parameters. You are only required to be able to search by one of the parameters described below at a time.
 * The search section will consists of an input text box:
   * The input text box will take in a search string, and will search title and city location properties of listings, and only display those that match.
   * You are expected to do this matching on frontend (after loading all the results from the backend).
   * You are only required to do case insensitive substring matching (of each word in the search field), nothing more complicated. 
 * Other form inputs should also exist that allow the user to search by:
 	* Number of bedrooms (a minimum and maximum number of bedrooms, expressed either via text fields or a slider)
-	* Date range (two date fields) - only display bookings that are available for the entire date range as inputted by the user. (**\***)
+	* Date range (two date fields) - only display bookings that are available for the entire date range as inputted by the user.
 	* Price (a minimum and maximum price, expressed either via text fields or a slider)
 	* Review ratings:
 		- Sort results from highest to lowest review rating **or** from lowest to highest review rating depending
@@ -172,24 +173,24 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 	- Number of beds
 	- Number of bathrooms
  * On this screen if the user is logged in and they have made booking for this listing, they should be able to see the status of their booking (see `2.4.2`).
- * (Note: if the user has made more than 1 booking for a listing, display the status of all the bookings) (**\***)
+ * (Note: if the user has made more than 1 booking for a listing, display the status of all the bookings)
 
 #### 2.4.2. Making a booking and checking its status
  * On the screen described in `2.4.1`, a **logged in** user should be able to make a booking for a given listing they are viewing between the dates they are after. The user enters two dates (this includes day, month and year), and assume the dates describe a valid booking, a button allows for the confirmation of the booking.
- * A user can make an unlimited number of bookings per listing even on overlapping date ranges and even if other users have already booked the property for those dates. It is up to the host to check if they have double booked their listing and accept/deny the bookings accordingly. (**\***)
- * A booking's length (in days) is defined based on _how many nights_ a user spends at the listed property (this is how bookings are defined on all modern accommodation platforms). For example, a booking from the 15th to the 17th of November consists of 2 days in length - 15th to the 16th and 16th to the 17th. As this is a late addition to the specification, we will not be strictly enforcing how you chose to calculate a booking's length. So for the case described here, it could also be expressed as a 3 day long booking (15th, 16th and 17th as the 3 days). (**\***)
+ * A user can make an unlimited number of bookings per listing even on overlapping date ranges and even if other users have already booked the property for those dates. It is up to the host to check if they have double booked their listing and accept/deny the bookings accordingly.
+ * A booking's length (in days) is defined based on _how many nights_ a user spends at the listed property (this is how bookings are defined on all modern accommodation platforms). For example, a booking from the 15th to the 17th of November consists of 2 days in length - 15th to the 16th and 16th to the 17th. As this is a late addition to the specification, we will not be strictly enforcing how you chose to calculate a booking's length. So for the case described here, it could also be expressed as a 3 day long booking (15th, 16th and 17th as the 3 days).
  * Once a booking is made, the user receives some kind of temporary confirmation on screen.
 
 #### 2.4.3 Leaving a listing review
 * A logged in user should be able to leave a review for listings they've booked that will immidiately appear on the listing screen after it's been posted by the user. The review will consist of a score (number) and a comment (text). You can leave an unlimited number of reviews per listing.
 * Please note: Normally you'd prohibit reviews until after a booking visit is complete, but in this case for simplicity we allow reviews to be left as soon as a booking's status becomes `accepted`.
-* If the user has made more than 1 booking for a given listing, you can use any of their `bookingid`s for the purpose of leaving a review. Just as long as the booking has status `accepted`. (**\***)
+* If the user has made more than 1 booking for a given listing, you can use any of their `bookingid`s for the purpose of leaving a review. Just as long as the booking has status `accepted`.
 
 ### 2.5. Feature Set 5. Removing a Listing, Managing Booking Requests (9% for solo, 8% for pairs)
 
 #### 2.5.1. Removing a live listing
  * On the hosted listings screen described in `2.2.1`, add the ability to remove a live listing from being visible to other users. 
- * Once un-published, those who had made bookings for a removed listing will no longer be able to view it on their landing screen (**\***)
+ * Once un-published, those who had made bookings for a removed listing will no longer be able to view it on their landing screen
 
 #### 2.5.2. Viewing booking requests and history for a hosted listing
  * A unique route must exist for this screen that is parameterised on the listing ID
@@ -200,7 +201,7 @@ When the app loads, regardless of whether a user is logged in or not, they can a
 	* The booking request history for this listing consisting of all booking requests for this listing and their status (accepted/denied)
 	* How many days this year has the listing been booked for
 	* How much profit has this listing made the owner this year
-	* (Note: When counting the days and profits, inlcude all the bookings, past or future, that have been accepted for this year) (**\***)
+	* (Note: When counting the days and profits, inlcude all the bookings, past or future, that have been accepted for this year)
 
 ### 2.6. Feature Set 6. Advanced Features (0% for solo, 8% for pairs)
 
@@ -245,7 +246,7 @@ For **ui testing**, you must:
    7. Logs out of the application successfully
    8. Logs back into the application successfully
  * (If working in a pair) also required to write a test for another path through the program, describing the steps and the rationale behind this choice in `TESTING.md`
- * (If working solo) include a short rationale of the testing you have undertaken within `TESTING.md`. (*****)
+ * (If working solo) include a short rationale of the testing you have undertaken within `TESTING.md`.
 
 Tests must be run from inside the `frontend` folder by running `yarn test`.
 
