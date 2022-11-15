@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styles from '../ManageBookings.module.css';
 import { Typography, Card, Descriptions } from 'antd';
@@ -44,6 +45,12 @@ const BookingHistories = (props) => {
       </div>
     </>
   );
+};
+
+BookingHistories.propTypes = {
+  bookings: PropTypes.shape({
+    filter: PropTypes.func,
+  }),
 };
 
 export default BookingHistories;

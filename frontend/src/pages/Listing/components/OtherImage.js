@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styles from '../Listing.module.css';
 import { Card, Typography } from 'antd';
@@ -25,6 +26,15 @@ const OtherImages = (props) => {
       </div>
     </>
   );
+};
+
+OtherImages.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    metadata: PropTypes.shape({
+      imageGallery: PropTypes.array,
+    }),
+  }),
 };
 
 export default OtherImages;

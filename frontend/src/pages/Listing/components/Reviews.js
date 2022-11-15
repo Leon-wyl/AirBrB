@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Typography, Button, Divider, Card, Rate } from 'antd';
 import styles from '../Listing.module.css';
@@ -70,6 +71,14 @@ const Reviews = (props) => {
       </div>
     </>
   );
+};
+
+Reviews.propTypes = {
+  acceptedBookings: PropTypes.array,
+  data: PropTypes.shape({
+    reviews: PropTypes.array,
+  }),
+  setData: PropTypes.func,
 };
 
 export default Reviews;

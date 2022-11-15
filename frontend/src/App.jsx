@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useState, useContext } from 'react';
 import Navbar from './pages/navbar/Navbar';
 import Login from './pages/User/Login';
@@ -11,7 +12,7 @@ import EditListing from './pages/EditListing/EditListing';
 import Listing from './pages/Listing/Listing';
 import ManageBookings from './pages/ManageBookings/ManageBookings';
 
-function App() {
+const App = () => {
   const [userInfo, setUserInfo] = useState({ email: '', token: '' });
   const [dateRange, setDateRange] = useState(0);
   return (
@@ -33,7 +34,7 @@ function App() {
       </UserContext.Provider>
     </>
   );
-}
+};
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { userInfo } = useContext(UserContext);
@@ -43,16 +44,23 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isLoggedIn ? (
+        isLoggedIn
+          ? (
           <Component {...props} />
-        ) : (
+            )
+          : (
           <Redirect
             to={{ pathname: '/login', state: { from: props.location } }}
           />
-        )
+            )
       }
     />
   );
 };
+
+PrivateRoute.propTypes = {
+  component: PropTypes.any,
+  location: PropTypes.any,
+}
 
 export default App;

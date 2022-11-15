@@ -45,7 +45,8 @@ const Navbar = () => {
       >
         <p>Are you sure to log out this account?</p>
       </Modal>
-      {userInfo?.token ? (
+      {userInfo?.token
+        ? (
         <PageHeader
           ghost={false}
           backIcon={false}
@@ -76,7 +77,8 @@ const Navbar = () => {
             </Button>,
           ]}
         />
-      ) : (
+          )
+        : (
         <PageHeader
           ghost={false}
           backIcon={false}
@@ -91,6 +93,7 @@ const Navbar = () => {
               Home
             </Button>,
             <Button
+              name='loginButton'
               className={styles.navbtn}
               key="1"
               type="primary"
@@ -100,7 +103,7 @@ const Navbar = () => {
             </Button>,
           ]}
         />
-      )}
+          )}
     </div>
   );
 };

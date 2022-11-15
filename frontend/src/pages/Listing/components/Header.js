@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
 import styles from './Header.module.css';
 import { Card, Typography, Rate, Button } from 'antd';
@@ -90,6 +91,25 @@ const Header = (props) => {
       </div>
     </div>
   );
+};
+
+Header.propTypes = {
+  data: PropTypes.shape({
+    address: PropTypes.shape({
+      addressLine: PropTypes.string,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      state: PropTypes.string,
+    }),
+    id: PropTypes.number,
+    price: PropTypes.number,
+    reviews: PropTypes.array,
+    thumbnail: PropTypes.string,
+    title: PropTypes.string,
+  }),
+  getMyBookingRes: PropTypes.func,
+  isOwnListing: PropTypes.bool,
+  setBookings: PropTypes.func,
 };
 
 export default Header;

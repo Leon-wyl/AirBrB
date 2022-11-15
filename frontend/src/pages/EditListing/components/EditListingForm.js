@@ -1,9 +1,9 @@
-import { Button, Form, Input, Select, message, Upload, Card } from 'antd';
-import React, { useState, useEffect } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, message, Select, Upload } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { propertyTypes, amenities } from '../../../constants/Constants';
 import { getListingWithId, putListing } from '../../../api/ListingApi';
+import { amenities, propertyTypes } from '../../../constants/Constants';
 import { beforeUpload } from '../../../Helper/Helper';
 
 const EditListingForm = () => {
@@ -34,7 +34,7 @@ const EditListingForm = () => {
         };
         form.setFieldsValue(initialValues);
         // Set thumbnail picture into state
-        if (listingData.thumbnail !== '')
+        if (listingData.thumbnail !== '') {
           setThumbnail([
             {
               uid: '-1',
@@ -43,6 +43,7 @@ const EditListingForm = () => {
               thumbUrl: listingData.thumbnail,
             },
           ]);
+        }
         // Set gallery image into state
         if (listingData?.metadata?.imageGallery) {
           const imageGalleryList = listingData?.metadata?.imageGallery?.map(
@@ -59,10 +60,8 @@ const EditListingForm = () => {
         }
       } else if (res.response.status === 403) {
         message.error('User is invalid. Please log in or sign up again');
-        return;
       } else {
         message.error('Something unexpected happened. Delete Unsuccessful');
-        return;
       }
     });
   }, []);
@@ -122,8 +121,6 @@ const EditListingForm = () => {
   };
   const onFinishFailed = () => {};
 
-  const [loading, setLoading] = useState(false);
-
   // When thumbnail number > 1, cut it to 1
   const handleThumbnailChange = (info) => {
     setThumbnail(info.fileList);
@@ -134,7 +131,7 @@ const EditListingForm = () => {
 
   const uploadButton = (
     <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <PlusOutlined />
       <div
         style={{
           marginTop: 8,

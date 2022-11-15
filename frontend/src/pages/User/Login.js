@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Button, Card, Form, Input, message } from 'antd';
 import 'antd/dist/antd.min.css';
-import { Card, Form, Input, Button, message } from 'antd';
-import styles from './Login.module.css';
-import logo from '../../assets/logo-black.png';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { postLogin } from '../../api/AuthApi';
+import logo from '../../assets/logo-black.png';
 import { UserContext } from '../../store/UserContext';
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { useLocalStorage } from '../../custom-hooks/CustomHooks';
+import styles from './Login.module.css';
 
 const Login = () => {
   const history = useHistory();
@@ -72,6 +71,7 @@ const Login = () => {
             ]}
           >
             <Input
+              name='email'
               prefix={<MailOutlined className={styles.icon} />}
               placeholder="Email"
             />
@@ -87,13 +87,14 @@ const Login = () => {
             ]}
           >
             <Input.Password
+              name='password'
               prefix={<LockOutlined className={styles.icon}/>}
               placeholder="Password"
             />
           </Form.Item>
 
           <Form.Item name='remember' className={styles.link}>
-            <div onClick={() => history.push('/register')}>
+            <div name='linkToSignUp' onClick={() => history.push('/register')}>
               Not registered? Sign Up!
             </div>
           </Form.Item>

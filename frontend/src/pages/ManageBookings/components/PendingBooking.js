@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { Typography, Card, Button, Descriptions } from 'antd';
-import styles from '../ManageBookings.module.css';
+import { Button, Card, Descriptions } from 'antd';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import styles from '../ManageBookings.module.css';
 import AcceptModal from './AcceptModal';
 import RejectModal from './RejectModal';
-import DeleteModal from '../../Listing/components/DeleteModal';
 
 const PendingBooking = (props) => {
-  const { Title, Text } = Typography;
   const { data, booking, getListingBookings, setBookings } = props;
 
   const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
@@ -36,6 +35,7 @@ const PendingBooking = (props) => {
         className={styles.card}
         actions={[
           <Button
+            key="1"
             style={{
               border: 'transparent',
               backgroundColor: 'transparent',
@@ -46,6 +46,7 @@ const PendingBooking = (props) => {
             Accept
           </Button>,
           <Button
+            key="2"
             style={{
               border: 'transparent',
               backgroundColor: 'transparent',
@@ -68,25 +69,25 @@ const PendingBooking = (props) => {
             {moment(booking.dateRange.end).format('DD/MM/YYYY')}
           </Descriptions.Item>
           <Descriptions.Item label="Total Price">
-          {`$${booking.totalPrice} USD`}
+            {`$${booking.totalPrice} USD`}
           </Descriptions.Item>
         </Descriptions>
-        {/* <Text
-          style={{ fontSize: '16px', display: 'block' }}
-        >{`Starts On: ${moment(booking.dateRange.start).format(
-          'DD/MM/YYYY'
-        )}`}</Text>
-        <Text
-          style={{ fontSize: '16px', display: 'block' }}
-        >{`Ends On: ${moment(booking.dateRange.end).format(
-          'DD/MM/YYYY'
-        )}`}</Text>
-        <Text
-          style={{ fontSize: '16px', display: 'block' }}
-        >{`Total Price: $${booking.totalPrice} USD`}</Text> */}
       </Card>
     </>
   );
+};
+
+PendingBooking.propTypes = {
+  booking: PropTypes.shape({
+    dateRange: PropTypes.shape({
+      end: PropTypes.object,
+      start: PropTypes.object,
+    }),
+    totalPrice: PropTypes.number,
+  }),
+  data: PropTypes.object,
+  getListingBookings: PropTypes.func,
+  setBookings: PropTypes.func,
 };
 
 export default PendingBooking;

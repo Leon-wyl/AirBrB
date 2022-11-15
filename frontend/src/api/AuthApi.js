@@ -5,8 +5,8 @@ export const postLogin = async (email, password) => {
   try {
     const url = baseUrl + '/user/auth/login';
     const data = {
-      email: email,
-      password: password,
+      email,
+      password,
     };
     const res = await postAxios(url, data);
     console.log(res);
@@ -20,9 +20,9 @@ export const postRegister = async (email, name, password) => {
   try {
     const url = baseUrl + '/user/auth/register';
     const data = {
-      email: email,
-      name: name,
-      password: password,
+      email,
+      name,
+      password,
     };
     const res = await postAxios(url, data);
     return res;

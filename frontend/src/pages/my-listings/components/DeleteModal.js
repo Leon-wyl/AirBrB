@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Modal, Typography, message } from 'antd';
 import { UserContext } from '../../../store/UserContext';
@@ -51,6 +52,13 @@ const DeleteModal = (props) => {
       </Modal>
     </>
   );
+};
+
+DeleteModal.propTypes = {
+  isModalOpen: PropTypes.bool,
+  listingId: PropTypes.number,
+  setIsModalOpen: PropTypes.func,
+  setListings: PropTypes.func,
 };
 
 export default DeleteModal;

@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { getAllListings, getListingWithId } from '../../api/ListingApi';
 import styles from './MyListings.module.css';
-import { Button, Typography, message } from 'antd';
+import { Button, Typography } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../../store/UserContext';
 import MyListingCard from './components/MyListingCard';
 import { getAllSortedUserDetails } from '../../Helper/Helper';
 
 const MyListings = () => {
-  const { Title } = Typography;
+  const { Title, Text } = Typography;
 
   const history = useHistory();
 
@@ -18,7 +17,9 @@ const MyListings = () => {
 
   useEffect(async () => {
     const listingDetails = await getAllSortedUserDetails(userInfo);
-		const myListingDetails = listingDetails.filter((listing) => listing.owner === userInfo.email);
+    const myListingDetails = listingDetails.filter(
+      (listing) => listing.owner === userInfo.email
+    );
     setListings(myListingDetails);
   }, []);
 
@@ -28,6 +29,7 @@ const MyListings = () => {
         <div className={styles.header}>
           <Title className={styles.title}>My Listings</Title>
           <Button
+            name='createNewListing'
             type="primary"
             size="large"
             onClick={() => history.push('/newlisting')}
@@ -36,6 +38,12 @@ const MyListings = () => {
           </Button>
         </div>
         <div className={styles.cardContainer}>
+          {listings.length === 0 && (
+            <Text style={{ fontSize: '16px' }}>
+              You have not created any listings yet. Click the &apos;Create New
+              Listing&apos; button to create a new listing.
+            </Text>
+          )}
           {listings.map((listing, key) => (
             <MyListingCard key={key} data={listing} setListings={setListings} />
           ))}

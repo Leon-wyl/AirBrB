@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { getListingWithId } from '../../api/ListingApi';
-import styles from './Listing.module.css';
-import { Card, Typography, Rate, Button, Divider } from 'antd';
-import { UserContext } from '../../store/UserContext';
-import OtherDetails from './components/OtherDetails';
-import Header from './components/Header';
+import { Divider, Typography } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
 import { getBookings } from '../../api/BookingApi';
+import { getListingWithId } from '../../api/ListingApi';
+import { UserContext } from '../../store/UserContext';
 import BookingCard from './components/BookingCard';
+import Header from './components/Header';
+import OtherDetails from './components/OtherDetails';
 import OtherImages from './components/OtherImage';
 import Reviews from './components/Reviews';
+import styles from './Listing.module.css';
 
 const Listing = () => {
   const { Title, Text } = Typography;
@@ -67,9 +67,9 @@ const Listing = () => {
         {loggedIn && !isOwnListing && (
           <div className={styles.BookingContainer}>
             <Title level={2}>Your Bookings</Title>
-            {bookings.length == 0 && (
+            {bookings.length === 0 && (
               <Text style={{ fontSize: '16px' }}>
-                You haven't made any bookings on this listing
+                You haven&apos;t made any bookings on this listing
               </Text>
             )}
             <div className={styles.container}>

@@ -1,9 +1,9 @@
-import { Button, Form, Input, Select, message, Upload, Card } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, message, Select, Upload } from 'antd';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { propertyTypes, amenities } from '../../../constants/Constants';
 import { postNewListing } from '../../../api/ListingApi';
+import { amenities, propertyTypes } from '../../../constants/Constants';
 import { beforeUpload } from '../../../Helper/Helper';
 
 const CreateNewListingForm = () => {
@@ -21,9 +21,9 @@ const CreateNewListingForm = () => {
     const metaData = {
       amenities: value.amenities,
       bedroomDetails: value.bedroomDetails,
-      numBathroom: value.numBathroom,
-      numBed: value.numBed,
-      numBedroom: value.numBedroom,
+      numBathroom: Number(value.numBathroom),
+      numBed: Number(value.numBed),
+      numBedroom: Number(value.numBedroom),
       propertyType: value.propertyType,
       imageGallery: [],
     };
@@ -32,7 +32,7 @@ const CreateNewListingForm = () => {
       const res = await postNewListing(
         value.title,
         address,
-        value.price,
+        Number(value.price),
         imageUrl,
         metaData
       );
@@ -44,7 +44,6 @@ const CreateNewListingForm = () => {
         message.error('Input of infomation of the new listing in invalid');
       } else if (res.response.status === 403) {
         message.error('User is invalid. Please log in or sign up again');
-        history.push('/login');
       } else {
         message.error('Something unexpected happened.');
       }
@@ -52,7 +51,6 @@ const CreateNewListingForm = () => {
   };
   const onFinishFailed = () => {};
 
-  const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
 
   const handleChange = (info) => {
@@ -70,7 +68,7 @@ const CreateNewListingForm = () => {
 
   const uploadButton = (
     <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <PlusOutlined />
       <div
         style={{
           marginTop: 8,
@@ -105,7 +103,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Title" />
+          <Input name='title' placeholder="Title" />
         </Form.Item>
 
         <Form.Item
@@ -118,7 +116,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Address Line" />
+          <Input name="addressLine" placeholder="Address Line" />
         </Form.Item>
 
         <Form.Item
@@ -131,7 +129,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="City" />
+          <Input name="city" placeholder="City" />
         </Form.Item>
 
         <Form.Item
@@ -144,7 +142,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="State" />
+          <Input name="state" placeholder="State" />
         </Form.Item>
 
         <Form.Item
@@ -157,7 +155,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Country" />
+          <Input name="country" placeholder="Country" />
         </Form.Item>
 
         <Form.Item
@@ -174,7 +172,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Price in USD" />
+          <Input name="price" placeholder="Price in USD" />
         </Form.Item>
 
         <Form.Item
@@ -188,6 +186,7 @@ const CreateNewListingForm = () => {
           ]}
         >
           <Select
+            name="propertyType"
             placeholder="Please select a property type"
             optionLabelProp="label"
           >
@@ -213,7 +212,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Number of Bathroom" />
+          <Input name="numBathroom" placeholder="Number of Bathroom" />
         </Form.Item>
 
         <Form.Item
@@ -230,7 +229,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Number of Bathroom" />
+          <Input name="numBedroom" placeholder="Number of Bathroom" />
         </Form.Item>
 
         <Form.Item
@@ -247,7 +246,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Number of Bathroom" />
+          <Input name="numBed" placeholder="Number of Bathroom" />
         </Form.Item>
 
         <Form.Item
@@ -260,11 +259,12 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="For example, how many beds in each bedroom and their sizes" />
+          <Input name="bedroomDetails" placeholder="For example, how many beds in each bedroom and their sizes" />
         </Form.Item>
 
         <Form.Item name="amenities" label="Amenities">
           <Select
+            name="amenities"
             placeholder="Please select a property type"
             optionLabelProp="label"
             mode="multiple"

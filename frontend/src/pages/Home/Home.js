@@ -1,12 +1,10 @@
-import styles from './Home.module.css';
-import React, { useState, useEffect } from 'react';
 import { Typography } from 'antd';
-import { getAllListings } from '../../api/ListingApi';
-import AllListingCard from './components/AllListingCard';
+import React, { useContext, useEffect, useState } from 'react';
 import { getAllSortedUserDetails } from '../../Helper/Helper';
-import { useContext } from 'react';
+import AllListingCard from './components/AllListingCard';
+import styles from './Home.module.css';
+
 import { UserContext } from '../../store/UserContext';
-import { getBookings } from '../../api/BookingApi';
 import SearchBar from './components/SearchBar';
 
 const Home = () => {

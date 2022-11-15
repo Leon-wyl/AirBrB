@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Typography, Descriptions, Divider } from 'antd';
-import styles from './ManageBookings.module.css';
-import { UserContext } from '../../store/UserContext';
-import { getListingWithId } from '../../api/ListingApi';
-import { getAllDatesBetweenDates, getRating } from '../../Helper/Helper';
+import { Divider, Typography } from 'antd';
 import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import { getBookings } from '../../api/BookingApi';
+import { getListingWithId } from '../../api/ListingApi';
+import BookingHistories from './components/BookingHistories';
 import ListingDescriptions from './components/LisitingDescriptions';
 import PendingBooking from './components/PendingBooking';
-import BookingHistories from './components/BookingHistories';
+import styles from './ManageBookings.module.css';
 
 const ManageBookings = () => {
   const { Title, Text } = Typography;

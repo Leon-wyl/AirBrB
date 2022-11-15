@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { Modal, Typography, Rate, Input, message, Form, Button } from 'antd';
 import { UserContext } from '../../../store/UserContext';
@@ -8,7 +9,7 @@ const ReviewModal = (props) => {
   const { isModalOpen, setIsModalOpen, data, setData, acceptedBookings } =
     props;
 
-  const { Title, Text } = Typography;
+  const { Text } = Typography;
   const { TextArea } = Input;
 
   const { userInfo } = useContext(UserContext);
@@ -19,7 +20,7 @@ const ReviewModal = (props) => {
     const review = {
       user: userInfo?.email,
       time: moment(),
-      rating: rating,
+      rating,
       comment: values.comment,
     };
     const res = await putReviewListing(data.id, acceptedBookings[0].id, review);
@@ -45,10 +46,9 @@ const ReviewModal = (props) => {
     setIsModalOpen(false);
   };
 
-	const onFinishFailed = (res) => {
-		message.error('Please write a comment');
-		return;
-	}
+  const onFinishFailed = (res) => {
+    message.error('Please write a comment');
+  };
 
   return (
     <Modal
@@ -107,6 +107,16 @@ const ReviewModal = (props) => {
       </Form>
     </Modal>
   );
+};
+
+ReviewModal.propTypes = {
+  acceptedBookings: PropTypes.array,
+  data: PropTypes.shape({
+    id: PropTypes.number,
+  }),
+  isModalOpen: PropTypes.bool,
+  setData: PropTypes.func,
+  setIsModalOpen: PropTypes.func,
 };
 
 export default ReviewModal;

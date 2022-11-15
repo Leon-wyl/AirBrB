@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, Typography, message } from 'antd';
 import { putAcceptBookings } from '../../../api/BookingApi';
@@ -49,6 +50,19 @@ const AcceptModal = (props) => {
       </Modal>
     </>
   );
+};
+
+AcceptModal.propTypes = {
+  booking: PropTypes.shape({
+    id: PropTypes.number,
+  }),
+  data: PropTypes.shape({
+    id: PropTypes.number,
+  }),
+  getListingBookings: PropTypes.func,
+  isModalOpen: PropTypes.func,
+  setBookings: PropTypes.func,
+  setIsModalOpen: PropTypes.func,
 };
 
 export default AcceptModal;

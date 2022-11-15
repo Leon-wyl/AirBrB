@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Modal, Typography, message } from 'antd';
 import { deleteBookings } from '../../../api/BookingApi';
@@ -52,6 +53,19 @@ const DeleteModal = (props) => {
       </Modal>
     </>
   );
+};
+
+DeleteModal.propTypes = {
+  booking: PropTypes.shape({
+    id: PropTypes.number,
+  }),
+  data: PropTypes.shape({
+    id: PropTypes.number,
+  }),
+  getMyBookingRes: PropTypes.func,
+  isModalOpen: PropTypes.func,
+  setBookings: PropTypes.func,
+  setIsModalOpen: PropTypes.func,
 };
 
 export default DeleteModal;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useState, useContext } from 'react';
 import { Input, Select, Typography, DatePicker, message } from 'antd';
 import {
@@ -151,8 +152,7 @@ const SearchBar = (props) => {
         // Check is all filtered dates are available, if not, exclude it
         let isAllInAvailableDates = true;
         filteredDates.forEach((filteredDate) => {
-          if (!availableDates.includes(filteredDate))
-            isAllInAvailableDates = false;
+          if (!availableDates.includes(filteredDate)) { isAllInAvailableDates = false; }
         });
         return isAllInAvailableDates;
       });
@@ -263,5 +263,9 @@ const SearchBar = (props) => {
     </div>
   );
 };
+
+SearchBar.propTypes = {
+  setAllListings: PropTypes.func
+}
 
 export default SearchBar;

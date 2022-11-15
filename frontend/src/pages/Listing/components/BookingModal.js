@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
 import { Modal, DatePicker, Typography, message } from 'antd';
 import moment from 'moment';
@@ -67,6 +68,17 @@ const BookingModal = (props) => {
       </Modal>
     </div>
   );
+};
+
+BookingModal.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    price: PropTypes.number,
+  }),
+  getMyBookingRes: PropTypes.func,
+  isModalOpen: PropTypes.bool,
+  setBookings: PropTypes.func,
+  setIsModalOpen: PropTypes.func,
 };
 
 export default BookingModal;

@@ -40,11 +40,11 @@ export const postNewListing = async (
     const url = baseUrl + '/listings/new';
     const headers = { Authorization: 'Bearer ' + token };
     const data = {
-      title: title,
-      address: address,
-      price: price,
-      thumbnail: thumbnail,
-      metadata: metadata,
+      title,
+      address,
+      price,
+      thumbnail,
+      metadata,
     };
     const res = await postAxios(url, data, headers);
     return res;
@@ -81,11 +81,11 @@ export const putListing = async (
     const url = baseUrl + '/listings/' + id;
     const headers = { Authorization: 'Bearer ' + token };
     const data = {
-      title: title,
-      address: address,
-      price: price,
-      thumbnail: thumbnail,
-      metadata: metadata,
+      title,
+      address,
+      price,
+      thumbnail,
+      metadata,
     };
     const res = await putAxios(url, data, headers);
     return res;
@@ -101,7 +101,7 @@ export const putPublishListing = async (id, availability) => {
     const url = baseUrl + '/listings/publish/' + id;
     const headers = { Authorization: 'Bearer ' + token };
     const data = {
-      availability: availability,
+      availability,
     };
     console.log(data);
     const res = await putAxios(url, data, headers);
@@ -130,7 +130,7 @@ export const putReviewListing = async (listingId, bookingId, review) => {
     const token = localStorage.getItem('token');
     const url = baseUrl + '/listings/' + listingId + '/review/' + bookingId;
     const headers = { Authorization: 'Bearer ' + token };
-    const res = await putAxios(url, { review: review }, headers);
+    const res = await putAxios(url, { review }, headers);
     return res;
   } catch (err) {
     console.log(err);

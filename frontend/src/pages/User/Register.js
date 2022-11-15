@@ -70,6 +70,7 @@ const Register = () => {
             ]}
           >
             <Input
+              name='name'
               prefix={<UserOutlined className={styles.icon}/>}
               placeholder='Name'
             />
@@ -88,6 +89,7 @@ const Register = () => {
             ]}
           >
             <Input
+              name='email'
               prefix={<MailOutlined className={styles.icon}/>}
               placeholder="Email"
             />
@@ -103,6 +105,7 @@ const Register = () => {
             ]}
           >
             <Input.Password
+              name='password'
               prefix={<LockOutlined className={styles.icon}/>}
               placeholder="Password"
             />
@@ -128,6 +131,7 @@ const Register = () => {
             ]}
           >
             <Input.Password
+              name='confirmPassword'
               prefix={<LockOutlined className={styles.icon}/>}
               placeholder="Password"
             />

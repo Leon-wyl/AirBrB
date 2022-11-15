@@ -1,8 +1,9 @@
-import { Typography, Card, Rate } from 'antd';
+import PropTypes from 'prop-types'
+import { Card, Rate, Typography } from 'antd';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { getRating } from '../../../Helper/Helper';
 import styles from '../../my-listings/components/MyListingCard.module.css';
-import { useHistory } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -12,7 +13,7 @@ const AllListingCard = (props) => {
   const { Text } = Typography;
 
   const history = useHistory();
-
+  console.log(data?.reviews)
   const numRatings = data.reviews.length;
   const rating = getRating(data.reviews);
 
@@ -42,5 +43,15 @@ const AllListingCard = (props) => {
     </>
   );
 };
+
+AllListingCard.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    price: PropTypes.number,
+    reviews: PropTypes.array,
+    thumbnail: PropTypes.string,
+    title: PropTypes.string
+  })
+}
 
 export default AllListingCard;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Modal, Typography, message, Form, DatePicker, Button } from 'antd';
 import DynamicField from './DynamicField';
@@ -12,8 +13,6 @@ const PublishModal = (props) => {
   const { isModalOpen, setIsModalOpen, listingId, setListings } = props;
 
   const { userInfo } = useContext(UserContext);
-
-  const [form] = Form.useForm();
 
   const onFinish = async (value) => {
     const publishCallback = async (value) => {
@@ -40,7 +39,9 @@ const PublishModal = (props) => {
         message.error('Something unexpected happened. Delete Unsuccessful');
       }
       const listingDetails = await getAllSortedUserDetails(userInfo);
-      const myListingDetails = listingDetails.filter((listing) => listing.owner === userInfo.email);
+      const myListingDetails = listingDetails.filter(
+        (listing) => listing.owner === userInfo.email
+      );
       setListings(myListingDetails);
     };
     publishCallback(value);
@@ -87,6 +88,13 @@ const PublishModal = (props) => {
       </Modal>
     </>
   );
+};
+
+PublishModal.propTypes = {
+  isModalOpen: PropTypes.bool,
+  listingId: PropTypes.number,
+  setIsModalOpen: PropTypes.func,
+  setListings: PropTypes.func,
 };
 
 export default PublishModal;

@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types'
+import { Button, Card, Typography } from 'antd';
+import moment from 'moment';
 import React, { useState } from 'react';
 import styles from '../Listing.module.css';
-import { Card, Typography, Button } from 'antd';
 import DeleteModal from './DeleteModal';
-import moment from 'moment';
 
 const BookingCard = (props) => {
   const { data, setData, booking, getMyBookingRes, setBookings } = props;
-  console.log(booking);
-  const { Title, Text } = Typography;
+
+  const { Text } = Typography;
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -27,6 +28,7 @@ const BookingCard = (props) => {
         className={styles.card}
         actions={[
           <Button
+            key="1"
             style={{
               border: 'transparent',
               backgroundColor: 'transparent',
@@ -58,5 +60,20 @@ const BookingCard = (props) => {
     </>
   );
 };
+
+BookingCard.propTypes = {
+  booking: PropTypes.shape({
+    dateRange: PropTypes.shape({
+      end: PropTypes.object,
+      start: PropTypes.object
+    }),
+    status: PropTypes.string,
+    totalPrice: PropTypes.number
+  }),
+  data: PropTypes.object,
+  getMyBookingRes: PropTypes.func,
+  setBookings: PropTypes.func,
+  setData: PropTypes.func
+}
 
 export default BookingCard;

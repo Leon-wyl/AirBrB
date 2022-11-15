@@ -21,8 +21,8 @@ export const postBookings = async (listingId, dateRange, totalPrice) => {
     const url = baseUrl + `/bookings/new/${listingId}`;
     const headers = { Authorization: 'Bearer ' + token };
     const data = {
-      dateRange: dateRange,
-      totalPrice: totalPrice,
+      dateRange,
+      totalPrice,
     };
     const res = await postAxios(url, data, headers);
     console.log(res);

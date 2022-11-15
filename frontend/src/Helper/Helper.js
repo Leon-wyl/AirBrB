@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { getAxios } from '../api/Base';
 import { getBookings } from '../api/BookingApi';
-import { getAllListings, getListingWithId } from '../api/ListingApi';
+import { getAllListings } from '../api/ListingApi';
 import { baseUrl } from '../constants/Constants';
 
 export const beforeUpload = (file) => {
@@ -29,8 +29,7 @@ const compareNames = (a, b) => {
 };
 
 const compareIsMyBooking = (bookings, userInfo) => (a, b) => {
-  if (isMyBooking(a, bookings, userInfo) === isMyBooking(b, bookings, userInfo))
-    return 0;
+  if (isMyBooking(a, bookings, userInfo) === isMyBooking(b, bookings, userInfo)) { return 0; }
   if (isMyBooking(a, bookings, userInfo)) return -1;
   return 1;
 };
@@ -41,8 +40,7 @@ const isMyBooking = (listing, bookings, userInfo) => {
     if (
       listing.id === Number(booking.listingId) &&
       userInfo.email === booking.owner
-    )
-      marker = true;
+    ) { marker = true; }
   });
   return marker;
 };

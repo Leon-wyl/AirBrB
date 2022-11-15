@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Typography, Descriptions, Divider } from 'antd';
-import { getAllDatesBetweenDates, getRating } from '../../../Helper/Helper';
+import { Descriptions, Typography } from 'antd';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { getAllDatesBetweenDates, getRating } from '../../../Helper/Helper';
 
 const ListingDescriptions = (props) => {
   const { data, bookings } = props;
@@ -31,10 +32,12 @@ const ListingDescriptions = (props) => {
 
   const numDaysBookedThisYear = getNumDaysBookedThisYear(bookings);
   const getProfitMadeThisYear = (bookings) => {
-    const acceptedBookings = bookings.filter((booking) => booking.status === 'accepted');
+    const acceptedBookings = bookings.filter(
+      (booking) => booking.status === 'accepted'
+    );
     const numDaysAccepted = getNumDaysBookedThisYear(acceptedBookings);
     return numDaysAccepted * data.price;
-  }
+  };
   const profitMadeThisYear = getProfitMadeThisYear(bookings);
 
   const rating = getRating(data?.reviews ? data.reviews : []);
@@ -68,6 +71,30 @@ const ListingDescriptions = (props) => {
       </Descriptions>
     </div>
   );
+};
+
+ListingDescriptions.propTypes = {
+  bookings: PropTypes.shape({
+    filter: PropTypes.func,
+    map: PropTypes.func,
+  }),
+  data: PropTypes.shape({
+    address: PropTypes.shape({
+      addressLine: PropTypes.string,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      state: PropTypes.string,
+    }),
+    owner: PropTypes.string,
+    postedOn: PropTypes.object,
+    price: PropTypes.number,
+    published: PropTypes.shape({
+      toString: PropTypes.func,
+    }),
+    reviews: PropTypes.shape({
+      length: PropTypes.number,
+    }),
+  }),
 };
 
 export default ListingDescriptions;

@@ -3,7 +3,7 @@ import axios from 'axios';
 export const getAxios = (url, headers = {}) =>
   new Promise((resolve, reject) => {
     axios
-      .get(url, { headers: headers })
+      .get(url, { headers })
       .then((res) => {
         resolve(res);
       })
@@ -19,7 +19,7 @@ export const postAxios = (url, data = {}, headers = {}) =>
         url,
         { ...data },
         {
-          headers: headers,
+          headers,
         }
       )
       .then((res) => {
@@ -37,7 +37,7 @@ export const putAxios = (url, data = {}, headers = {}) =>
         url,
         { ...data },
         {
-          headers: headers,
+          headers,
         }
       )
       .then((res) => {
@@ -52,8 +52,8 @@ export const deleteAxios = (url, data = {}, headers = {}) =>
   new Promise((resolve, reject) => {
     axios
       .delete(url, {
-        headers: headers,
-        data: data,
+        headers,
+        data,
       })
       .then((res) => {
         resolve(res);

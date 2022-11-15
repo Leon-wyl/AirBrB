@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Divider, Typography, Card } from 'antd';
 import styles from '../Listing.module.css';
@@ -37,6 +38,19 @@ const OtherDetails = (props) => {
       </div>
     </>
   );
+};
+
+OtherDetails.propTypes = {
+  data: PropTypes.shape({
+    metadata: PropTypes.shape({
+      amenities: PropTypes.array,
+      bedroomDetails: PropTypes.string,
+      numBathroom: PropTypes.number,
+      numBed: PropTypes.number,
+      numBedroom: PropTypes.number,
+      propertyType: PropTypes.string,
+    }),
+  }),
 };
 
 export default OtherDetails;

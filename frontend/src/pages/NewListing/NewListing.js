@@ -1,7 +1,7 @@
-import { Button } from 'antd';
+import { Typography } from 'antd';
 import React from 'react';
 import styles from './NewListing.module.css';
-import { Typography } from 'antd';
+
 import CreateNewListingForm from './components/CreateNewListingForm';
 
 const NewListing = () => {
