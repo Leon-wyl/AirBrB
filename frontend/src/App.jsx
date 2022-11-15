@@ -28,7 +28,7 @@ function App() {
           <PrivateRoute path="/newlisting" component={NewListing} />
           <PrivateRoute path="/editlisting/:id" component={EditListing} />
           <Route path="/listing/:id" exact component={Listing} />
-          <Route path="/bookings/:id" exact component={ManageBookings} />
+          <PrivateRoute path="/bookings/:id" component={ManageBookings} />
         </Switch>
       </UserContext.Provider>
     </>

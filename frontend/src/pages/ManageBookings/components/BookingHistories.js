@@ -35,7 +35,7 @@ const BookingHistories = (props) => {
                 <Descriptions.Item label="Total price">
                   {`$${booking.totalPrice} USD`}
                 </Descriptions.Item>
-								<Descriptions.Item label="Booking status">
+                <Descriptions.Item label="Booking status">
                   {booking.status}
                 </Descriptions.Item>
               </Descriptions>

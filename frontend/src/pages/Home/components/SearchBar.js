@@ -78,14 +78,16 @@ const SearchBar = (props) => {
   };
 
   const filterBySearchText = (listings) => {
-    console.log(listings);
     if (searchText) {
       const searchTextLower = searchText.toLowerCase();
-      const listingsAfterFilter = listings.filter(
-        (listing) =>
-          listing.address.city.toLowerCase() === searchTextLower ||
-          listing.title.toLowerCase() == searchTextLower
-      );
+      const listingsAfterFilter = listings.filter((listing) => {
+        const cityLower = listing.address.city.toLowerCase();
+        const titleLower = listing.title.toLowerCase();
+        return (
+          cityLower.includes(searchTextLower) ||
+          titleLower.includes(searchTextLower)
+        );
+      });
       return listingsAfterFilter;
     }
     return listings;

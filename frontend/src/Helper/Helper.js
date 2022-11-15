@@ -120,5 +120,6 @@ export const getRating = (reviews) => {
   reviews.forEach((review) => {
     ratingSum = ratingSum + review.rating;
   });
-  return numRatings === 0 ? 0 : (ratingSum / numRatings).toFixed(2);
+  const rating = numRatings === 0 ? 0 : (ratingSum / numRatings).toFixed(2);
+  return rating;
 };

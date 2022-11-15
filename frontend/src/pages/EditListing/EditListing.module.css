@@ -1,19 +1,19 @@
 .outerContainer {
-	display: flex;
-	justify-content: center;
-	height: calc(100vh - 72px);
-	overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 72px);
+  overflow-y: scroll;
 }
 
 .innerContainer {
-	display: flex;
-	flex-direction: column;
-	width: 1000px;
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
 }
 
 .header {
-	display: flex;
-	width: 100%;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }

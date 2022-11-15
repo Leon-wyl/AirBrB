@@ -1,37 +1,37 @@
 .outerContainer {
-	display: flex;
-	justify-content: center;
-	height: calc(100vh - 72px);
-	overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 72px);
+  overflow-y: scroll;
 }
 
 .innerContainer {
-	display: flex;
-	width: 90%;
-	flex-direction: column;
+  display: flex;
+  width: 90%;
+  flex-direction: column;
 }
 
 .header {
-	display: flex;
-	width: 100%;
-	justify-content: center;
-	align-items: center;
-	margin: 1rem 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
 }
 
 h1 {
-	margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .cardContainer {
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	flex-wrap: wrap;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .searchBarContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -3,7 +3,14 @@ import { Modal, Typography, message } from 'antd';
 import { putAcceptBookings } from '../../../api/BookingApi';
 
 const AcceptModal = (props) => {
-  const { isModalOpen, setIsModalOpen, booking, getListingBookings, setBookings, data } = props;
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    booking,
+    getListingBookings,
+    setBookings,
+    data,
+  } = props;
 
   const { Text } = Typography;
 

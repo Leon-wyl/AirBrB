@@ -30,7 +30,7 @@ export const postBookings = async (listingId, dateRange, totalPrice) => {
   } catch (err) {
     return err;
   }
-} 
+};
 
 export const putAcceptBookings = async (bookingId) => {
   try {
@@ -43,7 +43,7 @@ export const putAcceptBookings = async (bookingId) => {
   } catch (err) {
     return err;
   }
-} 
+};
 
 export const putDeclineBookings = async (bookingId) => {
   try {
@@ -56,7 +56,7 @@ export const putDeclineBookings = async (bookingId) => {
   } catch (err) {
     return err;
   }
-} 
+};
 
 export const deleteBookings = async (bookingId) => {
   try {
@@ -70,4 +70,4 @@ export const deleteBookings = async (bookingId) => {
     console.log(err);
     return err;
   }
-} 
+};

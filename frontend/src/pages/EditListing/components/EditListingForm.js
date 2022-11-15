@@ -1,10 +1,10 @@
-import { Button, Form, Input, Select, message, Upload, Card } from "antd";
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { propertyTypes, amenities } from "../../../constants/Constants";
-import { getListingWithId, putListing } from "../../../api/ListingApi";
-import { beforeUpload } from "../../../Helper/Helper";
+import { Button, Form, Input, Select, message, Upload, Card } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { propertyTypes, amenities } from '../../../constants/Constants';
+import { getListingWithId, putListing } from '../../../api/ListingApi';
+import { beforeUpload } from '../../../Helper/Helper';
 
 const EditListingForm = () => {
   // The useState storing the thumbnail and image
@@ -13,7 +13,7 @@ const EditListingForm = () => {
   const [form] = Form.useForm();
   useEffect(async () => {
     // Get listing id from url
-    const listingId = window.location.href.split("/")[4];
+    const listingId = window.location.href.split('/')[4];
     getListingWithId(listingId).then((res) => {
       if (res.status) {
         // Set all fetched listing details into form
@@ -34,12 +34,12 @@ const EditListingForm = () => {
         };
         form.setFieldsValue(initialValues);
         // Set thumbnail picture into state
-        if (listingData.thumbnail !== "")
+        if (listingData.thumbnail !== '')
           setThumbnail([
             {
-              uid: "-1",
-              name: "avatar.png",
-              status: "done",
+              uid: '-1',
+              name: 'avatar.png',
+              status: 'done',
               thumbUrl: listingData.thumbnail,
             },
           ]);
@@ -49,8 +49,8 @@ const EditListingForm = () => {
             (url, key) => {
               return {
                 uid: key,
-                name: "image" + key,
-                status: "done",
+                name: 'image' + key,
+                status: 'done',
                 thumbUrl: url,
               };
             }
@@ -58,10 +58,10 @@ const EditListingForm = () => {
           setImageGallery(imageGalleryList);
         }
       } else if (res.response.status === 403) {
-        message.error("User is invalid. Please log in or sign up again");
+        message.error('User is invalid. Please log in or sign up again');
         return;
       } else {
-        message.error("Something unexpected happened. Delete Unsuccessful");
+        message.error('Something unexpected happened. Delete Unsuccessful');
         return;
       }
     });
@@ -97,7 +97,7 @@ const EditListingForm = () => {
     }
     if (value.title) {
       // Send request
-      const listingId = window.location.href.split("/")[4];
+      const listingId = window.location.href.split('/')[4];
       const res = await putListing(
         listingId,
         value.title,
@@ -108,15 +108,15 @@ const EditListingForm = () => {
       );
       if (res.status) {
         console.log(res);
-        message.success("Edit listing successfully");
-        history.push("/mylistings");
+        message.success('Edit listing successfully');
+        history.push('/mylistings');
       } else if (res.response.status === 400) {
-        message.error("Input of infomation of the new listing in invalid");
+        message.error('Input of infomation of the new listing in invalid');
       } else if (res.response.status === 403) {
-        message.error("User is invalid. Please log in or sign up again");
-        history.push("/login");
+        message.error('User is invalid. Please log in or sign up again');
+        history.push('/login');
       } else {
-        message.error("Something unexpected happened.");
+        message.error('Something unexpected happened.');
       }
     }
   };
@@ -166,7 +166,7 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input the title of your listing!",
+              message: 'Please input the title of your listing!',
             },
           ]}
         >
@@ -179,7 +179,7 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your address line!",
+              message: 'Please input your address line!',
             },
           ]}
         >
@@ -192,7 +192,7 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your scity!",
+              message: 'Please input your scity!',
             },
           ]}
         >
@@ -205,7 +205,7 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your state!",
+              message: 'Please input your state!',
             },
           ]}
         >
@@ -217,7 +217,7 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your country!",
+              message: 'Please input your country!',
             },
           ]}
         >
@@ -230,11 +230,11 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your price!",
+              message: 'Please input your price!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -247,7 +247,7 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please select a property type!",
+              message: 'Please select a property type!',
             },
           ]}
         >
@@ -269,11 +269,11 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your number of bathroom!",
+              message: 'Please input your number of bathroom!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -286,11 +286,11 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your number of bedroom!",
+              message: 'Please input your number of bedroom!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -303,11 +303,11 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your number of bed!",
+              message: 'Please input your number of bed!',
             },
             {
               pattern: /^\d+$/,
-              message: "Please input a valid whole number!",
+              message: 'Please input a valid whole number!',
             },
           ]}
         >
@@ -320,7 +320,7 @@ const EditListingForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input your bedroom details!",
+              message: 'Please input your bedroom details!',
             },
           ]}
         >
@@ -341,10 +341,7 @@ const EditListingForm = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          name="thumbnail"
-          label="Thumbnail"
-        >
+        <Form.Item name="thumbnail" label="Thumbnail">
           <Upload
             name="avatar"
             listType="picture-card"
@@ -377,9 +374,9 @@ const EditListingForm = () => {
 
         <Form.Item
           style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "row",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'row',
           }}
         >
           <Button
@@ -394,12 +391,12 @@ const EditListingForm = () => {
 
         <Form.Item
           style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "row",
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'row',
           }}
         >
-          <Button size="large" onClick={() => history.push("/mylistings")}>
+          <Button size="large" onClick={() => history.push('/mylistings')}>
             Cancel
           </Button>
         </Form.Item>

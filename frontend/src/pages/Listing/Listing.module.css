@@ -1,36 +1,36 @@
 /* @import "~react-image-gallery/styles/css/image-gallery.css"; */
 
 .outerContainer {
-	display: flex;
-	justify-content: center;
-	height: calc(100vh - 72px);
-	overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 72px);
+  overflow-y: scroll;
 }
 
 .innerContainer {
-	display: flex;
-	width: 75%;
-	flex-direction: column;
+  display: flex;
+  width: 75%;
+  flex-direction: column;
 }
 
 .container {
-	display: flex;
-	flex-direction: flex-start;
-	flex-wrap: wrap;
+  display: flex;
+  flex-direction: flex-start;
+  flex-wrap: wrap;
 }
 
 .card {
-	margin-right: 30px;
-	margin-bottom: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
 }
 
 .amenityCard {
-	margin-right: 10px;
-	margin-bottom: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .reviewHeader {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

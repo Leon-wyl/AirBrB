@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styles from './Header.module.css';
-import { Card, Typography, Rate, Button, Divider } from 'antd';
+import { Card, Typography, Rate, Button } from 'antd';
 import { getRating } from '../../../Helper/Helper';
 import { UserContext } from '../../../store/UserContext';
 import BookingModal from './BookingModal';
@@ -13,7 +13,7 @@ const Header = (props) => {
   const { dateRange, userInfo } = useContext(UserContext);
 
   const numReviews = data?.reviews ? data.reviews.length : 0;
-  const rating = data?.reviews ? getRating(data.reviews) : 0;
+  const rating = data?.reviews ? getRating(data.reviews) : -1;
 
   const loggedIn = !(userInfo.token === '');
 
@@ -22,15 +22,15 @@ const Header = (props) => {
   const perStayOrPerNight = dateRange === 0 ? 'per night' : 'per stay';
 
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-
+  console.log(rating);
   return (
     <div className={styles.header}>
       <BookingModal
         isModalOpen={isBookingModalOpen}
         setIsModalOpen={setIsBookingModalOpen}
-				data={data}
-				getMyBookingRes={getMyBookingRes}
-				setBookings={setBookings}
+        data={data}
+        getMyBookingRes={getMyBookingRes}
+        setBookings={setBookings}
       />
       <Card
         hoverable={true}
@@ -41,39 +41,52 @@ const Header = (props) => {
         cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
       ></Card>
       <div className={styles.headerInfo}>
-        <Title level={2} style={{ marginBottom: '5px' }}>
-          {data.title}
-        </Title>
-        <Text
-          style={{ display: 'inline', fontSize: '16px' }}
-          type="primary"
-          underline
-        >{`${data?.address?.addressLine}, ${data?.address?.city}, ${data?.address?.state}, ${data?.address?.country}`}</Text>
         <div>
-          <Title level={2} style={{ display: 'inline' }}>{`$${
-            price * stayLength
-          }`}</Title>
+          <Title level={2} style={{ marginBottom: '5px' }}>
+            {data.title}
+          </Title>
+          <Text
+            style={{ display: 'inline', fontSize: '16px' }}
+            type="primary"
+            underline
+          >{`${data?.address?.addressLine}, ${data?.address?.city}, ${data?.address?.state}, ${data?.address?.country}`}</Text>
+        </div>
+        <div className={styles.price}>
+          <Title
+            level={2}
+            style={{ display: 'inline', marginRight: '5px' }}
+            type="danger"
+          >{`$${price * stayLength}`}</Title>
           <Text>{` USD ${perStayOrPerNight}`}</Text>
         </div>
-        <Button
-          size="large"
-          type="primary"
-          disabled={!loggedIn || isOwnListing}
-					onClick={() => setIsBookingModalOpen(true)}
-        >
-          Book
-        </Button>
         <div>
-          <Rate size="small" disabled allowHalf defaultValue={rating} />
-          <Text type="primary"> {`(${rating})`}</Text>
+          <Button
+            size="large"
+            type="primary"
+            disabled={!loggedIn || isOwnListing}
+            onClick={() => setIsBookingModalOpen(true)}
+          >
+            Book
+          </Button>
+          <div>
+            {rating !== -1 && (
+              <Rate
+                size="small"
+                disabled
+                allowHalf
+                defaultValue={Number(rating)}
+              />
+            )}
+            <Text type="primary"> {`(${rating})`}</Text>
+          </div>
+          <Text
+            style={{ display: 'inline', fontSize: '16px' }}
+            type="primary"
+            underline
+          >
+            {`${numReviews}`} people reviewed
+          </Text>
         </div>
-        <Text
-          style={{ display: 'inline', fontSize: '16px' }}
-          type="primary"
-          underline
-        >
-          {`${numReviews}`} people reviewed
-        </Text>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-import { Typography, Card, Rate } from "antd";
-import React from "react";
-import { getRating } from "../../../Helper/Helper";
-import styles from "../../my-listings/components/MyListingCard.module.css";
+import { Typography, Card, Rate } from 'antd';
+import React from 'react';
+import { getRating } from '../../../Helper/Helper';
+import styles from '../../my-listings/components/MyListingCard.module.css';
 import { useHistory } from 'react-router-dom';
 
 const { Meta } = Card;
@@ -36,7 +36,7 @@ const AllListingCard = (props) => {
             <Rate size="small" disabled allowHalf defaultValue={rating} />
             <Text type="secondary"> {`(${rating})`}</Text>
           </div>
-					<Text type="secondary"> {`(${numRatings} people rates)`}</Text>
+          <Text type="secondary"> {`(${numRatings} people rates)`}</Text>
         </div>
       </Card>
     </>

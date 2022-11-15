@@ -31,7 +31,8 @@ const Listing = () => {
     console.log(bookingDetails);
     const myBookings = bookingDetails.filter(
       (booking) =>
-        booking.listingId === listingId.toString() && booking.owner === userInfo.email
+        booking.listingId === listingId.toString() &&
+        booking.owner === userInfo.email
     );
     console.log(userInfo.email);
     return myBookings;
@@ -45,7 +46,7 @@ const Listing = () => {
     setData({ ...listingDetail, id: Number(listingId) });
     // If logged in, get booking info, store at useState
     if (loggedIn) {
-      console.log(listingId)
+      console.log(listingId);
       const myBookings = await getMyBookingRes(listingId, userInfo);
       setBookings(myBookings);
     }
@@ -91,7 +92,11 @@ const Listing = () => {
         <Divider />
         <OtherImages data={data} />
         <Divider />
-        <Reviews data={data} acceptedBookings={acceptedBookings} setData={setData}/>
+        <Reviews
+          data={data}
+          acceptedBookings={acceptedBookings}
+          setData={setData}
+        />
       </div>
     </div>
   );

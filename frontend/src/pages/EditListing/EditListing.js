@@ -1,10 +1,10 @@
-import { Typography } from "antd";
-import React from "react";
-import EditListingForm from "./components/EditListingForm";
+import { Typography } from 'antd';
+import React from 'react';
+import EditListingForm from './components/EditListingForm';
 import styles from './EditListing.module.css';
 
 const EditListing = () => {
-	const { Title } = Typography;
+  const { Title } = Typography;
 
   return (
     <>
