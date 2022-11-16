@@ -1,8 +1,7 @@
+import { message, Modal, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
-import { Modal, Typography, message } from 'antd';
+import React from 'react';
 import { putUnpublishListing } from '../../../api/ListingApi';
-import { UserContext } from '../../../store/UserContext';
 import { getAllSortedUserDetails } from '../../../Helper/Helper';
 
 const UnpublishModal = (props) => {
@@ -10,7 +9,8 @@ const UnpublishModal = (props) => {
 
   const { isModalOpen, setIsModalOpen, listingId, setListings } = props;
 
-  const { userInfo } = useContext(UserContext);
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
   const handleOk = async () => {
     const unpublishCallback = async () => {
@@ -20,15 +20,15 @@ const UnpublishModal = (props) => {
         console.log(res);
         message.success('Unpublish listing successfully');
       } else if (res.response.status === 400) {
-        message.error('Unpublish Unsuccessful');
+        message.error(res.response.data.error);
       } else if (res.response.status === 403) {
         message.error('User is invalid. Please log in or sign up again');
       } else {
         message.error('Something unexpected happened. Unpublish Unsuccessful');
       }
-      const listingDetails = await getAllSortedUserDetails(userInfo);
+      const listingDetails = await getAllSortedUserDetails(email, token);
       const myListingDetails = listingDetails.filter(
-        (listing) => listing.owner === userInfo.email
+        (listing) => listing.owner === email
       );
       setListings(myListingDetails);
     };

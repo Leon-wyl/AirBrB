@@ -1,17 +1,13 @@
-import React, { useContext } from 'react';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Card, Form, Input, message } from 'antd';
 import 'antd/dist/antd.min.css';
-import { Card, Form, Input, Button, message } from 'antd';
-import styles from './Login.module.css';
-import logo from '../../assets/logo-black.png';
-import { postRegister } from '../../api/AuthApi';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { UserContext } from '../../store/UserContext';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
-
+import { postRegister } from '../../api/AuthApi';
+import logo from '../../assets/logo-black.png';
+import styles from './Login.module.css';
 const Register = () => {
   const history = useHistory();
-
-  const { setUserInfo } = useContext(UserContext);
 
   const onFinish = async (value) => {
     const res = await postRegister(value.email, value.name, value.password);
@@ -20,10 +16,6 @@ const Register = () => {
       message.success('Login successfully');
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('email', value.email);
-      setUserInfo({
-        email: value.email,
-        token: res.data.token,
-      });
       history.push('/mylistings');
     } else if (res.response.data.error) {
       message.error(res.response.data.error);
@@ -70,6 +62,7 @@ const Register = () => {
             ]}
           >
             <Input
+              data-testid="name"
               name='name'
               prefix={<UserOutlined className={styles.icon}/>}
               placeholder='Name'
@@ -89,6 +82,7 @@ const Register = () => {
             ]}
           >
             <Input
+              data-testid="email"
               name='email'
               prefix={<MailOutlined className={styles.icon}/>}
               placeholder="Email"
@@ -105,6 +99,7 @@ const Register = () => {
             ]}
           >
             <Input.Password
+              data-testid="password"
               name='password'
               prefix={<LockOutlined className={styles.icon}/>}
               placeholder="Password"
@@ -131,6 +126,7 @@ const Register = () => {
             ]}
           >
             <Input.Password
+              data-testid="confirmPassword"
               name='confirmPassword'
               prefix={<LockOutlined className={styles.icon}/>}
               placeholder="Password"

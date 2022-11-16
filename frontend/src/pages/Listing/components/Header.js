@@ -1,29 +1,27 @@
+import { Button, Card, Rate, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
-import styles from './Header.module.css';
-import { Card, Typography, Rate, Button } from 'antd';
+import React, { useState } from 'react';
 import { getRating } from '../../../Helper/Helper';
-import { UserContext } from '../../../store/UserContext';
 import BookingModal from './BookingModal';
-
+import styles from './Header.module.css';
 const Header = (props) => {
-  const { data, isOwnListing, getMyBookingRes, setBookings } = props;
+  const { data, isOwnListing, getMyBookingRes, setBookings, dateRange } = props;
 
   const { Title, Text } = Typography;
 
-  const { dateRange, userInfo } = useContext(UserContext);
+  const token = localStorage.getItem('token');
 
   const numReviews = data?.reviews ? data.reviews.length : 0;
   const rating = data?.reviews ? getRating(data.reviews) : -1;
 
-  const loggedIn = !(userInfo.token === '');
+  const loggedIn = !(token === '');
 
   const price = data?.price ? data.price : 0;
   const stayLength = dateRange === 0 ? 1 : dateRange;
   const perStayOrPerNight = dateRange === 0 ? 'per night' : 'per stay';
 
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-  console.log(rating);
+
   return (
     <div className={styles.header}>
       <BookingModal
@@ -38,6 +36,7 @@ const Header = (props) => {
         className={styles.card}
         style={{
           width: 300,
+          marginRight: '40px'
         }}
         cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
       ></Card>
@@ -110,6 +109,7 @@ Header.propTypes = {
   getMyBookingRes: PropTypes.func,
   isOwnListing: PropTypes.bool,
   setBookings: PropTypes.func,
+  dateRange: PropTypes.number,
 };
 
 export default Header;

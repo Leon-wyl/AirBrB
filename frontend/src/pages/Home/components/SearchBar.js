@@ -1,13 +1,10 @@
-import PropTypes from 'prop-types'
-import React, { useState, useContext } from 'react';
-import { Input, Select, Typography, DatePicker, message } from 'antd';
-import {
-  compareSortBy,
-  getAllSortedUserDetails,
-  getAllDatesBetweenDates,
-} from '../../../Helper/Helper';
-import { UserContext } from '../../../store/UserContext';
+import { DatePicker, Input, message, Select, Typography } from 'antd';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import {
+  compareSortBy, getAllDatesBetweenDates, getAllSortedUserDetails
+} from '../../../Helper/Helper';
 import styles from './SearchBar.module.css';
 
 const SearchBar = (props) => {
@@ -15,9 +12,10 @@ const SearchBar = (props) => {
   const { Text } = Typography;
   const { RangePicker } = DatePicker;
 
-  const { setAllListings } = props;
+  const { setAllListings, setDateRange } = props;
 
-  const { userInfo, setDateRange } = useContext(UserContext);
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
   const [searchText, setSearchText] = useState('');
   const [filter, setFilter] = useState('None');
@@ -44,7 +42,7 @@ const SearchBar = (props) => {
   };
 
   const onSearch = async () => {
-    const listingDetails = await getAllSortedUserDetails(userInfo);
+    const listingDetails = await getAllSortedUserDetails(email, token);
     const publishedListings = listingDetails.filter(
       (listing) => listing.published
     );
@@ -265,7 +263,8 @@ const SearchBar = (props) => {
 };
 
 SearchBar.propTypes = {
-  setAllListings: PropTypes.func
+  setAllListings: PropTypes.func,
+  setDateRange: PropTypes.func,
 }
 
 export default SearchBar;

@@ -1,17 +1,14 @@
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message } from 'antd';
 import 'antd/dist/antd.min.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { postLogin } from '../../api/AuthApi';
 import logo from '../../assets/logo-black.png';
-import { UserContext } from '../../store/UserContext';
 import styles from './Login.module.css';
 
 const Login = () => {
   const history = useHistory();
-
-  const { setUserInfo } = useContext(UserContext);
 
   const onFinish = async (value) => {
     const res = await postLogin(value.email, value.password);
@@ -19,10 +16,6 @@ const Login = () => {
       message.success('Login successfully');
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('email', value.email);
-      setUserInfo({
-        email: value.email,
-        token: res.data.token,
-      });
       history.push('/mylistings');
     } else if (res.response.data.error) {
       message.error(res.response.data.error);

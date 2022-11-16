@@ -28,18 +28,18 @@ const compareNames = (a, b) => {
   return 0;
 };
 
-const compareIsMyBooking = (bookings, userInfo) => (a, b) => {
-  if (isMyBooking(a, bookings, userInfo) === isMyBooking(b, bookings, userInfo)) { return 0; }
-  if (isMyBooking(a, bookings, userInfo)) return -1;
+const compareIsMyBooking = (bookings, email) => (a, b) => {
+  if (isMyBooking(a, bookings, email) === isMyBooking(b, bookings, email)) { return 0; }
+  if (isMyBooking(a, bookings, email)) return -1;
   return 1;
 };
 
-const isMyBooking = (listing, bookings, userInfo) => {
+const isMyBooking = (listing, bookings, email) => {
   let marker = false;
   bookings.forEach((booking) => {
     if (
       listing.id === Number(booking.listingId) &&
-      userInfo.email === booking.owner
+      email === booking.owner
     ) { marker = true; }
   });
   return marker;
@@ -70,7 +70,7 @@ export const getAllDatesBetweenDates = (startDate, endDate) => {
   return dates;
 };
 
-export const getAllSortedUserDetails = async (userInfo) => {
+export const getAllSortedUserDetails = async (email, token) => {
   // get all user info, if cannot get then, print a message
   const listingsResRaw = await getAllListings();
   if (!listingsResRaw.status) {
@@ -89,13 +89,13 @@ export const getAllSortedUserDetails = async (userInfo) => {
   }
   // Sort the result alphabetially, then put the listing(s) that is booked by the user in front of all other listings
   listingDetails.sort(compareNames);
-  if (userInfo.token) {
+  if (token) {
     const bookingsResRaw = await getBookings();
     if (bookingsResRaw.status) {
       const bookings = bookingsResRaw.data.bookings;
       console.log(listingDetails);
       const afterSorting = listingDetails.sort(
-        compareIsMyBooking(bookings, userInfo)
+        compareIsMyBooking(bookings, email)
       );
       console.log(afterSorting);
     }

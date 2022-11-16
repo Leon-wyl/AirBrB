@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Modal, Typography, message, Form, DatePicker, Button } from 'antd';
 import DynamicField from './DynamicField';
 import { getAllSortedUserDetails, toRangeObject } from '../../../Helper/Helper';
 import { putPublishListing } from '../../../api/ListingApi';
 import moment from 'moment';
-import { UserContext } from '../../../store/UserContext';
 
 const PublishModal = (props) => {
   const { Title } = Typography;
   const { RangePicker } = DatePicker;
   const { isModalOpen, setIsModalOpen, listingId, setListings } = props;
 
-  const { userInfo } = useContext(UserContext);
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
   const onFinish = async (value) => {
     const publishCallback = async (value) => {
@@ -38,9 +38,9 @@ const PublishModal = (props) => {
       } else {
         message.error('Something unexpected happened. Delete Unsuccessful');
       }
-      const listingDetails = await getAllSortedUserDetails(userInfo);
+      const listingDetails = await getAllSortedUserDetails(email, token);
       const myListingDetails = listingDetails.filter(
-        (listing) => listing.owner === userInfo.email
+        (listing) => listing.owner === email
       );
       setListings(myListingDetails);
     };

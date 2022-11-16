@@ -1,8 +1,7 @@
+import { message, Modal, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
-import { Modal, Typography, message } from 'antd';
+import React from 'react';
 import { deleteBookings } from '../../../api/BookingApi';
-import { UserContext } from '../../../store/UserContext';
 
 const DeleteModal = (props) => {
   const {
@@ -16,13 +15,14 @@ const DeleteModal = (props) => {
 
   const { Text } = Typography;
 
-  const { userInfo } = useContext(UserContext);
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
   const handleOk = async () => {
     const res = await deleteBookings(booking.id);
     if (res.status) {
       message.success('Delete booking successfully');
-      const myBookings = await getMyBookingRes(data.id, userInfo);
+      const myBookings = await getMyBookingRes(data.id, email, token);
       setBookings(myBookings);
     } else if (res.response.status === 400) {
       console.log(res);

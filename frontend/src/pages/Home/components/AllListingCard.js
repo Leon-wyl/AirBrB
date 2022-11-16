@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { Card, Rate, Typography } from 'antd';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,12 +8,12 @@ import styles from '../../my-listings/components/MyListingCard.module.css';
 const { Meta } = Card;
 
 const AllListingCard = (props) => {
-  const { data } = props;
+  const { data, dateRange } = props;
 
   const { Text } = Typography;
 
   const history = useHistory();
-  console.log(data?.reviews)
+  console.log(data?.reviews);
   const numRatings = data.reviews.length;
   const rating = getRating(data.reviews);
 
@@ -26,7 +26,7 @@ const AllListingCard = (props) => {
           width: 300,
         }}
         cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
-        onClick={() => history.push(`/listing/${data.id}`)}
+        onClick={() => history.push(`/listing/${data.id}/${dateRange}`)}
       >
         <Meta title={data.title} />
         <div className={styles.desContainer}>
@@ -50,8 +50,9 @@ AllListingCard.propTypes = {
     price: PropTypes.number,
     reviews: PropTypes.array,
     thumbnail: PropTypes.string,
-    title: PropTypes.string
-  })
-}
+    title: PropTypes.string,
+  }),
+  dateRange: PropTypes.number,
+};
 
 export default AllListingCard;

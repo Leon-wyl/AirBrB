@@ -1,25 +1,19 @@
 import 'antd/dist/antd.min.css';
 import { Button, PageHeader, Modal, message } from 'antd';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Navbar.module.css';
-import { UserContext } from '../../store/UserContext';
 import { postLogout } from '../../api/AuthApi';
 import { useHistory } from 'react-router-dom';
 
 const Navbar = () => {
   const history = useHistory();
 
-  const { userInfo, setUserInfo } = useContext(UserContext);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+
   const handleOk = async () => {
     const res = await postLogout();
     localStorage.setItem('email', '');
     localStorage.setItem('token', '');
-    setUserInfo({ email: '', token: '' });
     setIsModalOpen(false);
     if (res.status) {
       message.success('Log out successfully');
@@ -35,6 +29,11 @@ const Navbar = () => {
     setIsModalOpen(false);
   };
 
+  const onLoginOrLogout = () => {
+    const token = localStorage.getItem('token');
+    token ? setIsModalOpen(true) : history.push('/login');
+  };
+
   return (
     <div className="site-page-header-ghost-wrapper">
       <Modal
@@ -45,65 +44,37 @@ const Navbar = () => {
       >
         <p>Are you sure to log out this account?</p>
       </Modal>
-      {userInfo?.token
-        ? (
-        <PageHeader
-          ghost={false}
-          backIcon={false}
-          onBack={() => window.history.back()}
-          title="AirBrB"
-          extra={[
-            <Button
-              className={styles.navbtn}
-              key="3"
-              onClick={() => history.push('/')}
-            >
-              Home
-            </Button>,
-            <Button
-              className={styles.navbtn}
-              key="2"
-              onClick={() => history.push('/mylistings')}
-            >
-              My Listings
-            </Button>,
-            <Button
-              className={styles.navbtn}
-              key="1"
-              type="danger"
-              onClick={showModal}
-            >
-              Logout
-            </Button>,
-          ]}
-        />
-          )
-        : (
-        <PageHeader
-          ghost={false}
-          backIcon={false}
-          onBack={() => window.history.back()}
-          title="AirBrB"
-          extra={[
-            <Button
-              className={styles.navbtn}
-              key="3"
-              onClick={() => history.push('/')}
-            >
-              Home
-            </Button>,
-            <Button
-              name='loginButton'
-              className={styles.navbtn}
-              key="1"
-              type="primary"
-              onClick={() => history.push('/login')}
-            >
-              Log In
-            </Button>,
-          ]}
-        />
-          )}
+      <PageHeader
+        ghost={false}
+        backIcon={false}
+        onBack={() => window.history.back()}
+        title="AirBrB"
+        extra={[
+          <Button
+            className={styles.navbtn}
+            key="3"
+            onClick={() => history.push('/')}
+          >
+            Home
+          </Button>,
+          <Button
+            className={styles.navbtn}
+            key="2"
+            onClick={() => history.push('/mylistings')}
+          >
+            My Listings
+          </Button>,
+          <Button
+            name="loginButton"
+            className={styles.navbtn}
+            key="1"
+            type="primary"
+            onClick={onLoginOrLogout}
+          >
+            Login/Logout
+          </Button>,
+        ]}
+      />
     </div>
   );
 };

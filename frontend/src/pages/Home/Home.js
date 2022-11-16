@@ -1,19 +1,21 @@
 import { Typography } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllSortedUserDetails } from '../../Helper/Helper';
 import AllListingCard from './components/AllListingCard';
 import styles from './Home.module.css';
 
-import { UserContext } from '../../store/UserContext';
 import SearchBar from './components/SearchBar';
 
 const Home = () => {
-  const { Title } = Typography;
-  const { userInfo, setDateRange } = useContext(UserContext);
+  const { Title, Text } = Typography;
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
+
   const [allListings, setAllListings] = useState([]);
+  const [dateRange, setDateRange] = useState(0);
 
   useEffect(async () => {
-    const listingsRes = await getAllSortedUserDetails(userInfo);
+    const listingsRes = await getAllSortedUserDetails(email, token);
     const publishedListings = listingsRes.filter(
       (listing) => listing.published
     );
@@ -28,11 +30,20 @@ const Home = () => {
           <Title className={styles.title}>Welcome to AirBrB</Title>
         </div>
         <div className={styles.searchBarContainer}>
-          <SearchBar setAllListings={setAllListings} />
+          <SearchBar
+            setAllListings={setAllListings}
+            setDateRange={setDateRange}
+          />
         </div>
         <div className={styles.cardContainer}>
+          {allListings.length === 0 && <Text>No listing found.</Text>}
           {allListings.map((listing, key) => (
-            <AllListingCard key={key} data={listing} listingId={listing.id} />
+            <AllListingCard
+              key={key}
+              data={listing}
+              listingId={listing.id}
+              dateRange={dateRange}
+            />
           ))}
         </div>
       </div>

@@ -41,7 +41,7 @@ const CreateNewListingForm = () => {
         message.success('Creat new listing successfully');
         history.push('/mylistings');
       } else if (res.response.status === 400) {
-        message.error('Input of infomation of the new listing in invalid');
+        message.error(res.response.data.error);
       } else if (res.response.status === 403) {
         message.error('User is invalid. Please log in or sign up again');
       } else {

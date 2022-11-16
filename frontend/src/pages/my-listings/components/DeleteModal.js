@@ -1,14 +1,14 @@
+import { message, Modal, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
-import { Modal, Typography, message } from 'antd';
-import { UserContext } from '../../../store/UserContext';
-import { getAllSortedUserDetails } from '../../../Helper/Helper';
+import React from 'react';
 import { deleteListing } from '../../../api/ListingApi';
+import { getAllSortedUserDetails } from '../../../Helper/Helper';
 
 const DeleteModal = (props) => {
   const { Text } = Typography;
 
-  const { userInfo } = useContext(UserContext);
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
   const { isModalOpen, setIsModalOpen, listingId, setListings } = props;
 
@@ -27,9 +27,9 @@ const DeleteModal = (props) => {
       } else {
         message.error('Something unexpected happened. Delete Unsuccessful');
       }
-      const listingDetails = await getAllSortedUserDetails(userInfo);
+      const listingDetails = await getAllSortedUserDetails(email, token);
       const myListingDetails = listingDetails.filter(
-        (listing) => listing.owner === userInfo.email
+        (listing) => listing.owner === email
       );
       setListings(myListingDetails);
     };

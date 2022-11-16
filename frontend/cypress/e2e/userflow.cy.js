@@ -1,36 +1,30 @@
 describe('user happy path', () => {
-  it('should navigate to the home screen successfully', () => {
+  it('should register successfully', () => {
+    // visit the url
     cy.visit('localhost:3000/');
     cy.url().should('include', 'localhost:3000');
-  });
-
-  // it('should get to the register page successfully', () => {
-  //   cy.get('button[name="loginButton"]').click();
-  //   cy.url().should('include', 'localhost:3000/login');
-  //   cy.get('div[name="linkToSignUp"]').click();
-  //   cy.url().should('include', 'localhost:3000/register');
-  // });
-
-  // it('should register successfully', () => {
-  //   cy.get('input[name="name"]').focus().type('randomName');
-  //   cy.get('input[name="email"]').focus().type('randomEmail@email.com');
-  //   cy.get('input[name="password"]').focus().type('password');
-  //   cy.get('input[name="confirmPassword"]').focus().type('password');
-  //   cy.get('button[type="submit"]').click();
-  // });
-
-  it('should get to the sign in page successfully', () => {
+    
+    // Get to register page
     cy.get('button[name="loginButton"]').click();
     cy.url().should('include', 'localhost:3000/login');
-  });
-
-  it('should sign in successfully', () => {
+    // cy.get('div[name="linkToSignUp"]').click();
+    // cy.url().should('include', 'localhost:3000/register');
+    // Register
+    // cy.get('input[name="name"]').focus().type('randomName');
+    // cy.get('input[name="email"]').focus().type('randomEmail@email.com');
+    // cy.get('input[name="password"]').focus().type('password');
+    // cy.get('input[name="confirmPassword"]').focus().type('password');
+    // cy.get('button[type="submit"]').click();
+    // get to log in
+    cy.get('button[name="loginButton"]').click();
+    cy.url().should('include', 'localhost:3000/login');
+    // log in successfullly
     cy.get('input[name="email"]').focus().type('randomEmail@email.com');
     cy.get('input[name="password"]').focus().type('password');
     cy.get('button[type="submit"]').click();
-  });
+  // });
 
-  it('should create a new listing successfully', () => {
+  // it('should create a new listing successfully', () => {
     cy.get('button[name="createNewListing"]').click();
     cy.url().should('include', 'localhost:3000/newlisting');
     cy.get('input[name="title"]').focus().type('A Good House');
@@ -51,7 +45,9 @@ describe('user happy path', () => {
     cy.get('div[label="Wi-Fi"]').click();
     cy.get('div[label="Kitchen"]').click();
     cy.get('input[name="bedroomDetails"]').focus();
-    cy.wait(5000);
+    cy.get('input[type=file]').selectFile('../../ass3/frontend/public/picture1.jpg', {
+      force: true,
+    });
     cy.get('button[type="submit"]').click();
   });
 });

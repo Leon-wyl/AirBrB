@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
-import { Modal, DatePicker, Typography, message } from 'antd';
+import { DatePicker, message, Modal, Typography } from 'antd';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { postBookings } from '../../../api/BookingApi';
-import { UserContext } from '../../../store/UserContext';
 
 const BookingModal = (props) => {
   const { isModalOpen, setIsModalOpen, data, getMyBookingRes, setBookings } =
@@ -12,7 +11,8 @@ const BookingModal = (props) => {
   const { RangePicker } = DatePicker;
   const { Title } = Typography;
 
-  const { userInfo } = useContext(UserContext);
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
   const [dateRange, setDateRange] = useState({ start: null, end: null });
 
@@ -26,7 +26,7 @@ const BookingModal = (props) => {
         if (res.status) {
           message.success('Create new booking successfully');
           console.log(data.id);
-          const myBookings = await getMyBookingRes(data.id, userInfo);
+          const myBookings = await getMyBookingRes(data.id, email, token);
           setBookings(myBookings);
         } else if (res.response.status === 400) {
           console.log(res);

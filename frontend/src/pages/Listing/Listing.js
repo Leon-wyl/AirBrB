@@ -1,8 +1,7 @@
 import { Divider, Typography } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getBookings } from '../../api/BookingApi';
 import { getListingWithId } from '../../api/ListingApi';
-import { UserContext } from '../../store/UserContext';
 import BookingCard from './components/BookingCard';
 import Header from './components/Header';
 import OtherDetails from './components/OtherDetails';
@@ -15,26 +14,25 @@ const Listing = () => {
 
   const [data, setData] = useState({});
   const [bookings, setBookings] = useState([]);
-
-  const { userInfo } = useContext(UserContext);
-  const loggedIn = !(userInfo.token === '');
-  const isOwnListing = userInfo.email === data.owner;
+  const dateRange = Number(window.location.href.split('/')[5]);
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
+  const loggedIn = !(token === '');
+  const isOwnListing = email === data.owner;
 
   const acceptedBookings = bookings.filter(
     (booking) => booking.status === 'accepted'
   );
-  console.log(acceptedBookings);
 
-  const getMyBookingRes = async (listingId, userInfo) => {
+  const getMyBookingRes = async (listingId, email) => {
     const bookingsRes = await getBookings();
     const bookingDetails = bookingsRes ? bookingsRes?.data?.bookings : [];
     console.log(bookingDetails);
     const myBookings = bookingDetails.filter(
       (booking) =>
         booking.listingId === listingId.toString() &&
-        booking.owner === userInfo.email
+        booking.owner === email
     );
-    console.log(userInfo.email);
     return myBookings;
   };
 
@@ -47,7 +45,7 @@ const Listing = () => {
     // If logged in, get booking info, store at useState
     if (loggedIn) {
       console.log(listingId);
-      const myBookings = await getMyBookingRes(listingId, userInfo);
+      const myBookings = await getMyBookingRes(listingId, email);
       setBookings(myBookings);
     }
   }, []);
@@ -62,6 +60,7 @@ const Listing = () => {
           setData={setData}
           getMyBookingRes={getMyBookingRes}
           setBookings={setBookings}
+          dateRange={dateRange}
         />
         <Divider />
         {loggedIn && !isOwnListing && (

@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import styles from './MyListings.module.css';
 import { Button, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { UserContext } from '../../store/UserContext';
-import MyListingCard from './components/MyListingCard';
 import { getAllSortedUserDetails } from '../../Helper/Helper';
+import MyListingCard from './components/MyListingCard';
+import styles from './MyListings.module.css';
 
 const MyListings = () => {
   const { Title, Text } = Typography;
@@ -12,13 +11,13 @@ const MyListings = () => {
   const history = useHistory();
 
   const [listings, setListings] = useState([]);
-  console.log(listings);
-  const { userInfo } = useContext(UserContext);
+  const email = localStorage.getItem('email')
+  const token = localStorage.getItem('token')
 
   useEffect(async () => {
-    const listingDetails = await getAllSortedUserDetails(userInfo);
+    const listingDetails = await getAllSortedUserDetails(email, token);
     const myListingDetails = listingDetails.filter(
-      (listing) => listing.owner === userInfo.email
+      (listing) => listing.owner === email
     );
     setListings(myListingDetails);
   }, []);
