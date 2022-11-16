@@ -72,6 +72,7 @@ const Login = () => {
           >
             <Input
               name='email'
+              className='loginEmail'
               prefix={<MailOutlined className={styles.icon} />}
               placeholder="Email"
             />
@@ -88,6 +89,7 @@ const Login = () => {
           >
             <Input.Password
               name='password'
+              className='loginPassword'
               prefix={<LockOutlined className={styles.icon}/>}
               placeholder="Password"
             />

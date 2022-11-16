@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Typography, Rate, Input, message, Form, Button } from 'antd';
-import { UserContext } from '../../../store/UserContext';
 import { getListingWithId, putReviewListing } from '../../../api/ListingApi';
 import moment from 'moment';
 
@@ -12,13 +11,11 @@ const ReviewModal = (props) => {
   const { Text } = Typography;
   const { TextArea } = Input;
 
-  const { userInfo } = useContext(UserContext);
-
   const [rating, setRating] = useState(0);
 
   const handleOk = async (values) => {
     const review = {
-      user: userInfo?.email,
+      user: localStorage.getItem('email'),
       time: moment(),
       rating,
       comment: values.comment,
@@ -46,7 +43,7 @@ const ReviewModal = (props) => {
     setIsModalOpen(false);
   };
 
-  const onFinishFailed = (res) => {
+  const onFinishFailed = () => {
     message.error('Please write a comment');
   };
 
@@ -79,6 +76,7 @@ const ReviewModal = (props) => {
           ]}
         >
           <Rate
+            label='rate'
             allowHalf
             defaultValue={0}
             onChange={(value) => setRating(value)}
@@ -96,7 +94,7 @@ const ReviewModal = (props) => {
             },
           ]}
         >
-          <TextArea row={4} />
+          <TextArea label='comment' row={4} />
         </Form.Item>
 
         <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>

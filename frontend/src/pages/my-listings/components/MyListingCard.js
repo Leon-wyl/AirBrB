@@ -84,23 +84,23 @@ const MyListingCard = (props) => {
       >
         <Meta title={data.title} />
         <div className={styles.desContainer}>
-          <Text className={styles.description} type="secondary">
+          <Text name="price" className={styles.description} type="secondary">
             Price: {`$${data.price}`}
           </Text>
-          <Text className={styles.description} type="secondary">
+          <Text name="propertyType" className={styles.description} type="secondary">
             Property Type: {`${data.metadata.propertyType}`}
           </Text>
-          <Text className={styles.description} type="secondary">
+          <Text name="numBed" className={styles.description} type="secondary">
             Beds: {`${data.metadata.numBed}`}
           </Text>
-          <Text className={styles.description} type="secondary">
+          <Text name="numBathroom" className={styles.description} type="secondary">
             Bathrooms: {`${data.metadata.numBathroom}`}
           </Text>
           <div>
             <Rate size="small" disabled allowHalf defaultValue={rating} />
-            <Text type="secondary"> {`(${rating})`}</Text>
+            <Text name="rating" type="secondary"> {`(${rating})`}</Text>
           </div>
-          <Text className={styles.description} type="secondary">
+          <Text name="numRating" className={styles.description} type="secondary">
             Number of Ratings: {`${numRatings}`}
           </Text>
         </div>
