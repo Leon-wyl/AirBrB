@@ -5,7 +5,7 @@ import Signup from '../components/Signup'
 
 describe('renders login', () => {
   it('asdf', () => {
-		const mockOnSubmit = jest.fn();
+    const mockOnSubmit = jest.fn();
     render(<Signup onFinish={mockOnSubmit} />);
     const email = screen.getByTestId('email');
     const name = screen.getByTestId('name');
@@ -21,7 +21,7 @@ describe('renders login', () => {
     userEvent.type(email, '123@qqa.com');
     userEvent.type(password, 'abcdef');
     userEvent.type(confirmPassword, 'abcdef');
-		userEvent.click(button);
+    userEvent.click(button);
     expect(mockOnSubmit).toHaveBeenCalledTimes(1);
   });
 });

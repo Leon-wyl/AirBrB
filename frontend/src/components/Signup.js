@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import 'antd/dist/antd.min.css';
@@ -80,7 +80,7 @@ const Signup = ({ onFinish }) => {
               message: 'Please input your password!',
             },
             ({ getFieldValue }) => ({
-              validator(_, value) {
+              validator (_, value) {
                 if (!value || getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
@@ -108,7 +108,7 @@ const Signup = ({ onFinish }) => {
 };
 
 Signup.propTypes = {
-	onFinish: PropTypes.func
+  onFinish: PropTypes.func
 }
 
 export default Signup;

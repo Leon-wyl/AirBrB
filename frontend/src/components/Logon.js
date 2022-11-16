@@ -1,9 +1,8 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import 'antd/dist/antd.min.css';
 import React from 'react';
-import logo from '../assets/logo-black.png';
 import styles from '../pages/User/Login.module.css';
 
 const Logon = ({ onFinish }) => {
@@ -68,7 +67,7 @@ const Logon = ({ onFinish }) => {
 };
 
 Logon.propTypes = {
-	onFinish: PropTypes.func
+  onFinish: PropTypes.func
 }
 
 export default Logon;
