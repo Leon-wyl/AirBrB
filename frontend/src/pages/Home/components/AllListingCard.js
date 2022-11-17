@@ -14,7 +14,7 @@ const AllListingCard = (props) => {
   const { Text } = Typography;
 
   const history = useHistory();
-  console.log(data?.reviews);
+
   const numRatings = data.reviews.length;
   const rating = getRating(data.reviews);
 
@@ -26,7 +26,7 @@ const AllListingCard = (props) => {
         style={{
           width: 300,
         }}
-        cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
+        cover={<img alt={`thumbnail-${data.title}`} src={data.thumbnail} />}
         onClick={() => history.push(`/listing/${data.id}/${dateRange}`)}
       >
         <Meta title={data.title} />
@@ -59,6 +59,7 @@ AllListingCard.propTypes = {
     title: PropTypes.string,
   }),
   dateRange: PropTypes.number,
+  keyNumber: PropTypes.number,
 };
 
 export default AllListingCard;

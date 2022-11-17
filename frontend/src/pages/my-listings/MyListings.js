@@ -24,7 +24,7 @@ const MyListings = () => {
 
   return (
     <div className={styles.outerContainer}>
-      <div className={styles.innerContainer}>
+      <div className={styles.innerContainer} id='innerContainer'>
         <div className={styles.header}>
           <Title className={styles.title}>My Listings</Title>
           <Button

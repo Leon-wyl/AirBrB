@@ -1,5 +1,5 @@
-import { Divider, Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Divider, Typography, message } from 'antd';
+import React, { useEffect, useState, useContext } from 'react';
 import { getBookings } from '../../api/BookingApi';
 import { getListingWithId } from '../../api/ListingApi';
 import BookingCard from './components/BookingCard';
@@ -8,15 +8,19 @@ import OtherDetails from './components/OtherDetails';
 import OtherImages from './components/OtherImage';
 import Reviews from './components/Reviews';
 import styles from './Listing.module.css';
+import { UserContext } from '../../store/UserContext';
+import EmbeddedMap from './components/EmbeddedMap';
 
 const Listing = () => {
   const { Title, Text } = Typography;
 
+  const { token } = useContext(UserContext);
+  const email = localStorage.getItem('email');
+
   const [data, setData] = useState({});
   const [bookings, setBookings] = useState([]);
   const dateRange = Number(window.location.href.split('/')[5]);
-  const email = localStorage.getItem('email');
-  const token = localStorage.getItem('token');
+
   const loggedIn = !(token === '');
   const isOwnListing = email === data.owner;
 
@@ -24,16 +28,23 @@ const Listing = () => {
     (booking) => booking.status === 'accepted'
   );
 
-  const getMyBookingRes = async (listingId, email) => {
-    const bookingsRes = await getBookings();
-    const bookingDetails = bookingsRes ? bookingsRes?.data?.bookings : [];
-    console.log(bookingDetails);
-    const myBookings = bookingDetails.filter(
-      (booking) =>
-        booking.listingId === listingId.toString() &&
-        booking.owner === email
-    );
-    return myBookings;
+  const getMyBookingRes = async (listingId, email, token) => {
+    if (!token) return [];
+    const res = await getBookings();
+    if (res.status) {
+      const bookingDetails = res ? res?.data?.bookings : [];
+      const myBookings = bookingDetails.filter(
+        (booking) =>
+          booking.listingId === listingId.toString() && booking.owner === email
+      );
+      return myBookings;
+    } else if (res.response.status === 403) {
+      message.error('User is invalid. Please log in or sign up again');
+      return [];
+    } else {
+      message.error('Something unexpected happened. Delete Unsuccessful');
+      return [];
+    }
   };
 
   useEffect(async () => {
@@ -45,7 +56,7 @@ const Listing = () => {
     // If logged in, get booking info, store at useState
     if (loggedIn) {
       console.log(listingId);
-      const myBookings = await getMyBookingRes(listingId, email);
+      const myBookings = await getMyBookingRes(listingId, email, token);
       setBookings(myBookings);
     }
   }, []);
@@ -90,6 +101,8 @@ const Listing = () => {
         <OtherDetails data={data} />
         <Divider />
         <OtherImages data={data} />
+        <Divider />
+        <EmbeddedMap data={data}/>
         <Divider />
         <Reviews
           data={data}

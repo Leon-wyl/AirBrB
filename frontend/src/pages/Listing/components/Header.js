@@ -1,17 +1,18 @@
 import { Button, Card, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { getRating } from '../../../Helper/Helper';
 import BookingModal from './BookingModal';
 import styles from './Header.module.css';
 import StarRatings from 'react-star-ratings';
+import { UserContext } from '../../../store/UserContext';
 
 const Header = (props) => {
   const { data, isOwnListing, getMyBookingRes, setBookings, dateRange } = props;
 
   const { Title, Text } = Typography;
 
-  const token = localStorage.getItem('token');
+  const { token } = useContext(UserContext);
 
   const numReviews = data?.reviews ? data.reviews.length : 0;
   const rating = data?.reviews ? getRating(data.reviews) : -1;
@@ -23,6 +24,11 @@ const Header = (props) => {
   const perStayOrPerNight = dateRange === 0 ? 'per night' : 'per stay';
 
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+
+  const sendEmail = () => {
+    const subject = `Consultation about your Listing '${data.title}' on AirBrB`
+    window.open(`mailto:${data.owner}?subject=${subject}`);
+  };
 
   return (
     <div className={styles.header}>
@@ -40,7 +46,7 @@ const Header = (props) => {
           width: 300,
           marginRight: '40px',
         }}
-        cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
+        cover={<img alt={`thumbnail-${data.title}`} src={data.thumbnail} />}
       ></Card>
       <div className={styles.headerInfo}>
         <div>
@@ -63,6 +69,7 @@ const Header = (props) => {
         </div>
         <div>
           <Button
+            name="bookBtn"
             className={styles.bookBtn}
             size="large"
             type="primary"
@@ -70,6 +77,13 @@ const Header = (props) => {
             onClick={() => setIsBookingModalOpen(true)}
           >
             Book
+          </Button>
+          <Button
+            size="large"
+            onClick={sendEmail}
+            disabled={!loggedIn || isOwnListing}
+          >
+            Send email to host
           </Button>
           <div>
             {rating !== -1 && (
@@ -103,6 +117,7 @@ Header.propTypes = {
       country: PropTypes.string,
       state: PropTypes.string,
     }),
+    owner: PropTypes.string,
     id: PropTypes.number,
     price: PropTypes.number,
     reviews: PropTypes.array,

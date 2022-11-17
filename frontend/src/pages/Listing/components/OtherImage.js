@@ -20,7 +20,7 @@ const OtherImages = (props) => {
             className={styles.card}
             key={key}
             hoverable={true}
-            cover={<img alt={`image-${key}-${data.id}`} src={url} />}
+            cover={<img alt={`other-image-${data.title}-${key}`} src={url} />}
           />
         ))}
       </div>
@@ -31,6 +31,7 @@ const OtherImages = (props) => {
 OtherImages.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.number,
+    title: PropTypes.string,
     metadata: PropTypes.shape({
       imageGallery: PropTypes.array,
     }),

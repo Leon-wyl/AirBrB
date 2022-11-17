@@ -44,6 +44,7 @@ const UnpublishModal = (props) => {
       <Modal
         title="Unpublish Listing"
         open={isModalOpen}
+        onCancel={handleCancel}
         footer={[
           <Button key="1" onClick={handleCancel}>
             Cancel

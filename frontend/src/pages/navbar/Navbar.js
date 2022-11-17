@@ -15,6 +15,7 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOk = async () => {
+    // When log out, clear the local storage and useContext
     const res = await postLogout();
     localStorage.setItem('email', '');
     localStorage.setItem('token', '');
@@ -43,6 +44,7 @@ const Navbar = () => {
       <Modal
         title="Log Out"
         open={isModalOpen}
+        onCancel={handleCancel}
         footer={[
           <Button key="1" onClick={handleCancel}>
             Cancel
@@ -68,6 +70,7 @@ const Navbar = () => {
           token && localStorageToken
             ? [
                 <Button
+                  name="home"
                   className={styles.navbtn}
                   key="1"
                   onClick={() => history.push('/')}

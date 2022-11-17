@@ -17,9 +17,9 @@ const PublishModal = (props) => {
   const onFinish = async (value) => {
     const publishCallback = async (value) => {
       setIsModalOpen(false);
+      // Put all range into an array
       const availableRanges = [];
       const firstRange = toRangeObject(value.firstRange);
-      console.log(firstRange);
       availableRanges.push(firstRange);
       if (value.fields) {
         value.fields.forEach((item) => {
@@ -27,6 +27,7 @@ const PublishModal = (props) => {
           availableRanges.push(rangeObject);
         });
       }
+      // Publish the listing
       const res = await putPublishListing(listingId, availableRanges);
       if (res.status) {
         console.log(res);
@@ -38,6 +39,7 @@ const PublishModal = (props) => {
       } else {
         message.error('Something unexpected happened. Delete Unsuccessful');
       }
+      // Reload my listings
       const listingDetails = await getAllSortedUserDetails(email, token);
       const myListingDetails = listingDetails.filter(
         (listing) => listing.owner === email

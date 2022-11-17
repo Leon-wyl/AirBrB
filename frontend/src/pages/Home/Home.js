@@ -1,15 +1,16 @@
 import { Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { getAllSortedUserDetails } from '../../Helper/Helper';
 import AllListingCard from './components/AllListingCard';
 import styles from './Home.module.css';
+import { UserContext } from '../../store/UserContext';
 
 import SearchBar from './components/SearchBar';
 
 const Home = () => {
   const { Title, Text } = Typography;
   const email = localStorage.getItem('email');
-  const token = localStorage.getItem('token');
+  const { token } = useContext(UserContext);
 
   const [allListings, setAllListings] = useState([]);
   const [dateRange, setDateRange] = useState(0);

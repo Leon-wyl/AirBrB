@@ -19,9 +19,7 @@ const AcceptModal = (props) => {
     const res = await putAcceptBookings(booking.id);
     if (res.status) {
       message.success('Accept booking successfully');
-      console.log(data)
       const myBookings = await getListingBookings(String(data.id));
-      console.log(myBookings);
       setBookings(myBookings);
     } else if (res.response.status === 400) {
       console.log(res);

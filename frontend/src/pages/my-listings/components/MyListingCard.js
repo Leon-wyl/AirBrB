@@ -51,11 +51,12 @@ const MyListingCard = (props) => {
         style={{
           width: 300,
         }}
-        cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
+        cover={<img alt={`thumbnail-${data.title}`} src={data.thumbnail} />}
         actions={[
           <Button
             key="1"
-            name='publishBtn'
+            name="publishBtn"
+            aria-haspopup="Publish Listing"
             style={{ border: 'transparent', backgroundColor: 'transparent' }}
             size="small"
             onClick={() =>
@@ -76,14 +77,19 @@ const MyListingCard = (props) => {
           </Button>,
           <Button
             key="3"
-            name='editBtn'
+            name="editBtn"
             style={{ border: 'transparent', backgroundColor: 'transparent' }}
             size="small"
             onClick={() => history.push(`/editlisting/${data.id}`)}
           >
             Edit
           </Button>,
-          <DeleteOutlined key="4" onClick={() => setIsDeleteModalOpen(true)} />,
+          <DeleteOutlined
+            aria-haspopup="Delete Listing"
+            aria-label="delete"
+            key="4"
+            onClick={() => setIsDeleteModalOpen(true)}
+          />,
         ]}
       >
         <Meta title={data.title} />

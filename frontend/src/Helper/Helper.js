@@ -89,6 +89,7 @@ export const getAllSortedUserDetails = async (email, token) => {
   }
   // Sort the result alphabetially, then put the listing(s) that is booked by the user in front of all other listings
   listingDetails.sort(compareNames);
+  console.log(token)
   if (token) {
     const bookingsResRaw = await getBookings();
     if (bookingsResRaw.status) {

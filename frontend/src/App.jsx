@@ -14,9 +14,10 @@ import { UserContext } from './store/UserContext';
 
 const App = () => {
   const [token, setToken] = useState('');
+  const [isFetchedGoogle, setIsFetchedGoogle] = useState(false);
   return (
     <>
-      <UserContext.Provider value={{ token, setToken }}>
+      <UserContext.Provider value={{ token, setToken, isFetchedGoogle, setIsFetchedGoogle }}>
         <Navbar />
         <Switch>
           <Route path="/" exact component={Home} />

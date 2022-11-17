@@ -11,7 +11,7 @@ const CreateNewListingForm = () => {
 
   const onFinish = async (value) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
+    // Construct address and metadata
     const address = {
       addressLine: value.addressLine,
       city: value.city,
@@ -27,7 +27,7 @@ const CreateNewListingForm = () => {
       propertyType: value.propertyType,
       imageGallery: [],
     };
-    console.log(metaData);
+    // Send the new listing to the backend
     if (value.title) {
       const res = await postNewListing(
         value.title,
@@ -49,10 +49,10 @@ const CreateNewListingForm = () => {
       }
     }
   };
-  const onFinishFailed = () => {};
 
   const [imageUrl, setImageUrl] = useState();
 
+  // Handle the change on the thumbnail list: no more than 1 thumbnail
   const handleChange = (info) => {
     console.log(info);
     if (info.fileList.length >= 2) {
@@ -91,7 +91,6 @@ const CreateNewListingForm = () => {
           remember: true,
         }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           name="title"
@@ -103,7 +102,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="title" placeholder="Title" />
+          <Input name="title" placeholder="E.g. A Nice House" />
         </Form.Item>
 
         <Form.Item
@@ -116,7 +115,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="addressLine" placeholder="Address Line" />
+          <Input name="addressLine" placeholder="E.g. 233 Anzac Parade" />
         </Form.Item>
 
         <Form.Item
@@ -129,7 +128,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="city" placeholder="City" />
+          <Input name="city" placeholder="E.g. Sydney" />
         </Form.Item>
 
         <Form.Item
@@ -142,7 +141,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="state" placeholder="State" />
+          <Input name="state" placeholder="E.g. NSW" />
         </Form.Item>
 
         <Form.Item
@@ -155,7 +154,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="country" placeholder="Country" />
+          <Input name="country" placeholder="E.g. Australia" />
         </Form.Item>
 
         <Form.Item
@@ -172,7 +171,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="price" placeholder="Price in USD" />
+          <Input name="price" placeholder="Price in USD, E.g. 230" />
         </Form.Item>
 
         <Form.Item
@@ -212,7 +211,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="numBathroom" placeholder="Number of Bathroom" />
+          <Input name="numBathroom" placeholder="E.g. 5" />
         </Form.Item>
 
         <Form.Item
@@ -229,7 +228,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="numBedroom" placeholder="Number of Bathroom" />
+          <Input name="numBedroom" placeholder="E.g. 5" />
         </Form.Item>
 
         <Form.Item
@@ -246,7 +245,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="numBed" placeholder="Number of Bathroom" />
+          <Input name="numBed" placeholder="E.g. 5" />
         </Form.Item>
 
         <Form.Item

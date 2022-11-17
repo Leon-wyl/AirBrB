@@ -1,11 +1,12 @@
 import { DatePicker, Input, message, Select, Typography } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   compareSortBy, getAllDatesBetweenDates, getAllSortedUserDetails
 } from '../../../Helper/Helper';
 import styles from './SearchBar.module.css';
+import { UserContext } from '../../../store/UserContext';
 
 const SearchBar = (props) => {
   const { Search } = Input;
@@ -14,8 +15,8 @@ const SearchBar = (props) => {
 
   const { setAllListings, setDateRange } = props;
 
+  const { token } = useContext(UserContext)
   const email = localStorage.getItem('email');
-  const token = localStorage.getItem('token');
 
   const [searchText, setSearchText] = useState('');
   const [filter, setFilter] = useState('None');

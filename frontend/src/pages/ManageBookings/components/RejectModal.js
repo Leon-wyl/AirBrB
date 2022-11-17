@@ -19,6 +19,7 @@ const RejectModal = (props) => {
     const res = await putDeclineBookings(booking.id);
     if (res.status) {
       message.success('Reject booking successfully');
+      // After reject a booking, reload all bookings
       const myBookings = await getListingBookings(Number(data.id));
       setBookings(myBookings);
     } else if (res.response.status === 400) {

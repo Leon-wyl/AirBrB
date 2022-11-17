@@ -17,14 +17,6 @@ describe('user happy path', () => {
     cy.get('button[type="submit"]').click();
     cy.wait(100);
 
-    // // get to log in
-    // cy.get('button[name="loginButton"]').click();
-    // cy.url().should('include', 'localhost:3000/login');
-    // // log in successfullly
-    // cy.get('input[name="email"]').focus().type('randomEmail@email.com');
-    // cy.get('input[name="password"]').focus().type('password');
-    // cy.get('button[type="submit"]').click();
-
     // Create a new listing
     cy.url().should('include', 'localhost:3000/mylisting');
     cy.get('button[name="createNewListing"]').click();
@@ -59,6 +51,7 @@ describe('user happy path', () => {
 
     // Change Title and Thumbnail
     cy.get('button[name="editBtn"]').click();
+    cy.get('input[name="title"]').focus().clear();
     cy.get('input[name="title"]').focus().type('Better Apartment');
     cy.get('input[id="basic_thumbnail"]').selectFile(
       '../../ass3/frontend/public/picture4.jpeg',
@@ -72,7 +65,7 @@ describe('user happy path', () => {
     // Publish Listing
     cy.get('button[name="publishBtn"]').click();
     cy.get('input[id="firstRange"]').click();
-    cy.get('td[title="2022-12-29"]').click();
+    cy.get('td[title="2022-12-30"]').click();
     cy.get('td[title="2022-12-31"]').click();
     cy.get('button[name="publishSubmit"]').click();
     cy.url().should('include', 'localhost:3000/mylisting');
@@ -130,7 +123,7 @@ describe('user happy path', () => {
     // Publish Listing
     cy.get('button[name="publishBtn"]').click();
     cy.get('input[id="firstRange"]').click();
-    cy.get('td[title="2022-12-29"]').click();
+    cy.get('td[title="2022-12-30"]').click();
     cy.get('td[title="2022-12-31"]').click();
     cy.get('button[name="publishSubmit"]').click();
     cy.url().should('include', 'localhost:3000/mylisting');
@@ -141,6 +134,31 @@ describe('user happy path', () => {
     cy.get('button[name="logoutSubmit"]').click();
     cy.url().should('include', 'localhost:3000/login');
 
-    
+    // The first user login again
+    cy.get('input[name="email"]').focus().type('randomEmail@email.com');
+    cy.get('input[name="password"]').focus().type('password');
+    cy.get('button[type="submit"]').click();
+    cy.wait(500);
+
+    // The first user make a booking
+    cy.url().should('include', 'localhost:3000/mylisting');
+    cy.get('button[name="home"]').click();
+    cy.get('img[alt="thumbnail-Another Good House"]').click();
+    cy.url().should('include', 'localhost:3000/listing');
+    cy.get('button[name="bookBtn"]').click();
+    cy.get('input[placeholder="Start date"]').click();
+    cy.get('td[title="2022-12-30"]').click();
+    cy.get('td[title="2022-12-31"]').click();
+    cy.get('button[name="bookSubmit"]').click();
+
+    // the first user log out
+    cy.get('button[name="logoutButton"]').click();
+    cy.get('button[name="logoutSubmit"]').click();
+    cy.url().should('include', 'localhost:3000/login');
+
+    // the first user log in again
+    cy.get('input[name="email"]').focus().type('randomEmail@email.com');
+    cy.get('input[name="password"]').focus().type('password');
+    cy.get('button[type="submit"]').click();
   });
 });

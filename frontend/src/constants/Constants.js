@@ -36,3 +36,5 @@ export const propertyTypes = [
   'House',
   'Land',
 ];
+
+export const GOOGLE_MAP_API_KEY = 'AIzaSyCju7086RK14P3kSA-LUGcDtZsPC1fxqHI';

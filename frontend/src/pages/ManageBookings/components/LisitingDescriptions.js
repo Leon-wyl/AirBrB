@@ -11,6 +11,8 @@ const ListingDescriptions = (props) => {
 
   const getNumDaysBookedThisYear = (bookings) => {
     const thisYear = moment().year();
+    // get all accepted booking ranges, get the date,
+    // then put them into array and remove dups, then get the date of this year
     const acceptedBookings = bookings.filter((booking) => (booking.status === 'accepted'));
     const dateRanges = acceptedBookings.map((booking) => booking.dateRange);
     const allDatesWithDups = [];
@@ -33,6 +35,7 @@ const ListingDescriptions = (props) => {
 
   const getNumberOfBookingsThisYear = (bookings) => {
     const thisYear = moment().year();
+    // Get all accepted booking ranges, then filter out the ranges
     const acceptedBookings = bookings.filter((booking) => (booking.status === 'accepted'));
     const dateRanges = acceptedBookings.map((booking) => booking.dateRange);
     const dateRangesThisYear = dateRanges.filter((dateRange) => {
@@ -47,9 +50,10 @@ const ListingDescriptions = (props) => {
     const acceptedBookings = bookings.filter(
       (booking) => booking.status === 'accepted'
     );
+    // every period earns price * (dates - 1) dolloars, that's why number of
+    // booking need to be subtract
     const numAcceptedBookings = getNumberOfBookingsThisYear(bookings);
     const numDaysAccepted = getNumDaysBookedThisYear(acceptedBookings);
-    console.log(numAcceptedBookings)
     return (numDaysAccepted - numAcceptedBookings) * data.price;
   };
 

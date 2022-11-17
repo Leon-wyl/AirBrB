@@ -18,6 +18,8 @@ const Register = () => {
     console.log(res);
     if (res.status) {
       message.success('Login successfully');
+      // Set email and token to local storage, and set token to useContext
+      // Using both is because some component (like navbar) needs to monitor the log in state on time
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('email', value.email);
       setToken(res.data.token);
@@ -27,10 +29,6 @@ const Register = () => {
     } else {
       message.error('Something unexpected happened.');
     }
-  };
-
-  const onFinishFailed = (data) => {
-    console.log(data);
   };
 
   return (
@@ -55,7 +53,6 @@ const Register = () => {
             remember: true,
           }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             name="name"
@@ -138,7 +135,7 @@ const Register = () => {
             />
           </Form.Item>
 
-          <Form.Item name="link" className={styles.link}>
+          <Form.Item name="link" role="link" className={styles.link}>
             <div
               onClick={() => {
                 history.push('/login');

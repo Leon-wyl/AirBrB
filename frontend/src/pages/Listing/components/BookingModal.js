@@ -1,4 +1,4 @@
-import { DatePicker, message, Modal, Typography } from 'antd';
+import { DatePicker, message, Modal, Typography, Button } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -55,8 +55,20 @@ const BookingModal = (props) => {
       <Modal
         title="Book Listing"
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
+        footer={[
+          <Button key="1" onClick={handleCancel}>
+            Cancel
+          </Button>,
+          <Button
+            key="2"
+            name="bookSubmit"
+            type="primary"
+            onClick={handleOk}
+          >
+            OK
+          </Button>,
+        ]}
       >
         <Title level={5}>Select time range:</Title>
         <RangePicker

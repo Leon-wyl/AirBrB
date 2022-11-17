@@ -15,7 +15,7 @@ const DeleteModal = (props) => {
   const handleOk = async () => {
     const deleteCallback = async () => {
       setIsModalOpen(false);
-      console.log(listingId);
+      // Delete Listing
       const res = await deleteListing(listingId);
       if (res.status) {
         console.log(res);
@@ -27,6 +27,7 @@ const DeleteModal = (props) => {
       } else {
         message.error('Something unexpected happened. Delete Unsuccessful');
       }
+      // Reload my listings
       const listingDetails = await getAllSortedUserDetails(email, token);
       const myListingDetails = listingDetails.filter(
         (listing) => listing.owner === email

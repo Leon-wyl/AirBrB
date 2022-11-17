@@ -16,6 +16,7 @@ const Login = () => {
   const onFinish = async (value) => {
     const res = await postLogin(value.email, value.password);
     if (res.status) {
+      // Set email and token to local storage, and set token to useContext
       message.success('Login successfully');
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('email', value.email);
@@ -27,8 +28,6 @@ const Login = () => {
       message.error('Something unexpected happened.');
     }
   };
-
-  const onFinishFailed = () => {};
 
   return (
     <div className={styles.container}>
@@ -52,7 +51,6 @@ const Login = () => {
             remember: true,
           }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             name="email"
@@ -93,7 +91,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item name="remember" className={styles.link}>
-            <div name="linkToSignUp" onClick={() => history.push('/register')}>
+            <div name="linkToSignUp" role="link" onClick={() => history.push('/register')}>
               Not registered? Sign Up!
             </div>
           </Form.Item>

@@ -3,6 +3,7 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Button, DatePicker } from 'antd';
 import styles from './DynamicField.module.css';
 
+// This component used to construct the dynamic form when publishing multiple time periods
 const DynamicField = (props) => {
   const { RangePicker } = DatePicker;
   return (
@@ -41,7 +42,7 @@ const DynamicField = (props) => {
               </div>
             ))}
             <Form.Item>
-              <Button type="dashed" onClick={() => add()}>
+              <Button type="dashed" aria-expanded={true} onClick={() => add()}>
                 <PlusOutlined /> Add field
               </Button>
             </Form.Item>
