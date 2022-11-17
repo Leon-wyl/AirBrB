@@ -165,7 +165,7 @@ const SearchBar = (props) => {
     <div className={styles.searchContainer}>
       <Search
         className={styles.searchBar}
-        placeholder="input search text"
+        placeholder="Input search text"
         allowClear
         enterButton="Search"
         size="large"

@@ -41,7 +41,7 @@ const Reviews = (props) => {
         )}
         {data?.reviews?.length > 0 &&
           data?.reviews.map((review, key) => (
-            <Card style={{ width: '100%' }} key={key} className={styles.card}>
+            <Card style={{ width: '100%' }} key={key} className={styles.reviewCard}>
               <Title
                 level={4}
                 style={{
@@ -52,7 +52,7 @@ const Reviews = (props) => {
               >
                 {review.user}
               </Title>
-              <Text style={{ fontSize: '16px', display: 'inline' }}>
+              <Text type="secondary">
                 {`Rated on ${moment(review.time).format('DD/MM/YYYY')}`}
               </Text>
               <div>

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import { Card, Rate, Typography } from 'antd';
+import { Card, Typography } from 'antd';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { getRating } from '../../../Helper/Helper';
 import styles from '../../my-listings/components/MyListingCard.module.css';
+import StarRatings from 'react-star-ratings';
 
 const { Meta } = Card;
 
@@ -34,10 +35,15 @@ const AllListingCard = (props) => {
             {`$${data.price} USD per night`}
           </Text>
           <div>
-            <Rate size="small" disabled allowHalf defaultValue={rating} />
-            <Text type="secondary"> {`(${rating})`}</Text>
+            <StarRatings
+              rating={Number(rating)}
+              starDimension="20px"
+              starSpacing="1px"
+              starRatedColor="gold"
+            />
+            <Text type="secondary"> {`(${Number(rating).toFixed(2)})`}</Text>
           </div>
-          <Text type="secondary"> {`(${numRatings} people rates)`}</Text>
+          <Text type="secondary"> {`Total reviews: ${numRatings}`}</Text>
         </div>
       </Card>
     </>

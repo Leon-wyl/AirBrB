@@ -80,8 +80,8 @@ const PendingBooking = (props) => {
 PendingBooking.propTypes = {
   booking: PropTypes.shape({
     dateRange: PropTypes.shape({
-      end: PropTypes.object,
-      start: PropTypes.object,
+      end: PropTypes.string,
+      start: PropTypes.string,
     }),
     totalPrice: PropTypes.number,
   }),

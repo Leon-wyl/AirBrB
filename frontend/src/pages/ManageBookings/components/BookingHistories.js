@@ -48,9 +48,7 @@ const BookingHistories = (props) => {
 };
 
 BookingHistories.propTypes = {
-  bookings: PropTypes.shape({
-    filter: PropTypes.func,
-  }),
+  bookings: PropTypes.array,
 };
 
 export default BookingHistories;

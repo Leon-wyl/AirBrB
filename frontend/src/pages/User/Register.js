@@ -1,13 +1,17 @@
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message } from 'antd';
 import 'antd/dist/antd.min.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { postRegister } from '../../api/AuthApi';
 import logo from '../../assets/logo-black.png';
 import styles from './Login.module.css';
+import { UserContext } from '../../store/UserContext';
+
 const Register = () => {
   const history = useHistory();
+
+  const { setToken } = useContext(UserContext);
 
   const onFinish = async (value) => {
     const res = await postRegister(value.email, value.name, value.password);
@@ -16,6 +20,7 @@ const Register = () => {
       message.success('Login successfully');
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('email', value.email);
+      setToken(res.data.token);
       history.push('/mylistings');
     } else if (res.response.data.error) {
       message.error(res.response.data.error);
@@ -34,15 +39,15 @@ const Register = () => {
         <div className={styles.logoContainer}>
           <img
             className={styles.logo}
-            alt='logo'
+            alt="logo"
             src={logo}
-            width='200'
-            height='60'
+            width="200"
+            height="60"
           />
         </div>
         <h1 className={styles.title}>Sign Up</h1>
         <Form
-          name='basic'
+          name="basic"
           labelCol={{
             span: 6,
           }}
@@ -53,7 +58,7 @@ const Register = () => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
-            name='name'
+            name="name"
             rules={[
               {
                 required: true,
@@ -63,13 +68,13 @@ const Register = () => {
           >
             <Input
               data-testid="name"
-              name='name'
-              prefix={<UserOutlined className={styles.icon}/>}
-              placeholder='Name'
+              name="name"
+              prefix={<UserOutlined className={styles.icon} />}
+              placeholder="Name"
             />
           </Form.Item>
           <Form.Item
-            name='email'
+            name="email"
             rules={[
               {
                 type: 'email',
@@ -83,14 +88,14 @@ const Register = () => {
           >
             <Input
               data-testid="email"
-              name='email'
-              prefix={<MailOutlined className={styles.icon}/>}
+              name="email"
+              prefix={<MailOutlined className={styles.icon} />}
               placeholder="Email"
             />
           </Form.Item>
 
           <Form.Item
-            name='password'
+            name="password"
             rules={[
               {
                 required: true,
@@ -100,14 +105,14 @@ const Register = () => {
           >
             <Input.Password
               data-testid="password"
-              name='password'
-              prefix={<LockOutlined className={styles.icon}/>}
+              name="password"
+              prefix={<LockOutlined className={styles.icon} />}
               placeholder="Password"
             />
           </Form.Item>
 
           <Form.Item
-            name='confirmPassword'
+            name="confirmPassword"
             rules={[
               {
                 required: true,
@@ -127,13 +132,13 @@ const Register = () => {
           >
             <Input.Password
               data-testid="confirmPassword"
-              name='confirmPassword'
-              prefix={<LockOutlined className={styles.icon}/>}
+              name="confirmPassword"
+              prefix={<LockOutlined className={styles.icon} />}
               placeholder="Password"
             />
           </Form.Item>
 
-          <Form.Item name='link' className={styles.link}>
+          <Form.Item name="link" className={styles.link}>
             <div
               onClick={() => {
                 history.push('/login');
@@ -144,7 +149,7 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button type='primary' htmlType='submit'>
+            <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

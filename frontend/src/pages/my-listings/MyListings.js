@@ -30,7 +30,6 @@ const MyListings = () => {
           <Button
             name='createNewListing'
             type="primary"
-            size="large"
             onClick={() => history.push('/newlisting')}
           >
             Create New Listing

@@ -1,4 +1,4 @@
-import { message, Modal, Typography } from 'antd';
+import { message, Modal, Typography, Button } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { putUnpublishListing } from '../../../api/ListingApi';
@@ -44,8 +44,19 @@ const UnpublishModal = (props) => {
       <Modal
         title="Unpublish Listing"
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        footer={[
+          <Button key="1" onClick={handleCancel}>
+            Cancel
+          </Button>,
+          <Button
+            key="2"
+            name="unpublishSubmit"
+            type="primary"
+            onClick={handleOk}
+          >
+            OK
+          </Button>,
+        ]}
       >
         <Text>{'Are you sure to Unpublish this listing?'}</Text>
       </Modal>

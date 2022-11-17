@@ -18,7 +18,7 @@
 .searchBar {
   margin-bottom: 25px;
   margin-right: 25px;
-  width: 70%;
+  width: 70% !important;
 }
 
 .option {

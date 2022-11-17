@@ -20,13 +20,17 @@
 }
 
 .card {
-  margin-right: 30px;
-  margin-bottom: 30px;
+  margin-right: 30px !important;
+  margin-bottom: 30px !important;
 }
 
 .amenityCard {
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-right: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.reviewCard {
+  margin: 10px 0 !important;
 }
 
 .reviewHeader {

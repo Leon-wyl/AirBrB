@@ -19,7 +19,7 @@ const RejectModal = (props) => {
     const res = await putDeclineBookings(booking.id);
     if (res.status) {
       message.success('Reject booking successfully');
-      const myBookings = await getListingBookings(data.id);
+      const myBookings = await getListingBookings(Number(data.id));
       setBookings(myBookings);
     } else if (res.response.status === 400) {
       console.log(res);
@@ -60,7 +60,7 @@ RejectModal.propTypes = {
     id: PropTypes.number,
   }),
   getListingBookings: PropTypes.func,
-  isModalOpen: PropTypes.func,
+  isModalOpen: PropTypes.bool,
   setBookings: PropTypes.func,
   setIsModalOpen: PropTypes.func,
 };

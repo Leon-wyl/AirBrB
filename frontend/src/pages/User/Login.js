@@ -1,14 +1,17 @@
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message } from 'antd';
 import 'antd/dist/antd.min.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { postLogin } from '../../api/AuthApi';
 import logo from '../../assets/logo-black.png';
 import styles from './Login.module.css';
+import { UserContext } from '../../store/UserContext';
 
 const Login = () => {
   const history = useHistory();
+
+  const { setToken } = useContext(UserContext);
 
   const onFinish = async (value) => {
     const res = await postLogin(value.email, value.password);
@@ -16,6 +19,7 @@ const Login = () => {
       message.success('Login successfully');
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('email', value.email);
+      setToken(res.data.token);
       history.push('/mylistings');
     } else if (res.response.data.error) {
       message.error(res.response.data.error);
@@ -32,15 +36,15 @@ const Login = () => {
         <div className={styles.logoContainer}>
           <img
             className={styles.logo}
-            alt='logo'
+            alt="logo"
             src={logo}
-            width='200'
-            height='60'
+            width="200"
+            height="60"
           />
         </div>
         <h1 className={styles.title}>Log In</h1>
         <Form
-          name='basic'
+          name="basic"
           labelCol={{
             span: 8,
           }}
@@ -51,7 +55,7 @@ const Login = () => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
-            name='email'
+            name="email"
             rules={[
               {
                 type: 'email',
@@ -64,15 +68,15 @@ const Login = () => {
             ]}
           >
             <Input
-              name='email'
-              className='loginEmail'
+              name="email"
+              className="loginEmail"
               prefix={<MailOutlined className={styles.icon} />}
               placeholder="Email"
             />
           </Form.Item>
 
           <Form.Item
-            name='password'
+            name="password"
             rules={[
               {
                 required: true,
@@ -81,21 +85,21 @@ const Login = () => {
             ]}
           >
             <Input.Password
-              name='password'
-              className='loginPassword'
-              prefix={<LockOutlined className={styles.icon}/>}
+              name="password"
+              className="loginPassword"
+              prefix={<LockOutlined className={styles.icon} />}
               placeholder="Password"
             />
           </Form.Item>
 
-          <Form.Item name='remember' className={styles.link}>
-            <div name='linkToSignUp' onClick={() => history.push('/register')}>
+          <Form.Item name="remember" className={styles.link}>
+            <div name="linkToSignUp" onClick={() => history.push('/register')}>
               Not registered? Sign Up!
             </div>
           </Form.Item>
 
           <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button type='primary' htmlType='submit'>
+            <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

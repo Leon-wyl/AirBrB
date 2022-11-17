@@ -103,7 +103,7 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name='title' placeholder="Title" />
+          <Input name="title" placeholder="Title" />
         </Form.Item>
 
         <Form.Item
@@ -259,7 +259,10 @@ const CreateNewListingForm = () => {
             },
           ]}
         >
-          <Input name="bedroomDetails" placeholder="For example, how many beds in each bedroom and their sizes" />
+          <Input
+            name="bedroomDetails"
+            placeholder="For example, how many beds in each bedroom and their sizes"
+          />
         </Form.Item>
 
         <Form.Item name="amenities" label="Amenities">
@@ -277,7 +280,10 @@ const CreateNewListingForm = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item name="thumbnail" label="Thumbnail">
+        <Form.Item
+          name="thumbnail"
+          label="Thumbnail"
+        >
           <Upload
             name="avatar"
             listType="picture-card"

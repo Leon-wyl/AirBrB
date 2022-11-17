@@ -63,7 +63,7 @@ DeleteModal.propTypes = {
     id: PropTypes.number,
   }),
   getMyBookingRes: PropTypes.func,
-  isModalOpen: PropTypes.func,
+  isModalOpen: PropTypes.bool,
   setBookings: PropTypes.func,
   setIsModalOpen: PropTypes.func,
 };

@@ -13,7 +13,9 @@ const EditListing = () => {
           <div className={styles.header}>
             <Title>Edit Listing</Title>
           </div>
-          <EditListingForm />
+          <div className={styles.formContainer}>
+            <EditListingForm />
+          </div>
         </div>
       </div>
     </>

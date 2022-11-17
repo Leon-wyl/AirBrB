@@ -80,7 +80,7 @@ const PublishModal = (props) => {
           </Form.Item>
           <DynamicField />
           <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button type="primary" htmlType="submit">
+            <Button name="publishSubmit" type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

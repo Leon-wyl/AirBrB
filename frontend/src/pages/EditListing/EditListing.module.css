@@ -17,3 +17,11 @@
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 575px) {
+  .formContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}

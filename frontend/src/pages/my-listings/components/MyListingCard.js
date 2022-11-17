@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Typography, Card, Rate, Button } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Typography, Card, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import styles from './MyListingCard.module.css';
 import DeleteModal from './DeleteModal';
@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import PublishModal from './PublishModal';
 import UnpublishModal from './UnpublishModal';
 import { getRating } from '../../../Helper/Helper';
+import StarRatings from 'react-star-ratings';
 
 const { Meta } = Card;
 
@@ -54,6 +55,7 @@ const MyListingCard = (props) => {
         actions={[
           <Button
             key="1"
+            name='publishBtn'
             style={{ border: 'transparent', backgroundColor: 'transparent' }}
             size="small"
             onClick={() =>
@@ -72,14 +74,16 @@ const MyListingCard = (props) => {
           >
             Bookings
           </Button>,
-          <EditOutlined
+          <Button
             key="3"
+            name='editBtn'
+            style={{ border: 'transparent', backgroundColor: 'transparent' }}
+            size="small"
             onClick={() => history.push(`/editlisting/${data.id}`)}
-          />,
-          <DeleteOutlined
-            key="4"
-            onClick={() => setIsDeleteModalOpen(true)}
-          />,
+          >
+            Edit
+          </Button>,
+          <DeleteOutlined key="4" onClick={() => setIsDeleteModalOpen(true)} />,
         ]}
       >
         <Meta title={data.title} />
@@ -87,21 +91,41 @@ const MyListingCard = (props) => {
           <Text name="price" className={styles.description} type="secondary">
             Price: {`$${data.price}`}
           </Text>
-          <Text name="propertyType" className={styles.description} type="secondary">
+          <Text
+            name="propertyType"
+            className={styles.description}
+            type="secondary"
+          >
             Property Type: {`${data.metadata.propertyType}`}
           </Text>
           <Text name="numBed" className={styles.description} type="secondary">
             Beds: {`${data.metadata.numBed}`}
           </Text>
-          <Text name="numBathroom" className={styles.description} type="secondary">
+          <Text
+            name="numBathroom"
+            className={styles.description}
+            type="secondary"
+          >
             Bathrooms: {`${data.metadata.numBathroom}`}
           </Text>
           <div>
-            <Rate size="small" disabled allowHalf defaultValue={rating} />
-            <Text name="rating" type="secondary"> {`(${rating})`}</Text>
+            <StarRatings
+              rating={Number(rating)}
+              starDimension="20px"
+              starSpacing="1px"
+              starRatedColor="gold"
+            />
+            <Text name="rating" type="secondary">
+              {' '}
+              {`(${rating})`}
+            </Text>
           </div>
-          <Text name="numRating" className={styles.description} type="secondary">
-            Number of Ratings: {`${numRatings}`}
+          <Text
+            name="numRating"
+            className={styles.description}
+            type="secondary"
+          >
+            Total reviews: {`${numRatings}`}
           </Text>
         </div>
       </Card>

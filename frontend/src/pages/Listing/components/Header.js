@@ -1,9 +1,11 @@
-import { Button, Card, Rate, Typography } from 'antd';
+import { Button, Card, Typography } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { getRating } from '../../../Helper/Helper';
 import BookingModal from './BookingModal';
 import styles from './Header.module.css';
+import StarRatings from 'react-star-ratings';
+
 const Header = (props) => {
   const { data, isOwnListing, getMyBookingRes, setBookings, dateRange } = props;
 
@@ -36,7 +38,7 @@ const Header = (props) => {
         className={styles.card}
         style={{
           width: 300,
-          marginRight: '40px'
+          marginRight: '40px',
         }}
         cover={<img alt={`thumbnail-${data.id}`} src={data.thumbnail} />}
       ></Card>
@@ -61,6 +63,7 @@ const Header = (props) => {
         </div>
         <div>
           <Button
+            className={styles.bookBtn}
             size="large"
             type="primary"
             disabled={!loggedIn || isOwnListing}
@@ -70,11 +73,11 @@ const Header = (props) => {
           </Button>
           <div>
             {rating !== -1 && (
-              <Rate
-                size="small"
-                disabled
-                allowHalf
-                defaultValue={Number(rating)}
+              <StarRatings
+                rating={Number(rating)}
+                starDimension="20px"
+                starSpacing="1px"
+                starRatedColor="gold"
               />
             )}
             <Text type="primary"> {`(${rating})`}</Text>
@@ -84,7 +87,7 @@ const Header = (props) => {
             type="primary"
             underline
           >
-            {`${numReviews}`} people reviewed
+            {`Total reviews: ${numReviews}`}
           </Text>
         </div>
       </div>

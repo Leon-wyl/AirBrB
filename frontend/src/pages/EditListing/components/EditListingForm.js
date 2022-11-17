@@ -167,7 +167,7 @@ const EditListingForm = () => {
             },
           ]}
         >
-          <Input placeholder="Title" />
+          <Input name="title" placeholder="Title" />
         </Form.Item>
 
         <Form.Item

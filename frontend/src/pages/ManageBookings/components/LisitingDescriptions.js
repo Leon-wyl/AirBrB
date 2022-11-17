@@ -11,7 +11,8 @@ const ListingDescriptions = (props) => {
 
   const getNumDaysBookedThisYear = (bookings) => {
     const thisYear = moment().year();
-    const dateRanges = bookings.map((booking) => booking.dateRange);
+    const acceptedBookings = bookings.filter((booking) => (booking.status === 'accepted'));
+    const dateRanges = acceptedBookings.map((booking) => booking.dateRange);
     const allDatesWithDups = [];
     dateRanges.forEach((dateRange) => {
       const allDatesForRange = getAllDatesBetweenDates(
@@ -23,21 +24,35 @@ const ListingDescriptions = (props) => {
     const allDates = [...new Set(allDatesWithDups)];
     const filteredDates = allDates.filter((date) => {
       const year = Number(date.split('-')[0]);
-      console.log(year, thisYear);
       return year === thisYear;
     });
-    console.log(filteredDates);
     return filteredDates.length;
   };
 
   const numDaysBookedThisYear = getNumDaysBookedThisYear(bookings);
+
+  const getNumberOfBookingsThisYear = (bookings) => {
+    const thisYear = moment().year();
+    const acceptedBookings = bookings.filter((booking) => (booking.status === 'accepted'));
+    const dateRanges = acceptedBookings.map((booking) => booking.dateRange);
+    const dateRangesThisYear = dateRanges.filter((dateRange) => {
+      const year = Number(dateRange.start.split('-')[0]);
+      console.log(year, thisYear)
+      return year === thisYear;
+    })
+    return dateRangesThisYear.length;
+  }
+
   const getProfitMadeThisYear = (bookings) => {
     const acceptedBookings = bookings.filter(
       (booking) => booking.status === 'accepted'
     );
+    const numAcceptedBookings = getNumberOfBookingsThisYear(bookings);
     const numDaysAccepted = getNumDaysBookedThisYear(acceptedBookings);
-    return numDaysAccepted * data.price;
+    console.log(numAcceptedBookings)
+    return (numDaysAccepted - numAcceptedBookings) * data.price;
   };
+
   const profitMadeThisYear = getProfitMadeThisYear(bookings);
 
   const rating = getRating(data?.reviews ? data.reviews : []);
@@ -74,10 +89,7 @@ const ListingDescriptions = (props) => {
 };
 
 ListingDescriptions.propTypes = {
-  bookings: PropTypes.shape({
-    filter: PropTypes.func,
-    map: PropTypes.func,
-  }),
+  bookings: PropTypes.array,
   data: PropTypes.shape({
     address: PropTypes.shape({
       addressLine: PropTypes.string,
@@ -86,14 +98,10 @@ ListingDescriptions.propTypes = {
       state: PropTypes.string,
     }),
     owner: PropTypes.string,
-    postedOn: PropTypes.object,
+    postedOn: PropTypes.string,
     price: PropTypes.number,
-    published: PropTypes.shape({
-      toString: PropTypes.func,
-    }),
-    reviews: PropTypes.shape({
-      length: PropTypes.number,
-    }),
+    published: PropTypes.bool,
+    reviews: PropTypes.array,
   }),
 };
 

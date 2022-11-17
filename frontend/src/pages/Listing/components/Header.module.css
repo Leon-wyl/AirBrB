@@ -20,6 +20,10 @@
   margin-bottom: 10px;
 }
 
+.bookBtn {
+  margin-bottom: 10px;
+}
+
 @media screen and (max-width: 853px) {
 	.price {
 		margin: 30px 0;

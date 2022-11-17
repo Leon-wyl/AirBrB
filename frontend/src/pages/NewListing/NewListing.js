@@ -13,7 +13,9 @@ const NewListing = () => {
         <div className={styles.header}>
           <Title>Create New Listing</Title>
         </div>
-        <CreateNewListingForm />
+        <div className={styles.formContainer}>
+          <CreateNewListingForm />
+        </div>
       </div>
     </div>
   );
