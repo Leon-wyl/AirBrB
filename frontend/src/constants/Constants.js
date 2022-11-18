@@ -38,3 +38,5 @@ export const propertyTypes = [
 ];
 
 export const GOOGLE_MAP_API_KEY = 'AIzaSyCju7086RK14P3kSA-LUGcDtZsPC1fxqHI';
+
+export const OPEN_WEATHER_API_KEY = '2ac3d2a0df29e5c03f7e02d8910f8db2';
