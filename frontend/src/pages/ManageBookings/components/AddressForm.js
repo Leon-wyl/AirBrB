@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { Button, Modal, Form, Input } from 'antd';
 import React from 'react';
 
@@ -107,5 +108,11 @@ const AddressForm = ({ onOK, onCancel, isModalOpen }) => {
     </>
   );
 };
+
+AddressForm.propTypes = {
+  isModalOpen: PropTypes.bool,
+  onCancel: PropTypes.func,
+  onOK: PropTypes.func
+}
 
 export default AddressForm;

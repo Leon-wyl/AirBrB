@@ -80,6 +80,7 @@ const Login = () => {
                 required: true,
                 message: 'Please input your password!',
               },
+              { min: 6, message: 'Password length should be greater than six' },
             ]}
           >
             <Input.Password
