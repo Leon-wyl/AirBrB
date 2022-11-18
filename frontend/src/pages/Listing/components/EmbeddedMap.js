@@ -31,8 +31,8 @@ const EmbeddedMap = (props) => {
       const res = await getGeoCoding(address);
       setIsFetchedGoogle(true);
       console.log(res);
-      if (res?.data?.results) {
-        setGeocode(res.data.results[0].geometry?.location);
+      if (res?.data?.results && res?.data?.results !== []) {
+        setGeocode(res.data.results[0]?.geometry?.location);
       }
     }
   };
@@ -52,7 +52,7 @@ const EmbeddedMap = (props) => {
     <div>
       <Title level={2}>Location</Title>
       <GoogleMap
-        zoom={10}
+        zoom={14}
         center={geocode}
         mapContainerClassName={styles.mapContainer}
       >

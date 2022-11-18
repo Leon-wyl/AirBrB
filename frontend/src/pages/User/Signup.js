@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import 'antd/dist/antd.min.css';
 import React from 'react';
 import styles from '../pages/User/Login.module.css';
 
-const Signup = ({ onFinish }) => {
+const Signup = ({ onFinish, onLoginLink }) => {
   return (
     <div className={styles.container}>
       <Form
@@ -97,6 +97,10 @@ const Signup = ({ onFinish }) => {
           />
         </Form.Item>
 
+        <Form.Item name="loginLink" role="link" className={styles.link}>
+          <div data-testid="loginLink" onClick={onLoginLink}>Has account? Sign in!</div>
+        </Form.Item>
+
         <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
           <Button type="primary" htmlType="submit" onClick={onFinish}>
             Submit
@@ -108,7 +112,8 @@ const Signup = ({ onFinish }) => {
 };
 
 Signup.propTypes = {
-  onFinish: PropTypes.func
-}
+  onFinish: PropTypes.func,
+  onLoginLink: PropTypes.func,
+};
 
 export default Signup;
