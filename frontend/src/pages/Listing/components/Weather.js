@@ -5,6 +5,7 @@ import { Typography } from 'antd';
 const Weather = (props) => {
   const { data, weather } = props;
   const { Title, Text } = Typography;
+  console.log(weather);
 
   return (
     <>
@@ -19,7 +20,9 @@ const Weather = (props) => {
         Number(weather.data.main.temp_min) - 273.15
       ).toFixed(2)} degree celcius`}</Text>
       <br />
-      <Text>{`Humidity: ${Number(weather.data.main.humidity)}`}</Text>
+      <Text>{`Humidity: ${Number(weather.data.main.humidity)} %`}</Text>
+      <br />
+      <Text>{`Pressure: ${weather.data.main.pressure} kpa`}</Text>
     </>
   );
 };
@@ -33,9 +36,10 @@ Weather.propTypes = {
   weather: PropTypes.shape({
     data: PropTypes.shape({
       main: PropTypes.shape({
-        humidity: PropTypes.string,
-        temp_max: PropTypes.string,
-        temp_min: PropTypes.string,
+        humidity: PropTypes.number,
+        temp_max: PropTypes.number,
+        temp_min: PropTypes.number,
+        pressure: PropTypes.number,
       }),
       weather: PropTypes.any,
     }),
