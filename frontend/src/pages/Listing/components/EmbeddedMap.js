@@ -4,9 +4,9 @@ import { Divider, Typography } from 'antd';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { GOOGLE_MAP_API_KEY } from '../../../constants/Constants';
 import styles from '../Listing.module.css';
-import { getCurrentWeather, getGeoCoding } from '../../../api/ExternalApi';
+import { getGeoCoding } from '../../../api/ExternalApi';
 import { UserContext } from '../../../store/UserContext';
-import Weather from './Weather';
+// import Weather from './Weather';
 
 const convertAddress = (addressLine, city, state) => {
   const linkedAddress = `${addressLine},+${city},+${state}`;
@@ -21,7 +21,7 @@ const EmbeddedMap = (props) => {
   const { isFetchedGoogle, setIsFetchedGoogle } = useContext(UserContext);
 
   const [geocode, setGeocode] = useState({ lat: 44, lng: -80 });
-  const [weather, setWeather] = useState(null);
+  // const [weather, setWeather] = useState(null);
 
   const fetchGeoCode = async (data) => {
     if (data.address && !isFetchedGoogle) {
@@ -35,10 +35,10 @@ const EmbeddedMap = (props) => {
       console.log(res);
       if (res?.data?.results && res?.data?.results !== []) {
         setGeocode(res.data.results[0]?.geometry?.location);
-        const lat = res.data.results[0]?.geometry?.location.lat;
-        const lng = res.data.results[0]?.geometry?.location.lng;
-        const weatherRes = await getCurrentWeather(lat, lng);
-        setWeather(weatherRes);
+        // const lat = res.data.results[0]?.geometry?.location.lat;
+        // const lng = res.data.results[0]?.geometry?.location.lng;
+        // const weatherRes = await getCurrentWeather(lat, lng);
+        // setWeather(weatherRes);
       }
     }
   };
@@ -65,7 +65,7 @@ const EmbeddedMap = (props) => {
         <Marker position={geocode} />
       </GoogleMap>
       <Divider />
-      { weather && <Weather data={data} weather={weather} />}
+      {/* { weather && <Weather data={data} weather={weather} />} */}
     </div>
   );
 };

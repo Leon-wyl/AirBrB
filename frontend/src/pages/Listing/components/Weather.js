@@ -9,20 +9,26 @@ const Weather = (props) => {
 
   return (
     <>
-      <Title level={2}>{`Current weather in ${data.address.city}`}</Title>
-      <Text>{`Weather: ${weather.data.weather[0].description}`}</Text>
-      <br />
-      <Text>{`Max Temperature: ${(
-        Number(weather.data.main.temp_max) - 273.15
-      ).toFixed(2)} degree celcius`}</Text>
-      <br />
-      <Text>{`Min Temperature: ${(
-        Number(weather.data.main.temp_min) - 273.15
-      ).toFixed(2)} degree celcius`}</Text>
-      <br />
-      <Text>{`Humidity: ${Number(weather.data.main.humidity)} %`}</Text>
-      <br />
-      <Text>{`Pressure: ${weather.data.main.pressure} kpa`}</Text>
+      {weather ? (
+        <>
+          <Title level={2}>{`Current weather in ${data.address.city}`}</Title>
+          <Text>{`Weather: ${weather.data.weather[0].description}`}</Text>
+          <br />
+          <Text>{`Max Temperature: ${(
+            Number(weather.data.main.temp_max) - 273.15
+          ).toFixed(2)} degree celcius`}</Text>
+          <br />
+          <Text>{`Min Temperature: ${(
+            Number(weather.data.main.temp_min) - 273.15
+          ).toFixed(2)} degree celcius`}</Text>
+          <br />
+          <Text>{`Humidity: ${Number(weather.data.main.humidity)} %`}</Text>
+          <br />
+          <Text>{`Pressure: ${weather.data.main.pressure} kpa`}</Text>
+        </>
+      ) : (
+        <div></div>
+      )}
     </>
   );
 };
