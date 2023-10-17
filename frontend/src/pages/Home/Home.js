@@ -1,14 +1,13 @@
-import { Typography } from 'antd';
+import { Typography, Empty } from 'antd';
 import React, { useEffect, useState, useContext } from 'react';
 import { getAllSortedUserDetails } from '../../Helper/Helper';
 import AllListingCard from './components/AllListingCard';
 import styles from './Home.module.css';
 import { UserContext } from '../../store/UserContext';
-
 import SearchBar from './components/SearchBar';
 
 const Home = () => {
-  const { Title, Text } = Typography;
+  const { Title } = Typography;
   const email = localStorage.getItem('email');
   const { token } = useContext(UserContext);
 
@@ -37,7 +36,7 @@ const Home = () => {
           />
         </div>
         <div className={styles.cardContainer}>
-          {allListings.length === 0 && <Text>No listing found.</Text>}
+          {allListings.length === 0 && <Empty />}
           {allListings.map((listing, key) => (
             <AllListingCard
               key={key}

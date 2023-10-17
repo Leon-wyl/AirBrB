@@ -1,4 +1,4 @@
-import { Button, Typography } from 'antd';
+import { Button, Empty, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getAllSortedUserDetails } from '../../Helper/Helper';
@@ -11,8 +11,8 @@ const MyListings = () => {
   const history = useHistory();
 
   const [listings, setListings] = useState([]);
-  const email = localStorage.getItem('email')
-  const token = localStorage.getItem('token')
+  const email = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
   useEffect(async () => {
     const listingDetails = await getAllSortedUserDetails(email, token);
@@ -24,11 +24,11 @@ const MyListings = () => {
 
   return (
     <div className={styles.outerContainer}>
-      <div className={styles.innerContainer} id='innerContainer'>
+      <div className={styles.innerContainer} id="innerContainer">
         <div className={styles.header}>
           <Title className={styles.title}>My Listings</Title>
           <Button
-            name='createNewListing'
+            name="createNewListing"
             type="primary"
             onClick={() => history.push('/newlisting')}
           >
@@ -37,10 +37,14 @@ const MyListings = () => {
         </div>
         <div className={styles.cardContainer}>
           {listings.length === 0 && (
-            <Text style={{ fontSize: '16px' }}>
-              You have not created any listings yet. Click the &apos;Create New
-              Listing&apos; button to create a new listing.
-            </Text>
+            <Empty
+              description={
+                <Text style={{ fontSize: '16px' }}>
+                  You have not created any listings yet. Click the &apos;Create
+                  New Listing&apos; button to create a new listing.
+                </Text>
+              }
+            />
           )}
           {listings.map((listing, key) => (
             <MyListingCard key={key} data={listing} setListings={setListings} />

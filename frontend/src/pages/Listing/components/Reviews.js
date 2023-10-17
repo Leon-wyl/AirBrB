@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Typography, Button, Divider, Card, Rate } from 'antd';
+import { Typography, Button, Divider, Card, Rate, Empty } from 'antd';
 import styles from '../Listing.module.css';
 import ReviewModal from './ReviewModal';
 import moment from 'moment';
@@ -35,13 +35,21 @@ const Reviews = (props) => {
           Add an review
         </Button>
       </div>
+      {data?.reviews?.length === 0 && (
+        <Empty
+          description={
+            <Text style={{ fontSize: '16px' }}>No reviews posted</Text>
+          }
+        />
+      )}
       <div className={styles.container}>
-        {data?.reviews?.length === 0 && (
-          <Text style={{ fontSize: '16px' }}>No reviews posted</Text>
-        )}
         {data?.reviews?.length > 0 &&
           data?.reviews.map((review, key) => (
-            <Card style={{ width: '100%' }} key={key} className={styles.reviewCard}>
+            <Card
+              style={{ width: '100%' }}
+              key={key}
+              className={styles.reviewCard}
+            >
               <Title
                 level={4}
                 style={{
